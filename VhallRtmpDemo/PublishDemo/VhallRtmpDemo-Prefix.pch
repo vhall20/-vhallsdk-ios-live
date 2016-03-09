@@ -1,0 +1,28 @@
+//
+//  VhallRtmpDemo-Prefix.pch
+//  VhallRtmpDemo
+//
+//  Created by liwenlong on 15/10/10.
+//  Copyright © 2015年 vhall. All rights reserved.
+//
+
+#ifndef VhallRtmpDemo_Prefix_pch
+#define VhallRtmpDemo_Prefix_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#ifdef __OBJC__
+
+   #import <UIKit/UIKit.h>
+   #import <Foundation/Foundation.h>
+   #import "CONSTS.h"
+   #import "UIAlertView+ITTAdditions.h" 
+   #import "MBHUDHelper.h"
+   #import "UIView+ITTAdditions.h"
+   #import "AppDelegate.h"
+
+#endif
+
+
+#endif /* VhallRtmpDemo_Prefix_pch */
