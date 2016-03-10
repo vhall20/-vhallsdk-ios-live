@@ -11,7 +11,6 @@
 
 #define Id             @""
 #define AppKey         @""
-#define SecretKey      @""
 #define AppSecretKey   @""
 #define AccessToken    @""
 
