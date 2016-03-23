@@ -38,7 +38,6 @@
 {
    _selectArray = @[@"352X288",@"640X480",@"960X540",@"1280X720"];
    _videoResolution = kGeneralVideoResolution;
-   EnableVHallDebugModel(NO);
 }
 
 - (void)initViews

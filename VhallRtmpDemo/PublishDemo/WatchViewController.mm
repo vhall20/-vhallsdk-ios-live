@@ -57,6 +57,7 @@
 
 - (void)initViews
 {
+   
     //阻止iOS设备锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self addPanGestureRecognizer];
@@ -122,46 +123,29 @@
 {
     if (_isStart) {
         [_hud show:YES];
+       NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
+       param[@"id"] =  _roomId;
+       param[@"app_key"] = AppKey;
+       param[@"app_secret_key"] = AppSecretKey;
+       param[@"name"] = @"游客01";
+       param[@"email"] = @"1b2n6g8v@163.com";
+       if (_password&&_password.length>0) {
+          param[@"pass"] = _password;
+       }
         if (_watchVideoType == kWatchVideoRTMP)
         {
            _bufferCount = 0;
-           NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
-           param[@"id"] =  _roomId;
-           param[@"app_key"] = AppKey;
-           param[@"app_secret_key"] = AppSecretKey;
-           param[@"name"] = @"xxxxxxx";
-           param[@"email"] = @"xxxxxxx@163.com";
-           if (_password&&_password.length>0) {
-              param[@"pass"] = _password;
-           }
+           
            [_moviePlayer startPlay:param];
 
         }else if(_watchVideoType == kWatchVideoHLS)
         {
            //观看直播
-           NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
-           param[@"id"] =  _roomId;
-           param[@"app_key"] = AppKey;
-           param[@"app_secret_key"] = AppSecretKey;
-           param[@"name"] = @"xxxxxxx";
-           param[@"email"] = @"xxxxxxx@163.com";
-           if (_password&&_password.length) {
-              param[@"pass"] = _password;
-           }
            [_moviePlayer startPlay:param moviePlayer:self.hlsMoviePlayer];
 
         }else if(_watchVideoType == kWatchVideoPlayback){
            
            //观看回放地址
-           NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
-           param[@"id"] =  _roomId;
-           param[@"app_key"] = AppKey;
-           param[@"app_secret_key"] = AppSecretKey;
-           param[@"name"] = @"xxxxxxx";
-           param[@"email"] = @"xxxxxxx@163.com";
-           if (_password&&_password.length) {
-              param[@"pass"] = _password;
-           }
            [_moviePlayer startPlayback:param moviePlayer:self.hlsMoviePlayer];
         }
         
