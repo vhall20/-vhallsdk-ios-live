@@ -44,11 +44,12 @@ typedef NS_ENUM(int,LiveStatus)
     kLiveStatusRecvError =7,            //播放接受数据错误
     kLiveStatusSendError =8,            //直播发送数据错误
     kLiveStatusDownloadSpeed =9,        //播放下载速率
-    kLiveStatusUploadSpeed =10,          //直播上传速率
-    kLiveStatusNetworkStatus =11,        //当前的网络状态，>= 0为正常，< 0 代表卡顿
-    kLiveStatusGetUrlError =12,          //获取推流地址失败
-    kLiveStatusWidthAndHeight =13,       //返回播放视频的宽和高
-    kLiveStatusAudioInfo  =14            //音频流的信息
+    kLiveStatusUploadSpeed =10,         //直播上传速率
+    kLiveStatusNetworkStatus =11,       //当前的网络状态，>= 0为正常，< 0 代表卡顿
+    kLiveStatusGetUrlError =12,         //获取推流地址失败
+    kLiveStatusWidthAndHeight =13,      //返回播放视频的宽和高
+    kLiveStatusAudioInfo  =14,          //音频流的信息
+    kLiveStatusAudioRecoderError  =15   //音频采集失败，提示用户查看权限或者重新推流，切记此事件会回调多次，直到音频采集正常为止
 };
 
 typedef NS_ENUM(int,LivePlayErrorType)
@@ -142,51 +143,5 @@ typedef NS_ENUM(int,RTMPMovieScalingMode)
  *  10048	活动现场太火爆，已超过人数上限
  */
 @end
-
-#pragma mark - shaders 
-
-//OpenGL 着色器语言，可以用来调整视频渲染的颜色
-
-#define STRINGIZE(x) #x
-#define STRINGIZE2(x) STRINGIZE(x)
-#define SHADER_STRING(text) @ STRINGIZE2(text)
-
-NSString *const fshShaderString = SHADER_STRING
-(
- varying lowp vec2 TexCoordOut;
- 
- uniform sampler2D SamplerY;
- uniform sampler2D SamplerU;
- uniform sampler2D SamplerV;
- 
- void main(void)
-{
-    mediump vec3 yuv;
-    lowp vec3 rgb;
-    
-    yuv.x = texture2D(SamplerY, TexCoordOut).r;
-    yuv.y = texture2D(SamplerU, TexCoordOut).r - 0.5;
-    yuv.z = texture2D(SamplerV, TexCoordOut).r - 0.5;
-    
-    rgb = mat3( 1.0,    1.0,    1.0,
-                  0, -0.343,  1.765,
-                1.4, -0.711,    0.0) * yuv;
-    
-    gl_FragColor = vec4(rgb, 1);
-}
-);
-
-NSString *const vshShaderString = SHADER_STRING
-(
- attribute vec4 position;
- attribute vec2 TexCoordIn;
- varying vec2 TexCoordOut;
- 
- void main(void)
-{
-    gl_Position = position;
-    TexCoordOut = TexCoordIn;
-}
-);
 
 #endif /* OpenCONSTS_h */
