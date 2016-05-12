@@ -174,10 +174,10 @@
     //todo
     NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
     param[@"id"] =  _roomId;
-    param[@"app_key"] = AppKey;
-    param[@"app_secret_key"] = AppSecretKey;
-    param[@"name"] = @"liwenlong";
-    param[@"email"] = @"liwenlong_only@163.com";
+    param[@"app_key"] = DEMO_AppKey;
+    param[@"app_secret_key"] = DEMO_AppSecretKey;
+    param[@"name"] = DEMO_Setting.nickName;
+    param[@"email"] = DEMO_Setting.userID;
     if (_password&&_password.length) {
         param[@"pass"] = _password;
     }
@@ -243,7 +243,7 @@
 
 -(void)downloadSpeed:(VHMoviePlayer *)moviePlayer info:(NSDictionary *)info
 {
-    NSString * content = info[@"content"];
+//    NSString * content = info[@"content"];
     VHLog(@"downloadSpeed:%@",[info description]);
 }
 
@@ -386,7 +386,7 @@
 {
     if([keyPath isEqualToString:kViewFramePath])
     {
-        CGRect frame = [[change objectForKey:NSKeyValueChangeNewKey]CGRectValue];
+//        CGRect frame = [[change objectForKey:NSKeyValueChangeNewKey]CGRectValue];
         _hlsMoviePlayer.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.backView.height);
         //[self.backView addSubview:self.hlsMoviePlayer.view];
         [self.backView sendSubviewToBack:self.hlsMoviePlayer.view];

@@ -89,12 +89,12 @@
     {
         [_hud show:YES];
         _engine.videoResolution = _videoResolution;
-        _engine.bitRate = self.bitrate;
+        _engine.bitRate = _bitrate;
        NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
        param[@"id"] =  _roomId;
-       param[@"app_key"] = AppKey;
+       param[@"app_key"] = DEMO_AppKey;
        param[@"access_token"] = _token;
-       param[@"app_secret_key"] = AppSecretKey;
+       param[@"app_secret_key"] = DEMO_AppSecretKey;
        [_engine startLive:param];
     }else{
         
@@ -138,10 +138,11 @@
     }else{
         deviceOrgiation = kDeviceLandSpaceRight;
     }
-   self.engine = [[VHallLivePublish alloc] initWithOrgiation:deviceOrgiation];
+    self.engine = [[VHallLivePublish alloc] initWithOrgiation:deviceOrgiation];
     self.engine.videoResolution = _videoResolution;
     self.engine.displayView.frame = _perView.bounds;
     self.engine.publishConnectTimes = 2;
+    self.engine.videoCaptureFPS = (int)_videoCaptureFPS;
     self.engine.delegate = self;
     [self.perView insertSubview:_engine.displayView atIndex:0];
     

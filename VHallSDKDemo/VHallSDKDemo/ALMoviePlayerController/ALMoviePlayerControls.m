@@ -353,7 +353,7 @@ static const CGFloat iPhoneScreenPortraitWidth = 320.f;
         keyWindow = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
     }
     if (isIpad()) {
-        windowSubviews = keyWindow.layer.sublayers.count;
+        windowSubviews = (int)keyWindow.layer.sublayers.count;
         [keyWindow addObserver:self forKeyPath:@"layer.sublayers" options:NSKeyValueObservingOptionNew context:NULL];
     } else {
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeKey:) name:UIWindowDidBecomeKeyNotification object:nil];

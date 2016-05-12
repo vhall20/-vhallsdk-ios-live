@@ -9,10 +9,12 @@
 #ifndef CONSTS_h
 #define CONSTS_h
 
-#define Id             @""
-#define AppKey         @""
-#define AppSecretKey   @""
-#define AccessToken    @""
+//接口文档说明： http://e.vhall.com/home/vhallapi
+
+#define DEMO_AppKey         @""  //AppKey AppSecretKey 详见： ▪ API&SDK权限申请
+#define DEMO_AppSecretKey   @""
+#define DEMO_ActivityId     @""  //活动id      详见：▪ 自助式网络直播API -> 活动管理
+#define DEMO_AccessToken    @""  //直播Token   详见：▪ 自助式网络直播API -> 观众管理 ->verify/access-token
 
 #if DEBUG  // 调试状态, 打开LOG功能
 #define VHLog(...) NSLog(__VA_ARGS__)

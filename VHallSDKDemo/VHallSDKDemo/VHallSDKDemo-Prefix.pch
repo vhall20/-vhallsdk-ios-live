@@ -21,7 +21,7 @@
 #import "UIView+ITTAdditions.h"
 #import "MBHUDHelper.h"
 #import "AppDelegate.h"
-
+#import "VHStystemSetting.h"
 #endif
 
 #endif /* VHallSDKDemo_Prefix_pch */

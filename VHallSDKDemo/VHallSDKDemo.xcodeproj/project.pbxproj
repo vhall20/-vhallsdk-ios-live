@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		404592911CBE468300D8CE6D /* WatchRTMPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4045928F1CBE468300D8CE6D /* WatchRTMPViewController.m */; };
 		404592921CBE468300D8CE6D /* WatchRTMPViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 404592901CBE468300D8CE6D /* WatchRTMPViewController.xib */; };
-		408226CE1CDCC0C9009B7217 /* VHallSDKDemo-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 408226CD1CDCC0C9009B7217 /* VHallSDKDemo-info.plist */; };
 		40ED5A9B1CBD0CBD0046BF44 /* WatchHLSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40ED5A961CBD0CBD0046BF44 /* WatchHLSViewController.m */; };
 		40ED5A9C1CBD0CBD0046BF44 /* WatchHLSViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 40ED5A971CBD0CBD0046BF44 /* WatchHLSViewController.xib */; };
 		40ED5A9D1CBD0CBD0046BF44 /* WatchPlayBackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 40ED5A991CBD0CBD0046BF44 /* WatchPlayBackViewController.m */; };
@@ -82,17 +81,12 @@
 		7B17F1971C98025100FF0C8F /* ITTXibViewUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B17F1901C98025100FF0C8F /* ITTXibViewUtils.m */; };
 		7B17F1C71C98219800FF0C8F /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B17F1C61C98219800FF0C8F /* Reachability.m */; };
 		C004029A1CDCBAE1009D4C33 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */; };
-		C07A19D21CDCACF4006E70E9 /* libVHallSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19C01CDCACF4006E70E9 /* libVHallSDK.a */; };
-		C07A19D31CDCACF4006E70E9 /* libVHOpenLivePlay.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19C11CDCACF4006E70E9 /* libVHOpenLivePlay.a */; };
-		C07A19D41CDCACF4006E70E9 /* libVinnyLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19C21CDCACF4006E70E9 /* libVinnyLive.a */; };
-		C07A19D51CDCACF4006E70E9 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19C81CDCACF4006E70E9 /* libavcodec.a */; };
-		C07A19D71CDCACF4006E70E9 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CA1CDCACF4006E70E9 /* libavutil.a */; };
-		C07A19D81CDCACF4006E70E9 /* libcrypto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CB1CDCACF4006E70E9 /* libcrypto.a */; };
-		C07A19D91CDCACF4006E70E9 /* liblibjingle_ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CC1CDCACF4006E70E9 /* liblibjingle_ios.a */; };
-		C07A19DA1CDCACF4006E70E9 /* libssl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CD1CDCACF4006E70E9 /* libssl.a */; };
-		C07A19DB1CDCACF4006E70E9 /* libswresample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CE1CDCACF4006E70E9 /* libswresample.a */; };
-		C07A19DC1CDCACF4006E70E9 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19CF1CDCACF4006E70E9 /* libswscale.a */; };
-		C07A19DE1CDCACF4006E70E9 /* libx264.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C07A19D11CDCACF4006E70E9 /* libx264.a */; };
+		C094D7631CE3443E00EBB609 /* VHStystemSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = C094D7621CE3443E00EBB609 /* VHStystemSetting.m */; };
+		C094D7671CE3574200EBB609 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C094D7651CE3574200EBB609 /* SettingViewController.m */; };
+		C094D7681CE3574200EBB609 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C094D7661CE3574200EBB609 /* SettingViewController.xib */; };
+		C094D76A1CE4238200EBB609 /* vhallLogo.png in Resources */ = {isa = PBXBuildFile; fileRef = C094D7691CE4238200EBB609 /* vhallLogo.png */; };
+		C094D7AD1CE49B2C00EBB609 /* libVHallSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C094D7A81CE49B2C00EBB609 /* libVHallSDK.a */; };
+		C094D7B11CE4CCDA00EBB609 /* libVinnyLive.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C094D7B01CE4CCDA00EBB609 /* libVinnyLive.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -212,22 +206,19 @@
 		7B17F1C51C98219800FF0C8F /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		7B17F1C61C98219800FF0C8F /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		C07A19BF1CDCACF4006E70E9 /* CameraEngineRtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraEngineRtmp.h; sourceTree = "<group>"; };
-		C07A19C01CDCACF4006E70E9 /* libVHallSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVHallSDK.a; sourceTree = "<group>"; };
-		C07A19C11CDCACF4006E70E9 /* libVHOpenLivePlay.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVHOpenLivePlay.a; sourceTree = "<group>"; };
-		C07A19C21CDCACF4006E70E9 /* libVinnyLive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVinnyLive.a; sourceTree = "<group>"; };
-		C07A19C31CDCACF4006E70E9 /* OpenCONSTS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCONSTS.h; sourceTree = "<group>"; };
-		C07A19C41CDCACF4006E70E9 /* VHallLivePublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallLivePublish.h; sourceTree = "<group>"; };
-		C07A19C51CDCACF4006E70E9 /* VHallMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallMoviePlayer.h; sourceTree = "<group>"; };
-		C07A19C61CDCACF4006E70E9 /* VHMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHMoviePlayer.h; sourceTree = "<group>"; };
-		C07A19C81CDCACF4006E70E9 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavcodec.a; sourceTree = "<group>"; };
-		C07A19CA1CDCACF4006E70E9 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libavutil.a; sourceTree = "<group>"; };
-		C07A19CB1CDCACF4006E70E9 /* libcrypto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libcrypto.a; sourceTree = "<group>"; };
-		C07A19CC1CDCACF4006E70E9 /* liblibjingle_ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = liblibjingle_ios.a; sourceTree = "<group>"; };
-		C07A19CD1CDCACF4006E70E9 /* libssl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libssl.a; sourceTree = "<group>"; };
-		C07A19CE1CDCACF4006E70E9 /* libswresample.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswresample.a; sourceTree = "<group>"; };
-		C07A19CF1CDCACF4006E70E9 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libswscale.a; sourceTree = "<group>"; };
-		C07A19D11CDCACF4006E70E9 /* libx264.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libx264.a; sourceTree = "<group>"; };
+		C094D7611CE3443E00EBB609 /* VHStystemSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHStystemSetting.h; sourceTree = "<group>"; };
+		C094D7621CE3443E00EBB609 /* VHStystemSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VHStystemSetting.m; sourceTree = "<group>"; };
+		C094D7641CE3574200EBB609 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		C094D7651CE3574200EBB609 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
+		C094D7661CE3574200EBB609 /* SettingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewController.xib; sourceTree = "<group>"; };
+		C094D7691CE4238200EBB609 /* vhallLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = vhallLogo.png; sourceTree = "<group>"; };
+		C094D7A71CE49B2C00EBB609 /* CameraEngineRtmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraEngineRtmp.h; sourceTree = "<group>"; };
+		C094D7A81CE49B2C00EBB609 /* libVHallSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVHallSDK.a; sourceTree = "<group>"; };
+		C094D7A91CE49B2C00EBB609 /* OpenCONSTS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCONSTS.h; sourceTree = "<group>"; };
+		C094D7AA1CE49B2C00EBB609 /* VHallLivePublish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallLivePublish.h; sourceTree = "<group>"; };
+		C094D7AB1CE49B2C00EBB609 /* VHallMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallMoviePlayer.h; sourceTree = "<group>"; };
+		C094D7AC1CE49B2C00EBB609 /* VHMoviePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHMoviePlayer.h; sourceTree = "<group>"; };
+		C094D7B01CE4CCDA00EBB609 /* libVinnyLive.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVinnyLive.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -235,29 +226,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C094D7B11CE4CCDA00EBB609 /* libVinnyLive.a in Frameworks */,
 				C004029A1CDCBAE1009D4C33 /* JavaScriptCore.framework in Frameworks */,
-				C07A19D71CDCACF4006E70E9 /* libavutil.a in Frameworks */,
-				C07A19DE1CDCACF4006E70E9 /* libx264.a in Frameworks */,
-				C07A19D41CDCACF4006E70E9 /* libVinnyLive.a in Frameworks */,
-				C07A19DA1CDCACF4006E70E9 /* libssl.a in Frameworks */,
 				7B17F1001C97F81200FF0C8F /* libiconv.tbd in Frameworks */,
-				C07A19D21CDCACF4006E70E9 /* libVHallSDK.a in Frameworks */,
-				C07A19DC1CDCACF4006E70E9 /* libswscale.a in Frameworks */,
 				7B17F0FE1C97F7D800FF0C8F /* libbz2.1.0.tbd in Frameworks */,
 				7B17F0FC1C97F7CB00FF0C8F /* libz.tbd in Frameworks */,
 				7B17F0FA1C97F7A400FF0C8F /* CoreTelephony.framework in Frameworks */,
 				7B17F0F81C97F75900FF0C8F /* CoreMedia.framework in Frameworks */,
-				C07A19D51CDCACF4006E70E9 /* libavcodec.a in Frameworks */,
-				C07A19D91CDCACF4006E70E9 /* liblibjingle_ios.a in Frameworks */,
 				7B17F0F61C97F74B00FF0C8F /* QuartzCore.framework in Frameworks */,
-				C07A19D81CDCACF4006E70E9 /* libcrypto.a in Frameworks */,
 				7B17F0F41C97F74100FF0C8F /* OpenGLES.framework in Frameworks */,
 				7B17F0F21C97F73700FF0C8F /* OpenAL.framework in Frameworks */,
-				C07A19D31CDCACF4006E70E9 /* libVHOpenLivePlay.a in Frameworks */,
 				7B17F0F01C97F72D00FF0C8F /* AssetsLibrary.framework in Frameworks */,
 				7B17F0EE1C97F72100FF0C8F /* VideoToolbox.framework in Frameworks */,
 				7B17F0EC1C97F71400FF0C8F /* AVFoundation.framework in Frameworks */,
-				C07A19DB1CDCACF4006E70E9 /* libswresample.a in Frameworks */,
+				C094D7AD1CE49B2C00EBB609 /* libVHallSDK.a in Frameworks */,
 				7B17F0EA1C97F70A00FF0C8F /* MediaPlayer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,22 +307,25 @@
 			isa = PBXGroup;
 			children = (
 				7B17F17F1C97FB5A00FF0C8F /* CONSTS.h */,
+				C094D7611CE3443E00EBB609 /* VHStystemSetting.h */,
+				C094D7621CE3443E00EBB609 /* VHStystemSetting.m */,
 				7B17F0C41C97D8D400FF0C8F /* AppDelegate.h */,
 				7B17F0C51C97D8D400FF0C8F /* AppDelegate.mm */,
 				7B17F1821C97FFDA00FF0C8F /* Common */,
 				7B17F1201C97FA2300FF0C8F /* ViewController */,
 				7B17F0E81C97F50D00FF0C8F /* lib */,
 				7B17F0D31C97D8D400FF0C8F /* Assets.xcassets */,
+				C094D7B31CE4CD2D00EBB609 /* framework */,
 				7B17F0C11C97D8D400FF0C8F /* Supporting Files */,
 				7B17F0E51C97DA8D00FF0C8F /* LaunchScreen.storyboard */,
 			);
-			name = VHallSDKDemo;
 			path = VHallSDKDemo;
 			sourceTree = "<group>";
 		};
 		7B17F0C11C97D8D400FF0C8F /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C094D7691CE4238200EBB609 /* vhallLogo.png */,
 				408226CD1CDCC0C9009B7217 /* VHallSDKDemo-info.plist */,
 				7B0D748E1C98F8410056C445 /* VHallOpenSDKTest-Info.plist */,
 				7B17F0C21C97D8D400FF0C8F /* main.m */,
@@ -357,19 +342,6 @@
 				7B17F1C41C98219800FF0C8F /* Reachability */,
 				7B17F1331C97FAD300FF0C8F /* ALMoviePlayerController */,
 				7B17F1011C97F9C000FF0C8F /* MBProgressHUD */,
-				7B17F0FF1C97F81200FF0C8F /* libiconv.tbd */,
-				7B17F0FD1C97F7D800FF0C8F /* libbz2.1.0.tbd */,
-				7B17F0FB1C97F7CB00FF0C8F /* libz.tbd */,
-				C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */,
-				7B17F0F91C97F7A400FF0C8F /* CoreTelephony.framework */,
-				7B17F0F71C97F75900FF0C8F /* CoreMedia.framework */,
-				7B17F0F51C97F74B00FF0C8F /* QuartzCore.framework */,
-				7B17F0F31C97F74100FF0C8F /* OpenGLES.framework */,
-				7B17F0F11C97F73700FF0C8F /* OpenAL.framework */,
-				7B17F0EF1C97F72D00FF0C8F /* AssetsLibrary.framework */,
-				7B17F0ED1C97F72100FF0C8F /* VideoToolbox.framework */,
-				7B17F0EB1C97F71400FF0C8F /* AVFoundation.framework */,
-				7B17F0E91C97F70A00FF0C8F /* MediaPlayer.framework */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -405,6 +377,9 @@
 				40ED5A981CBD0CBD0046BF44 /* WatchPlayBackViewController.h */,
 				40ED5A991CBD0CBD0046BF44 /* WatchPlayBackViewController.m */,
 				40ED5A9A1CBD0CBD0046BF44 /* WatchPlayBackViewController.xib */,
+				C094D7641CE3574200EBB609 /* SettingViewController.h */,
+				C094D7651CE3574200EBB609 /* SettingViewController.m */,
+				C094D7661CE3574200EBB609 /* SettingViewController.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -488,33 +463,36 @@
 		C07A19BE1CDCACF4006E70E9 /* VHallSDK */ = {
 			isa = PBXGroup;
 			children = (
-				C07A19BF1CDCACF4006E70E9 /* CameraEngineRtmp.h */,
-				C07A19C01CDCACF4006E70E9 /* libVHallSDK.a */,
-				C07A19C11CDCACF4006E70E9 /* libVHOpenLivePlay.a */,
-				C07A19C21CDCACF4006E70E9 /* libVinnyLive.a */,
-				C07A19C31CDCACF4006E70E9 /* OpenCONSTS.h */,
-				C07A19C41CDCACF4006E70E9 /* VHallLivePublish.h */,
-				C07A19C51CDCACF4006E70E9 /* VHallMoviePlayer.h */,
-				C07A19C61CDCACF4006E70E9 /* VHMoviePlayer.h */,
-				C07A19C71CDCACF4006E70E9 /* VideoLib */,
+				C094D7A71CE49B2C00EBB609 /* CameraEngineRtmp.h */,
+				C094D7B01CE4CCDA00EBB609 /* libVinnyLive.a */,
+				C094D7A81CE49B2C00EBB609 /* libVHallSDK.a */,
+				C094D7A91CE49B2C00EBB609 /* OpenCONSTS.h */,
+				C094D7AA1CE49B2C00EBB609 /* VHallLivePublish.h */,
+				C094D7AB1CE49B2C00EBB609 /* VHallMoviePlayer.h */,
+				C094D7AC1CE49B2C00EBB609 /* VHMoviePlayer.h */,
 			);
 			name = VHallSDK;
 			path = ../../VHallSDK;
 			sourceTree = "<group>";
 		};
-		C07A19C71CDCACF4006E70E9 /* VideoLib */ = {
+		C094D7B31CE4CD2D00EBB609 /* framework */ = {
 			isa = PBXGroup;
 			children = (
-				C07A19C81CDCACF4006E70E9 /* libavcodec.a */,
-				C07A19CA1CDCACF4006E70E9 /* libavutil.a */,
-				C07A19CB1CDCACF4006E70E9 /* libcrypto.a */,
-				C07A19CC1CDCACF4006E70E9 /* liblibjingle_ios.a */,
-				C07A19CD1CDCACF4006E70E9 /* libssl.a */,
-				C07A19CE1CDCACF4006E70E9 /* libswresample.a */,
-				C07A19CF1CDCACF4006E70E9 /* libswscale.a */,
-				C07A19D11CDCACF4006E70E9 /* libx264.a */,
+				7B17F0FF1C97F81200FF0C8F /* libiconv.tbd */,
+				7B17F0FD1C97F7D800FF0C8F /* libbz2.1.0.tbd */,
+				7B17F0FB1C97F7CB00FF0C8F /* libz.tbd */,
+				C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */,
+				7B17F0F91C97F7A400FF0C8F /* CoreTelephony.framework */,
+				7B17F0F71C97F75900FF0C8F /* CoreMedia.framework */,
+				7B17F0F51C97F74B00FF0C8F /* QuartzCore.framework */,
+				7B17F0F31C97F74100FF0C8F /* OpenGLES.framework */,
+				7B17F0F11C97F73700FF0C8F /* OpenAL.framework */,
+				7B17F0EF1C97F72D00FF0C8F /* AssetsLibrary.framework */,
+				7B17F0ED1C97F72100FF0C8F /* VideoToolbox.framework */,
+				7B17F0EB1C97F71400FF0C8F /* AVFoundation.framework */,
+				7B17F0E91C97F70A00FF0C8F /* MediaPlayer.framework */,
 			);
-			path = VideoLib;
+			name = framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -543,7 +521,7 @@
 		7B17F0B61C97D8D400FF0C8F /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = vhall;
 				TargetAttributes = {
 					7B17F0BD1C97D8D400FF0C8F = {
@@ -575,13 +553,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C094D76A1CE4238200EBB609 /* vhallLogo.png in Resources */,
 				7B17F1691C97FAD300FF0C8F /* movieForward.png in Resources */,
 				7B17F16C1C97FAD300FF0C8F /* movieForwardSelected@2x.png in Resources */,
 				7B17F1711C97FAD300FF0C8F /* moviePlay.png in Resources */,
 				7B17F0E61C97DA8D00FF0C8F /* LaunchScreen.storyboard in Resources */,
 				7B17F16E1C97FAD300FF0C8F /* movieFullscreen@2x.png in Resources */,
 				7B17F1701C97FAD300FF0C8F /* moviePause@2x.png in Resources */,
-				408226CE1CDCC0C9009B7217 /* VHallSDKDemo-info.plist in Resources */,
 				7B17F1301C97FA2300FF0C8F /* RtmpLiveViewController.xib in Resources */,
 				7B17F1721C97FAD300FF0C8F /* moviePlay@2x.png in Resources */,
 				40ED5A9C1CBD0CBD0046BF44 /* WatchHLSViewController.xib in Resources */,
@@ -597,6 +575,7 @@
 				7B17F1631C97FAD300FF0C8F /* movieBackward.png in Resources */,
 				7B17F1661C97FAD300FF0C8F /* movieBackwardSelected@2x.png in Resources */,
 				7B17F0D41C97D8D400FF0C8F /* Assets.xcassets in Resources */,
+				C094D7681CE3574200EBB609 /* SettingViewController.xib in Resources */,
 				7B17F16F1C97FAD300FF0C8F /* moviePause.png in Resources */,
 				7B17F1921C98025100FF0C8F /* CustomPickerView.xib in Resources */,
 				7B17F1681C97FAD300FF0C8F /* movieEndFullscreen@2x.png in Resources */,
@@ -612,6 +591,7 @@
 			files = (
 				40F1503D1CC0A5B6007AF3A0 /* SDWebImageDecoder.m in Sources */,
 				40F150481CC0A5B6007AF3A0 /* UIView+WebCacheOperation.m in Sources */,
+				C094D7671CE3574200EBB609 /* SettingViewController.m in Sources */,
 				7B17F1601C97FAD300FF0C8F /* ALButton.m in Sources */,
 				40F150401CC0A5B6007AF3A0 /* SDWebImageManager.m in Sources */,
 				40ED5A9D1CBD0CBD0046BF44 /* WatchPlayBackViewController.m in Sources */,
@@ -646,6 +626,7 @@
 				7B17F0C31C97D8D400FF0C8F /* main.m in Sources */,
 				40F1503B1CC0A5B6007AF3A0 /* SDImageCache.m in Sources */,
 				40ED5A9B1CBD0CBD0046BF44 /* WatchHLSViewController.m in Sources */,
+				C094D7631CE3443E00EBB609 /* VHStystemSetting.m in Sources */,
 				7B17F1911C98025100FF0C8F /* CustomPickerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -740,17 +721,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPYING_PRESERVES_HFS_DATA = NO;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "VHallSDKDemo/VHallSDKDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../VHallSDK/";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../VHallSDK";
 				INFOPLIST_FILE = "VHallSDKDemo/VHallSDKDemo-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_NO_PIE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../VHallSDK",
-					"$(PROJECT_DIR)/../VHallSDK/VideoLib",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vhall.VHallSDKDemo;
@@ -763,18 +745,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPYING_PRESERVES_HFS_DATA = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_BITCODE = NO;
 				GCC_PREFIX_HEADER = "VHallSDKDemo/VHallSDKDemo-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
-				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../VHallSDK/";
+				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/../VHallSDK";
 				INFOPLIST_FILE = "VHallSDKDemo/VHallSDKDemo-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_NO_PIE = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/../VHallSDK",
-					"$(PROJECT_DIR)/../VHallSDK/VideoLib",
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vhall.VHallSDKDemo;

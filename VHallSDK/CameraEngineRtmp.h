@@ -24,11 +24,14 @@
  */
 
 @property (nonatomic,assign)int publishConnectTimes;
-
 /**
  *  用来显示摄像头拍摄内容的View
  */
 @property(nonatomic,strong,readonly)UIView * displayView;
+/**
+ *  视频采集的帧率 范围［1～30］
+ */
+@property(nonatomic,assign) int videoCaptureFPS;
 /**
  *  代理
  */

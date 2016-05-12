@@ -107,10 +107,10 @@
         //todo
         NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
         param[@"id"] =  _roomId;
-        param[@"app_key"] = AppKey;
-        param[@"app_secret_key"] = AppSecretKey;
-        param[@"name"] = @"liwenlong";
-        param[@"email"] = @"liwenlong_only@163.com";
+        param[@"app_key"] = DEMO_AppKey;
+        param[@"app_secret_key"] = DEMO_AppSecretKey;
+        param[@"name"] = DEMO_Setting.nickName;
+        param[@"email"] = DEMO_Setting.userID;
         if (_password&&_password.length>0) {
             param[@"pass"] = _password;
         }

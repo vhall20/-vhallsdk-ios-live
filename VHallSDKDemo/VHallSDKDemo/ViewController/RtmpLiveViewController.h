@@ -17,4 +17,5 @@
 @property(nonatomic,copy)NSString * roomId;
 @property(nonatomic,copy)NSString * token;
 @property(nonatomic,assign)NSInteger bitrate;
+@property(nonatomic,assign) NSInteger videoCaptureFPS;
 @end

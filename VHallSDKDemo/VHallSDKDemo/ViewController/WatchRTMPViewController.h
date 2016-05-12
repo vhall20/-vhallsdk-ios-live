@@ -10,7 +10,6 @@
 
 @interface WatchRTMPViewController : BaseViewController
 @property(nonatomic,copy)NSString * roomId;
-@property(nonatomic,copy)NSString * token;
 @property(nonatomic,copy)NSString * password;
 @property(nonatomic,assign)WatchVideoType  watchVideoType;
 @property(nonatomic,assign)NSInteger bufferTimes;
