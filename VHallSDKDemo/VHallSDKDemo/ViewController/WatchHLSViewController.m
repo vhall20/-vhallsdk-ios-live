@@ -275,7 +275,7 @@
     if (self.hlsMoviePlayer.view) {
         [MBProgressHUD hideAllHUDsForView:self.hlsMoviePlayer.view animated:YES];
     }
-    void (^resetStartPaly)(NSString * msg) = ^(NSString * msg){
+    void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         if (APPDELEGATE.isNetworkReachable) {
             [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
         }else{
@@ -288,19 +288,19 @@
         case kLivePlayParamError:
         {
             msg = @"参数错误";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayRecvError:
         {
             msg = @"对方已经停止直播";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayCDNConnectError:
         {
             msg = @"服务器任性...连接失败";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayGetUrlError:

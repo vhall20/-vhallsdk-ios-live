@@ -63,10 +63,15 @@ static VHStystemSetting *pub_sharedSetting = nil;
         //观看设置
         _bufferTimes    = [standardUserDefaults integerForKey:@"VHbufferTimes"];          //RTMP观看缓冲时间
 
-        if(_activityID == nil || _activityID.length == 0)
+        if(DEMO_ActivityId && DEMO_ActivityId.length > 0)
         {
             self.activityID = DEMO_ActivityId;
         }
+        if(DEMO_AccessToken && DEMO_AccessToken.length > 0)
+        {
+            self.liveToken = DEMO_AccessToken;
+        }
+        
         if(_nickName == nil || _nickName.length == 0)
         {
             _nickName = [NSString stringWithFormat:@"SDKsuer_%d",arc4random()% 100000];
@@ -82,10 +87,6 @@ static VHStystemSetting *pub_sharedSetting = nil;
         if(_videoResolution == nil || _videoResolution.length == 0)
         {
             self.videoResolution = @"1";
-        }
-        if(_liveToken == nil || _liveToken.length == 0)
-        {
-            self.liveToken = DEMO_AccessToken;
         }
 
         if(_bitRate<=0)

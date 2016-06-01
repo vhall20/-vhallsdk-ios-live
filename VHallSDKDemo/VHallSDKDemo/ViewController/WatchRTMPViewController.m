@@ -275,7 +275,7 @@
 
 - (void)playError:(LivePlayErrorType)livePlayErrorType info:(NSDictionary *)info;
 {
-    void (^resetStartPaly)(NSString * msg) = ^(NSString * msg){
+    void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         _isStart = YES;
         _bitRateLabel.text = @"";
         [_startAndStopBtn setTitle:@"开始播放" forState:UIControlStateNormal];
@@ -291,19 +291,19 @@
         case kLivePlayParamError:
         {
             msg = @"参数错误";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayRecvError:
         {
             msg = @"对方已经停止直播";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayCDNConnectError:
         {
             msg = @"服务器任性...连接失败";
-            resetStartPaly(msg);
+            resetStartPlay(msg);
         }
             break;
         case kLivePlayGetUrlError:

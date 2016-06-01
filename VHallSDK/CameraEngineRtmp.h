@@ -29,7 +29,7 @@
  */
 @property(nonatomic,strong,readonly)UIView * displayView;
 /**
- *  视频采集的帧率 范围［1～30］
+ *  视频采集的帧率 范围［10～30］
  */
 @property(nonatomic,assign) int videoCaptureFPS;
 /**

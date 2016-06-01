@@ -174,7 +174,7 @@
 
 -(void)publishStatus:(LiveStatus)liveStatus withInfo:(NSDictionary *)info
 {
-    void (^resetStartPaly)(NSString * msg) = ^(NSString * msg){
+    void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         _isStart = NO;
         _bitRateLabel.text = @"";
         [_startAndStopBtn setTitle:@"开始直播" forState:UIControlStateNormal];
@@ -202,19 +202,19 @@
         case kLiveStatusSendError:
         {
             [_hud hide:YES];
-            resetStartPaly(@"网断啦！不能再带你直播带你飞了");
+            resetStartPlay(@"网断啦！不能再带你直播带你飞了");
         }
             break;
         case kLiveStatusPushConnectError:
         {
             [_hud hide:YES];
-            resetStartPaly(@"服务器任性...连接失败");
+            resetStartPlay(@"服务器任性...连接失败");
         }
             break;
         case kLiveStatusParamError:
         {
             [_hud hide:YES];
-            resetStartPaly(@"参数错误");
+            resetStartPlay(@"参数错误");
         }
             break;
         case kLiveStatusGetUrlError:
