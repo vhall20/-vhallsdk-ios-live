@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WatchHLSViewController">
@@ -10,6 +10,7 @@
                 <outlet property="backView" destination="jeN-L8-MEC" id="Zhu-tm-Ut4"/>
                 <outlet property="bufferCountLabel" destination="FC1-cJ-bHv" id="hHr-FQ-Mg4"/>
                 <outlet property="liveTypeLabel" destination="FYT-vE-eSM" id="waz-Co-YAQ"/>
+                <outlet property="startAndStopBtn" destination="Q0S-kS-vDf" id="875-w0-VJE"/>
                 <outlet property="textImageView" destination="qoG-uR-NsF" id="EXh-F7-9an"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -104,6 +105,28 @@
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0S-kS-vDf">
+                            <rect key="frame" x="10" y="235" width="70" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="89b-x4-KZV"/>
+                                <constraint firstAttribute="height" constant="21" id="M3n-yU-fM2"/>
+                                <constraint firstAttribute="height" constant="40" id="PLD-V3-ozx"/>
+                                <constraint firstAttribute="width" constant="70" id="pca-iD-hwp"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <state key="normal" title="开始观看">
+                                <color key="titleColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </state>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="89b-x4-KZV"/>
+                                    <exclude reference="PLD-V3-ozx"/>
+                                </mask>
+                            </variation>
+                            <connections>
+                                <action selector="stopWatchBtnClick:" destination="-1" eventType="touchUpInside" id="skS-ZB-BEo"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -112,11 +135,15 @@
                         <constraint firstAttribute="trailing" secondItem="iTI-I0-Eps" secondAttribute="trailing" constant="10" id="8F2-IZ-R4j"/>
                         <constraint firstItem="m0r-CU-jWW" firstAttribute="leading" secondItem="jeN-L8-MEC" secondAttribute="leading" constant="10" id="8mq-iX-dTT"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="Hj4-pp-61h"/>
+                        <constraint firstItem="iTI-I0-Eps" firstAttribute="leading" secondItem="Q0S-kS-vDf" secondAttribute="trailing" constant="440" id="JFX-hQ-ZGf"/>
                         <constraint firstItem="FC1-cJ-bHv" firstAttribute="top" secondItem="jeN-L8-MEC" secondAttribute="top" constant="10" id="POz-Or-ZB5"/>
                         <constraint firstItem="m0r-CU-jWW" firstAttribute="top" secondItem="jeN-L8-MEC" secondAttribute="top" constant="10" id="Uk4-2S-ypl"/>
                         <constraint firstItem="FYT-vE-eSM" firstAttribute="centerX" secondItem="jeN-L8-MEC" secondAttribute="centerX" id="Umd-is-dTA"/>
+                        <constraint firstItem="Q0S-kS-vDf" firstAttribute="leading" secondItem="jeN-L8-MEC" secondAttribute="leading" constant="10" id="XdM-af-1AF"/>
                         <constraint firstAttribute="trailing" secondItem="FC1-cJ-bHv" secondAttribute="trailing" constant="10" id="YMD-nR-Jx7"/>
+                        <constraint firstItem="Q0S-kS-vDf" firstAttribute="leading" secondItem="m0r-CU-jWW" secondAttribute="leading" id="atv-TJ-ust"/>
                         <constraint firstItem="FYT-vE-eSM" firstAttribute="centerY" secondItem="jeN-L8-MEC" secondAttribute="centerY" constant="-100.5" id="hl6-gB-gzX"/>
+                        <constraint firstItem="Q0S-kS-vDf" firstAttribute="baseline" secondItem="iTI-I0-Eps" secondAttribute="baseline" id="jpp-7w-fT7"/>
                         <constraint firstAttribute="height" constant="300" id="lc5-uE-APz">
                             <variation key="heightClass=compact" constant="300"/>
                         </constraint>
@@ -128,7 +155,9 @@
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Hj4-pp-61h"/>
+                            <exclude reference="XdM-af-1AF"/>
                             <exclude reference="rQq-bN-AG2"/>
+                            <exclude reference="JFX-hQ-ZGf"/>
                         </mask>
                     </variation>
                 </view>

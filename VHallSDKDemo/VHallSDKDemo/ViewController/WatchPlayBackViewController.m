@@ -458,7 +458,7 @@
 - (void)didBecomeActive
 {
     //观看直播
-    [self.hlsMoviePlayer stop];
+    [self.hlsMoviePlayer play];
 }
 - (void)outputDeviceChanged:(NSNotification*)notification
 {

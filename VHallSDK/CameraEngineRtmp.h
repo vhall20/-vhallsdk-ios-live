@@ -53,6 +53,12 @@
  */
 @property(nonatomic,assign,readonly)AVCaptureDevicePosition captureDevicePosition;
 
+/**
+ *  滤镜的回调，在此回调中做滤镜处理
+ *  return   返回数据CMSampleBufferRef
+ */
+@property (nonatomic, strong) CMSampleBufferRef (^captureVideoBuf)(CMSampleBufferRef sampleBuffer);
+
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;
 

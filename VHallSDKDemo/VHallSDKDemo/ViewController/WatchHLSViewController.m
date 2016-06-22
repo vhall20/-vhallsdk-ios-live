@@ -19,10 +19,12 @@
 @interface WatchHLSViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate>
 {
     VHallMoviePlayer  *_moviePlayer;//播放器
+    BOOL _isStart;
     int  _bufferCount;
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *bufferCountLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startAndStopBtn;
 @property (weak, nonatomic) IBOutlet UIView *backView;
 @property(nonatomic,strong) MPMoviePlayerController * hlsMoviePlayer;
 @property (weak, nonatomic) IBOutlet UIImageView *textImageView;
@@ -64,11 +66,9 @@
     [self addPanGestureRecognizer];
     [self registerLiveNotification];
     _moviePlayer = [[VHallMoviePlayer alloc]initWithDelegate:self];
-        self.hlsMoviePlayer =[[MPMoviePlayerController alloc] init];
+        self.hlsMoviePlayer = [[MPMoviePlayerController alloc] init];
         self.hlsMoviePlayer.controlStyle=MPMovieControlStyleDefault;
-        [self.hlsMoviePlayer prepareToPlay];
         [self.hlsMoviePlayer.view setFrame:self.view.bounds];  // player的尺寸
-        self.hlsMoviePlayer.shouldAutoplay=YES;
         self.hlsMoviePlayer.view.backgroundColor = [UIColor whiteColor];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.hlsMoviePlayer];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:self.hlsMoviePlayer];
@@ -106,8 +106,49 @@
     [self.view addObserver:self forKeyPath:kViewFramePath options:NSKeyValueObservingOptionNew context:nil];
     //已经进入活跃状态的通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didBecomeActive)name:UIApplicationDidBecomeActiveNotification object:nil];
+    //即将非活跃状态的通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive) name:UIApplicationWillResignActiveNotification object:nil];
     //监听耳机的插拔
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(outputDeviceChanged:)name:AVAudioSessionRouteChangeNotification object:[AVAudioSession sharedInstance]];
+}
+
+#pragma mark - UIButton Event
+- (IBAction)stopWatchBtnClick:(id)sender
+{
+    if (_isStart) {
+        _bufferCount = 0;
+        //todo
+        NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
+        param[@"id"] =  _roomId;
+        param[@"app_key"] = DEMO_AppKey;
+        param[@"app_secret_key"] = DEMO_AppSecretKey;
+        param[@"name"] = DEMO_Setting.nickName;
+        param[@"email"] = DEMO_Setting.userID;
+        if (_password&&_password.length) {
+            param[@"pass"] = _password;
+        } 
+        [_moviePlayer startPlay:param moviePlayer:self.hlsMoviePlayer];
+
+        if (self.playModelTemp == VHallMovieVideoPlayModeTextAndVoice ) {
+            self.liveTypeLabel.text = @"语音直播中";
+        }else{
+            self.liveTypeLabel.text = @"";
+        }
+    }else{
+        [_startAndStopBtn setTitle:@"开始播放" forState:UIControlStateNormal];
+        [_moviePlayer stopPlay];
+        if (self.playModelTemp == VHallMovieVideoPlayModeTextAndVoice ) {
+            self.liveTypeLabel.text = @"已暂停语音直播";
+        }
+    }
+    
+    if (self.textImageView.image == nil) {
+        [self.textImageView addSubview:self.textLabel];
+    }else{
+        [self.textLabel removeFromSuperview];
+        self.textLabel = nil;
+    }
+    _isStart = !_isStart;
 }
 
 #pragma mark - 返回上层界面
@@ -138,7 +179,7 @@
 {
     self = [super init];
     if (self) {
-
+        _isStart = YES;
     }
     return self;
 }
@@ -192,21 +233,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initViews];
-    if (self.hlsMoviePlayer.view) {
-        [MBProgressHUD showHUDAddedTo:self.hlsMoviePlayer.view animated:YES];
-    }
-    //todo
-    NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
-    param[@"id"] =  _roomId;
-    param[@"app_key"] = DEMO_AppKey;
-    param[@"app_secret_key"] = DEMO_AppSecretKey;
-    param[@"name"] = DEMO_Setting.nickName;
-    param[@"email"] = DEMO_Setting.userID;
-    if (_password&&_password.length) {
-        param[@"pass"] = _password;
-    }
-    [_moviePlayer startPlay:param moviePlayer:self.hlsMoviePlayer];
-
+    
     //播放器
     _hlsMoviePlayer.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.backView.height);//self.view.bounds;
     [self.backView addSubview:self.hlsMoviePlayer.view];
@@ -276,6 +303,7 @@
         [MBProgressHUD hideAllHUDsForView:self.hlsMoviePlayer.view animated:YES];
     }
     void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
+        _isStart = YES;
         if (APPDELEGATE.isNetworkReachable) {
             [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
         }else{
@@ -417,8 +445,9 @@
         case MPMoviePlaybackStatePlaying:
         {
             VHLog(@"播放");
-            if (self.playModelTemp == VHallMovieVideoPlayModeTextAndVoice )
-            self.liveTypeLabel.text = @"语音直播中";
+            if (self.playModelTemp == VHallMovieVideoPlayModeTextAndVoice)
+                self.liveTypeLabel.text = @"语音直播中";
+            [_startAndStopBtn setTitle:@"停止播放" forState:UIControlStateNormal];
         }
             break;
         case MPMoviePlaybackStateSeekingBackward:
@@ -475,8 +504,16 @@
 - (void)didBecomeActive
 {
     //观看直播
+    [self.hlsMoviePlayer prepareToPlay];
     [self.hlsMoviePlayer play];
 }
+
+- (void)willResignActive
+{
+    //停止直播
+    [self.hlsMoviePlayer stop];
+}
+
 - (void)outputDeviceChanged:(NSNotification*)notification
 {
     NSInteger routeChangeReason = [[[notification userInfo]objectForKey:AVAudioSessionRouteChangeReasonKey] integerValue];
