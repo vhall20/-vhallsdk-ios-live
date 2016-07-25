@@ -34,6 +34,10 @@
 
 @property (nonatomic,strong) UILabel*textLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn0;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn1;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn3;
 @end
 
 @implementation WatchHLSViewController
@@ -115,6 +119,10 @@
 #pragma mark - UIButton Event
 - (IBAction)stopWatchBtnClick:(id)sender
 {
+    _definitionBtn0.hidden = YES;
+    _definitionBtn1.hidden = YES;
+    _definitionBtn2.hidden = YES;
+    _definitionBtn3.hidden = YES;
     if (_isStart) {
         _bufferCount = 0;
         //todo
@@ -304,11 +312,13 @@
     }
     void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         _isStart = YES;
-        if (APPDELEGATE.isNetworkReachable) {
-            [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
-        }else{
-            [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (APPDELEGATE.isNetworkReachable) {
+                [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
+            }else{
+                [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
+            }
+        });
     };
 
     NSString * msg = @"";
@@ -334,7 +344,10 @@
         case kLivePlayGetUrlError:
         {
             msg = @"获取服务器地址报错";
-            [MBHUDHelper showWarningWithText:info[@"content"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBHUDHelper showWarningWithText:info[@"content"]];
+            });
+            
         }
             break;
         default:
@@ -387,6 +400,65 @@
 {
     VHLog(@"activeState - %ld",(long)activeState);
 }
+
+- (void)VideoDefinitionList: (NSArray*)definitionList
+{
+    NSLog(@"可用分辨率%@ 当前分辨率：%ld",definitionList,(long)_moviePlayer.curDefinition);
+    _definitionBtn0.hidden = YES;
+    _definitionBtn1.hidden = YES;
+    _definitionBtn2.hidden = YES;
+    _definitionBtn3.hidden = YES;
+    
+    for (NSNumber *num in definitionList) {
+        switch ([num intValue]) {
+            case VHallMovieDefinitionOrigin:
+                _definitionBtn0.hidden = NO;
+                break;
+            case VHallMovieDefinitionUHD:
+                _definitionBtn1.hidden = NO;
+                break;
+            case VHallMovieDefinitionHD:
+                _definitionBtn2.hidden = NO;
+                break;
+            case VHallMovieDefinitionSD:
+                _definitionBtn3.hidden = NO;
+                break;
+            default:
+                break;
+        }
+    }
+    _definitionBtn0.selected = NO;
+    _definitionBtn1.selected = NO;
+    _definitionBtn2.selected = NO;
+    _definitionBtn3.selected = NO;
+    switch (_moviePlayer.curDefinition) {
+        case VHallMovieDefinitionOrigin:
+            _definitionBtn0.selected = YES;
+            break;
+        case VHallMovieDefinitionUHD:
+            _definitionBtn1.selected = YES;
+            break;
+        case VHallMovieDefinitionHD:
+            _definitionBtn2.selected = YES;
+            break;
+        case VHallMovieDefinitionSD:
+            _definitionBtn3.selected = YES;
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)LiveStoped
+{
+    NSLog(@"直播已结束");
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
+    _isStart = NO;
+    [self stopWatchBtnClick:nil];
+    UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"直播已结束" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 
 #pragma mark - ALMoviePlayerControllerDelegate
 - (void)movieTimedOut
@@ -591,6 +663,30 @@
  // Pass the selected object to the new view controller.
  }
  */
-
+- (IBAction)definitionBtnCLicked:(UIButton *)sender {
+    if(sender.isSelected)return;
+    
+    [_moviePlayer setDefinition:sender.tag];
+    _definitionBtn0.selected = NO;
+    _definitionBtn1.selected = NO;
+    _definitionBtn2.selected = NO;
+    _definitionBtn3.selected = NO;
+    switch (_moviePlayer.curDefinition) {
+        case VHallMovieDefinitionOrigin:
+            _definitionBtn0.selected = YES;
+            break;
+        case VHallMovieDefinitionUHD:
+            _definitionBtn1.selected = YES;
+            break;
+        case VHallMovieDefinitionHD:
+            _definitionBtn2.selected = YES;
+            break;
+        case VHallMovieDefinitionSD:
+            _definitionBtn3.selected = YES;
+            break;
+        default:
+            break;
+    }
+}
 @end
 

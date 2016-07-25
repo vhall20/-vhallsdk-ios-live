@@ -11,6 +11,10 @@
                 <outlet property="backView" destination="h5q-BX-aH2" id="duq-4Q-GNx"/>
                 <outlet property="bitRateLabel" destination="zyK-NK-pFO" id="EcE-Rg-jVF"/>
                 <outlet property="bufferCountLabel" destination="v2X-M7-8TB" id="gaq-RW-ng4"/>
+                <outlet property="definitionBtn0" destination="2wb-i3-vWn" id="4sp-Q7-UBd"/>
+                <outlet property="definitionBtn1" destination="agF-UX-fQg" id="fdB-Ld-Ztj"/>
+                <outlet property="definitionBtn2" destination="Or1-Hf-d6c" id="dxY-3m-hKD"/>
+                <outlet property="definitionBtn3" destination="JXt-dh-DH6" id="xYK-zN-kfG"/>
                 <outlet property="liveTypeLabel" destination="6tp-cI-IMF" id="SXg-4u-5fz"/>
                 <outlet property="muteBtn" destination="dek-1c-ate" id="nyQ-Ly-Ijf"/>
                 <outlet property="startAndStopBtn" destination="hG5-qj-kJa" id="oa4-pP-d9C"/>
@@ -178,6 +182,34 @@
                                 </mask>
                             </variation>
                         </label>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2wb-i3-vWn">
+                            <rect key="frame" x="0.0" y="39" width="46" height="30"/>
+                            <state key="normal" title="原画"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="fPq-dP-vNN"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Or1-Hf-d6c">
+                            <rect key="frame" x="0.0" y="98" width="46" height="30"/>
+                            <state key="normal" title="高清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="HE6-Jg-bUr"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JXt-dh-DH6">
+                            <rect key="frame" x="0.0" y="68" width="46" height="30"/>
+                            <state key="normal" title="标清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="hJz-zy-g05"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="agF-UX-fQg">
+                            <rect key="frame" x="0.0" y="130" width="46" height="30"/>
+                            <state key="normal" title="超清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="ege-Nl-Y51"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>

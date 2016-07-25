@@ -13,8 +13,10 @@
 #import "CONSTS.h"
 #import "MBProgressHUD.h"
 #import "VHallLivePublish.h"
+#import "GPUImage.h"
+#import "GPUImageBeautifyFilter.h"
 
-@interface RtmpLiveViewController ()<CameraEngineRtmpDelegate,UITextFieldDelegate>
+@interface RtmpLiveViewController ()<CameraEngineRtmpDelegate, VHallLivePublishFilterDelegate, UITextFieldDelegate>
 {
     BOOL  _isStart;
     BOOL  _torchType;
@@ -29,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *bitRateLabel;
 @property (weak, nonatomic) IBOutlet UIButton *torchBtn;
 @property (weak, nonatomic) IBOutlet UIView *networkStatusView;
+@property (weak, nonatomic) IBOutlet UIButton *filterBtn;
 
 @end
 
@@ -66,6 +69,15 @@
     }
 }
 
+- (IBAction)filterBtnClick:(id)sender
+{
+    _engine.openFilter = !_engine.openFilter;
+    if (_engine.openFilter)
+        [_filterBtn setTitle:@"关闭美颜" forState:UIControlStateNormal];
+    else
+        [_filterBtn setTitle:@"开启美颜" forState:UIControlStateNormal];
+}
+
 - (IBAction)onlyVideoBtnClick:(id)sender
 {
     _onlyVideo = !_onlyVideo;
@@ -87,7 +99,9 @@
 {
     if (!_isStart)
     {
+        _filterBtn.hidden = NO;
         [_hud show:YES];
+        _engine.openFilter = YES;
         _engine.videoResolution = _videoResolution;
         _engine.bitRate = _bitrate;
        NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
@@ -99,10 +113,11 @@
     }else{
         
         _bitRateLabel.text = @"";
+        _filterBtn.hidden = YES;
+        _engine.openFilter = NO;
         [_hud hide:YES];
         [_startAndStopBtn setTitle:@"开始直播" forState:UIControlStateNormal];
         [_engine disconnect];//停止向服务器推流
-        
     }
     _isStart = !_isStart;
 }
@@ -126,6 +141,7 @@
     _hud = [[MBProgressHUD alloc]initWithView:self.view];
     _networkStatusView.layer.cornerRadius = 7;
     _networkStatusView.backgroundColor = [UIColor greenColor];
+    _filterBtn.hidden = YES;
     [self.view addSubview:_hud];
 }
 
@@ -144,6 +160,7 @@
     self.engine.publishConnectTimes = 2;
     self.engine.videoCaptureFPS = (int)_videoCaptureFPS;
     self.engine.delegate = self;
+    self.engine.GPUFilterDelegate = self;
     [self.perView insertSubview:_engine.displayView atIndex:0];
     
     //视频初始化
@@ -178,11 +195,13 @@
         _isStart = NO;
         _bitRateLabel.text = @"";
         [_startAndStopBtn setTitle:@"开始直播" forState:UIControlStateNormal];
-        if (APPDELEGATE.isNetworkReachable) {
-            [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
-        }else{
-            [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (APPDELEGATE.isNetworkReachable) {
+                [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
+            }else{
+                [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
+            }
+        });
     };
 
     NSString * content = info[@"content"];
@@ -220,23 +239,33 @@
         case kLiveStatusGetUrlError:
         {
             [_hud hide:YES];
-            [MBHUDHelper showWarningWithText:content];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBHUDHelper showWarningWithText:content];
+            });
         }
             break;
-        case kLiveStatusNetworkStatus:
+        case kLiveStatusUploadNetworkOK:
         {
-            float networkStatus = [content floatValue];
-            if (networkStatus>=0) {
-                _networkStatusView.backgroundColor = [UIColor greenColor];
-            }else{
-                _networkStatusView.backgroundColor = [UIColor redColor];
-            }
+            _networkStatusView.backgroundColor = [UIColor greenColor];
             VHLog(@"kLiveStatusNetworkStatus:%@",content);
         }
             break;
+        case kLiveStatusUploadNetworkException:
+        {
+            _networkStatusView.backgroundColor = [UIColor redColor];
+            VHLog(@"kLiveStatusNetworkStatus:%@",content);
+        }
         default:
             break;
     }
+}
+
+#pragma mark - LivePublishFilterDelegate
+- (void)addGPUImageFilter:(GPUImageVideoCamera *)source Output:(GPUImageRawDataOutput *)output
+{
+    GPUImageBeautifyFilter *filter = [[GPUImageBeautifyFilter alloc] init];
+    [source addTarget:filter];
+    [filter addTarget:output];
 }
 
 #pragma mark - Lifecycle Method

@@ -254,11 +254,13 @@
 
     }
     void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
-        if (APPDELEGATE.isNetworkReachable) {
-            [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
-        }else{
-            [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (APPDELEGATE.isNetworkReachable) {
+                [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
+            }else{
+                [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
+            }
+        });
     };
 
     NSString * msg = @"";
@@ -284,7 +286,9 @@
         case kLivePlayGetUrlError:
         {
             msg = @"获取服务器地址报错";
-            [MBHUDHelper showWarningWithText:info[@"content"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBHUDHelper showWarningWithText:info[@"content"]];
+            });
         }
             break;
         default:
@@ -458,8 +462,10 @@
 - (void)didBecomeActive
 {
     //观看直播
+    [self.hlsMoviePlayer prepareToPlay];
     [self.hlsMoviePlayer play];
 }
+
 - (void)outputDeviceChanged:(NSNotification*)notification
 {
     NSInteger routeChangeReason = [[[notification userInfo]objectForKey:AVAudioSessionRouteChangeReasonKey] integerValue];

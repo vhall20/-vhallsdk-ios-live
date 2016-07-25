@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -9,6 +9,10 @@
             <connections>
                 <outlet property="backView" destination="jeN-L8-MEC" id="Zhu-tm-Ut4"/>
                 <outlet property="bufferCountLabel" destination="FC1-cJ-bHv" id="hHr-FQ-Mg4"/>
+                <outlet property="definitionBtn0" destination="ICd-rs-X6O" id="zcR-4z-vGl"/>
+                <outlet property="definitionBtn1" destination="u0d-5B-SgS" id="oMa-Wi-e1X"/>
+                <outlet property="definitionBtn2" destination="q7s-ac-3Kg" id="xyD-Nu-929"/>
+                <outlet property="definitionBtn3" destination="Q0X-d5-stb" id="E9U-eH-v1i"/>
                 <outlet property="liveTypeLabel" destination="FYT-vE-eSM" id="waz-Co-YAQ"/>
                 <outlet property="startAndStopBtn" destination="Q0S-kS-vDf" id="875-w0-VJE"/>
                 <outlet property="textImageView" destination="qoG-uR-NsF" id="EXh-F7-9an"/>
@@ -125,6 +129,34 @@
                             </variation>
                             <connections>
                                 <action selector="stopWatchBtnClick:" destination="-1" eventType="touchUpInside" id="skS-ZB-BEo"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ICd-rs-X6O">
+                            <rect key="frame" x="0.0" y="39" width="46" height="30"/>
+                            <state key="normal" title="原画"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="W8I-Fq-Wa2"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q7s-ac-3Kg">
+                            <rect key="frame" x="0.0" y="98" width="46" height="30"/>
+                            <state key="normal" title="高清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="ZZg-X9-7JY"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="3" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0X-d5-stb">
+                            <rect key="frame" x="0.0" y="71" width="46" height="30"/>
+                            <state key="normal" title="标清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="yvU-CS-2JW"/>
+                            </connections>
+                        </button>
+                        <button hidden="YES" opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u0d-5B-SgS">
+                            <rect key="frame" x="0.0" y="129" width="46" height="30"/>
+                            <state key="normal" title="超清"/>
+                            <connections>
+                                <action selector="definitionBtnCLicked:" destination="-1" eventType="touchUpInside" id="8xs-ap-zIg"/>
                             </connections>
                         </button>
                     </subviews>

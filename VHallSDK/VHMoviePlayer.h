@@ -18,9 +18,9 @@
 }
 @property(nonatomic,assign)id <VHMoviePlayerDelegate> delegate;
 @property(nonatomic,strong,readonly)UIView * moviePlayerView;
-@property(nonatomic,assign)int timeout;   //RTMP链接的超时时间 默认5秒，单位为毫秒
+@property(nonatomic,assign)int timeout;     //RTMP链接的超时时间 默认2秒，单位为毫秒
 @property(nonatomic,assign)int reConnectTimes; //RTMP 断开后的重连次数 默认 2次
-@property(nonatomic,assign)int bufferTime; //RTMP 的缓冲时间 默认 2秒 单位为秒 必须>0 值越小延时越小
+@property(nonatomic,assign)int bufferTime; //RTMP 的缓冲时间 默认 2秒 单位为秒 必须>0 值越小延时越小,卡顿增加
 @property(assign,readonly)int realityBufferTime; //获取RTMP播放实际的缓冲时间
 /**
  *  视频View的缩放比例 默认是自适应模式
@@ -35,14 +35,6 @@
  *  @return   返回VHMoviePlayer的一个实例
  */
 - (instancetype)initWithDelegate:(id <VHMoviePlayerDelegate>)delegate;
-
-/**
- *  开始发起直播
- *
- *  @param streamName 活动Id
- *
- */
--(BOOL)startPlay:(NSString*)streamName;
 
 /**
  *  设置静音

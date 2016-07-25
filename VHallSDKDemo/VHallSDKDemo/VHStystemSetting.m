@@ -90,7 +90,7 @@ static VHStystemSetting *pub_sharedSetting = nil;
         }
 
         if(_bitRate<=0)
-            self.bitRate = 300;
+            self.bitRate = 600;
         if(_videoCaptureFPS <1)
             self.videoCaptureFPS = 10;
         if(_videoCaptureFPS >30)

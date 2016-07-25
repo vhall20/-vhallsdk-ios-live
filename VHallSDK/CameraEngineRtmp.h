@@ -16,13 +16,12 @@
     
 }
 /**
- *  推流连接的超时时间，单位为毫秒 默认2000
+ *  推流连接的超时时间，单位为毫秒 默认5000
  */
 @property (nonatomic,assign)int publishConnectTimeout;
 /**
- *  推流断开重连的次数 默认为 1
+ *  推流断开重连的次数 默认为 5
  */
-
 @property (nonatomic,assign)int publishConnectTimes;
 /**
  *  用来显示摄像头拍摄内容的View
@@ -31,7 +30,7 @@
 /**
  *  视频采集的帧率 范围［10～30］
  */
-@property(nonatomic,assign) int videoCaptureFPS;
+@property(nonatomic,assign)int videoCaptureFPS;
 /**
  *  代理
  */
@@ -55,9 +54,8 @@
 
 /**
  *  滤镜的回调，在此回调中做滤镜处理
- *  return   返回数据CMSampleBufferRef
  */
-@property (nonatomic, strong) CMSampleBufferRef (^captureVideoBuf)(CMSampleBufferRef sampleBuffer);
+@property (nonatomic, strong) void (^captureVideoBuf)(CMSampleBufferRef sampleBuffer);
 
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;
@@ -88,16 +86,6 @@
 
 //停止音频采集
 - (BOOL)stopAudioCapture;
-
-/**
- *  开始发起直播 开始向后台推送视频流和音频流
- *
- *  @param streamName 活动Id
- *  @param token      token
- *
- *  @return YES 成功  NO 失败
- */
-- (BOOL)startLiveWithId:(NSString*)streamName token:(NSString*)token;
 
 /**
  *  切换摄像头
@@ -137,6 +125,13 @@
  *  断开推流的连接,注意app进入后台时要手动调用此方法
  */
 - (void)disconnect;
+
+/**
+ *  推送视频数据
+ *
+ *  @param sampleBuffer YUV420sp数据
+ */
+- (void)pushVideoData:(CMSampleBufferRef)sampleBuffer;
 
 //直播状态
 -(void)liveStatus:(NSNotification*)notification;

@@ -36,6 +36,10 @@
 @property (nonatomic,assign) VHallMovieVideoPlayMode playModelTemp;
 @property (nonatomic,strong) UILabel*textLabel;
 
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn0;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn1;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn2;
+@property (weak, nonatomic) IBOutlet UIButton *definitionBtn3;
 @end
 
 @implementation WatchRTMPViewController
@@ -102,6 +106,11 @@
 #pragma mark - UIButton Event
 - (IBAction)stopWatchBtnClick:(id)sender
 {
+    _definitionBtn0.hidden = YES;
+    _definitionBtn1.hidden = YES;
+    _definitionBtn2.hidden = YES;
+    _definitionBtn3.hidden = YES;
+
     if (_isStart) {
         _bufferCount = 0;
         //todo
@@ -253,21 +262,47 @@
 
 -(void)connectSucceed:(VHMoviePlayer *)moviePlayer info:(NSDictionary *)info
 {
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
     [_startAndStopBtn setTitle:@"停止播放" forState:UIControlStateNormal];
+    _definitionBtn0.selected = NO;
+    _definitionBtn1.selected = NO;
+    _definitionBtn2.selected = NO;
+    _definitionBtn3.selected = NO;
+    switch (_moviePlayer.curDefinition) {
+        case VHallMovieDefinitionOrigin:
+            _definitionBtn0.selected = YES;
+            break;
+        case VHallMovieDefinitionUHD:
+            _definitionBtn1.selected = YES;
+            break;
+        case VHallMovieDefinitionHD:
+            _definitionBtn2.selected = YES;
+            break;
+        case VHallMovieDefinitionSD:
+            _definitionBtn3.selected = YES;
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)bufferStart:(VHMoviePlayer *)moviePlayer info:(NSDictionary *)info
 {
     _bufferCount++;
     _bufferCountLabel.text = [NSString stringWithFormat:@"卡顿次数： %d",_bufferCount];
+    [MBProgressHUD showHUDAddedTo:_moviePlayer.moviePlayerView animated:YES];
 }
 
 -(void)bufferStop:(VHMoviePlayer *)moviePlayer info:(NSDictionary *)info
 {
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
+
 }
 
 -(void)downloadSpeed:(VHMoviePlayer *)moviePlayer info:(NSDictionary *)info
 {
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
+
     NSString * content = info[@"content"];
     _bitRateLabel.text = [NSString stringWithFormat:@"%@ kb/s",content];
     VHLog(@"downloadSpeed:%@",[info description]);
@@ -275,15 +310,18 @@
 
 - (void)playError:(LivePlayErrorType)livePlayErrorType info:(NSDictionary *)info;
 {
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
     void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         _isStart = YES;
         _bitRateLabel.text = @"";
         [_startAndStopBtn setTitle:@"开始播放" forState:UIControlStateNormal];
-        if (APPDELEGATE.isNetworkReachable) {
-            [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
-        }else{
-            [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
-        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (APPDELEGATE.isNetworkReachable) {
+                [UIAlertView popupAlertByDelegate:nil title:msg message:nil];
+            }else{
+                [UIAlertView popupAlertByDelegate:nil title:@"没有可以使用的网络" message:nil];
+            }
+        });
     };
 
     NSString * msg = @"";
@@ -309,7 +347,9 @@
         case kLivePlayGetUrlError:
         {
             msg = @"获取服务器地址报错";
-            [MBHUDHelper showWarningWithText:info[@"content"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [MBHUDHelper showWarningWithText:info[@"content"]];
+            });
         }
             break;
         default:
@@ -365,6 +405,46 @@
 {
     VHLog(@"activeState-%ld",(long)activeState);
 }
+
+
+- (void)VideoDefinitionList: (NSArray*)definitionList
+{
+    NSLog(@"可用分辨率%@ 当前分辨率：%ld",definitionList,(long)_moviePlayer.curDefinition);
+    _definitionBtn0.hidden = YES;
+    _definitionBtn1.hidden = YES;
+    _definitionBtn2.hidden = YES;
+    _definitionBtn3.hidden = YES;
+    
+    for (NSNumber *num in definitionList) {
+        switch ([num intValue]) {
+            case VHallMovieDefinitionOrigin:
+                _definitionBtn0.hidden = NO;
+                break;
+            case VHallMovieDefinitionUHD:
+                _definitionBtn1.hidden = NO;
+                break;
+            case VHallMovieDefinitionHD:
+                _definitionBtn2.hidden = NO;
+                break;
+            case VHallMovieDefinitionSD:
+                _definitionBtn3.hidden = NO;
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+- (void)LiveStoped
+{
+    NSLog(@"直播已结束");
+    [MBProgressHUD hideHUDForView:_moviePlayer.moviePlayerView animated:YES];
+    _isStart = NO;
+    [self stopWatchBtnClick:nil];
+    UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"提示" message:@"直播已结束" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
 #pragma mark - UIPanGestureRecognizer
 -(void)handlePan:(UIPanGestureRecognizer*)pan
 {
@@ -465,4 +545,31 @@
     [alert show];
 }
 
+
+- (IBAction)definitionBtnCLicked:(UIButton *)sender {
+    if(sender.isSelected)return;
+    
+    [MBProgressHUD showHUDAddedTo:_moviePlayer.moviePlayerView animated:YES];
+    [_moviePlayer setDefinition:sender.tag];
+    _definitionBtn0.selected = NO;
+    _definitionBtn1.selected = NO;
+    _definitionBtn2.selected = NO;
+    _definitionBtn3.selected = NO;
+    switch (_moviePlayer.curDefinition) {
+        case VHallMovieDefinitionOrigin:
+            _definitionBtn0.selected = YES;
+            break;
+        case VHallMovieDefinitionUHD:
+            _definitionBtn1.selected = YES;
+            break;
+        case VHallMovieDefinitionHD:
+            _definitionBtn2.selected = YES;
+            break;
+        case VHallMovieDefinitionSD:
+            _definitionBtn3.selected = YES;
+            break;
+        default:
+            break;
+    }
+}
 @end

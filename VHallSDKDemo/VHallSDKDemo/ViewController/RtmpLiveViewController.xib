@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RtmpLiveViewController">
             <connections>
                 <outlet property="bitRateLabel" destination="FYd-BF-obS" id="ZLP-dx-lLC"/>
+                <outlet property="filterBtn" destination="IlL-nv-WK2" id="P6R-y1-cb3"/>
                 <outlet property="networkStatusView" destination="7hf-VD-bn6" id="rBT-Oz-JsM"/>
                 <outlet property="perView" destination="2b8-7E-grG" id="6ez-GJ-Gnr"/>
                 <outlet property="startAndStopBtn" destination="gUq-Kw-mgv" id="NJD-Ks-yVw"/>
@@ -119,6 +120,20 @@
                                 </mask>
                             </variation>
                         </view>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IlL-nv-WK2">
+                            <rect key="frame" x="460" y="440" width="120" height="30"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="120" id="WqZ-pH-Hju"/>
+                                <constraint firstAttribute="height" constant="30" id="twu-sn-tuQ"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
+                            <state key="normal" title="关闭美颜">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="filterBtnClick:" destination="-1" eventType="touchUpInside" id="rA2-Fo-gOZ"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -128,19 +143,31 @@
                         <constraint firstAttribute="trailing" secondItem="9dh-OI-54m" secondAttribute="trailing" constant="20" id="7Ku-qV-jSG"/>
                         <constraint firstItem="x9e-gF-j7G" firstAttribute="top" secondItem="2b8-7E-grG" secondAttribute="top" constant="30" id="9MU-nB-1ve"/>
                         <constraint firstItem="FYd-BF-obS" firstAttribute="leading" secondItem="2b8-7E-grG" secondAttribute="leading" constant="20" id="9d7-e4-6Rd"/>
+                        <constraint firstItem="HAA-iG-sEr" firstAttribute="top" secondItem="IlL-nv-WK2" secondAttribute="bottom" constant="20" id="JHX-yg-TWT"/>
                         <constraint firstItem="9dh-OI-54m" firstAttribute="top" secondItem="HAA-iG-sEr" secondAttribute="bottom" constant="20" id="Jpw-O6-dQo"/>
                         <constraint firstAttribute="trailing" secondItem="7hf-VD-bn6" secondAttribute="trailing" constant="20" id="PZe-Zt-SQf"/>
                         <constraint firstItem="7hf-VD-bn6" firstAttribute="top" secondItem="2b8-7E-grG" secondAttribute="top" constant="35" id="Q2G-CQ-4uP"/>
+                        <constraint firstItem="IlL-nv-WK2" firstAttribute="top" secondItem="7hf-VD-bn6" secondAttribute="bottom" constant="388" id="Qj6-8t-1hh"/>
                         <constraint firstAttribute="trailing" secondItem="HAA-iG-sEr" secondAttribute="trailing" constant="20" id="bsW-ME-c0O"/>
                         <constraint firstAttribute="bottom" secondItem="9dh-OI-54m" secondAttribute="bottom" constant="30" id="cBe-rb-peH"/>
                         <constraint firstItem="7hf-VD-bn6" firstAttribute="top" secondItem="2b8-7E-grG" secondAttribute="top" constant="37" id="i8g-BM-KLT"/>
+                        <constraint firstItem="HAA-iG-sEr" firstAttribute="top" secondItem="IlL-nv-WK2" secondAttribute="bottom" constant="26" id="ig8-Ri-Zti"/>
+                        <constraint firstAttribute="trailing" secondItem="IlL-nv-WK2" secondAttribute="trailing" constant="15" id="lDT-dc-Tyc"/>
+                        <constraint firstItem="IlL-nv-WK2" firstAttribute="top" secondItem="7hf-VD-bn6" secondAttribute="bottom" constant="382" id="mPf-YA-RAU"/>
                         <constraint firstItem="21q-gG-MX0" firstAttribute="top" secondItem="gUq-Kw-mgv" secondAttribute="bottom" constant="20" id="pwN-C3-5tP"/>
                         <constraint firstItem="x9e-gF-j7G" firstAttribute="leading" secondItem="2b8-7E-grG" secondAttribute="leading" constant="20" id="qHv-73-uz2"/>
                         <constraint firstItem="gUq-Kw-mgv" firstAttribute="leading" secondItem="2b8-7E-grG" secondAttribute="leading" constant="20" id="rb4-7j-xXy"/>
+                        <constraint firstItem="IlL-nv-WK2" firstAttribute="leading" secondItem="2b8-7E-grG" secondAttribute="leading" constant="460" id="tsh-4f-MYJ"/>
+                        <constraint firstAttribute="trailing" secondItem="IlL-nv-WK2" secondAttribute="trailing" constant="20" id="zGR-cQ-sbo"/>
                     </constraints>
                     <variation key="default">
                         <mask key="constraints">
                             <exclude reference="Q2G-CQ-4uP"/>
+                            <exclude reference="Qj6-8t-1hh"/>
+                            <exclude reference="lDT-dc-Tyc"/>
+                            <exclude reference="mPf-YA-RAU"/>
+                            <exclude reference="tsh-4f-MYJ"/>
+                            <exclude reference="ig8-Ri-Zti"/>
                         </mask>
                     </variation>
                 </view>

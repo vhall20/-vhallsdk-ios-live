@@ -18,6 +18,16 @@ typedef NS_ENUM(NSInteger,VHallMovieVideoPlayMode) {
 };
 
 /**
+ *  直播视频清晰度
+ */
+typedef NS_ENUM(NSInteger,VHallMovieDefinition) {
+    VHallMovieDefinitionOrigin = 0,     //原画
+    VHallMovieDefinitionUHD = 1,        //超高清
+    VHallMovieDefinitionHD = 2,         //高清
+    VHallMovieDefinitionSD = 3,         //标清
+};
+
+/**
  *  活动状态
  */
 typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
@@ -51,8 +61,42 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 - (void)ActiveState : (VHallMovieActiveState)activeState;
 
+/**
+ *  该直播支持的清晰度列表
+ *
+ *  @param definitionList  支持的清晰度列表
+ */
+- (void)VideoDefinitionList: (NSArray*)definitionList;
+
+/**
+ *  直播结束消息 如果视频正在播放 等下一次loading 直播即结束
+ *
+ *  直播结束消息
+ */
+- (void)LiveStoped;
+
 @end
 @interface VHallMoviePlayer : VHMoviePlayer
+
+/*! @brief 获取当前微吼SDK的版本号
+ *
+ * @return 返回当前微吼SDK的版本号
+ */
++(NSString *) getSDKVersion;
+
+/**
+ *  当前视频清晰度 观看直播允许切换清晰度(回放没有) 默认是原画播放
+ */
+@property(nonatomic,assign,readonly)VHallMovieDefinition curDefinition;
+
+/*! @brief 设置直播视频清晰度 （只有直播有效）
+ *
+ *  @return 返回当前视频清晰度 如果和设置的不一致 设置无效保存原有清晰度 设置成功刷新直播
+ */
+
+- (VHallMovieDefinition)setDefinition:(VHallMovieDefinition)definition;
+
+
 
 /**
  *  初始化VHMoviePlayer对象

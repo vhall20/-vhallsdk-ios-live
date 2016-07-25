@@ -8,10 +8,24 @@
 
 #import "CameraEngineRtmp.h"
 
+@class GPUImageVideoCamera;
+@class GPUImageRawDataOutput;
+
+@protocol VHallLivePublishFilterDelegate <NSObject>
+@optional
+- (void)addGPUImageFilter:(GPUImageVideoCamera *)source Output:(GPUImageRawDataOutput *)output;
+@end
+
 @interface VHallLivePublish : CameraEngineRtmp
-{
-    
-}
+@property (nonatomic, assign) id<VHallLivePublishFilterDelegate> GPUFilterDelegate;
+@property (nonatomic, assign) BOOL openFilter;
+
+/*! @brief 获取当前微吼SDK的版本号
+ *
+ * @return 返回当前微吼SDK的版本号
+ */
++(NSString *) getSDKVersion;
+
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;
 /**
