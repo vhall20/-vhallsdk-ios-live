@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "VHallSDK"
-  s.version      = "2.3.0"
+  s.version      = "2.3.1"
   s.summary      = "VHallSDK for IOS"
 
   # This description is used to generate tags and improve search results.
@@ -80,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "https://github.com/vhall20/vhallsdk_live_ios.git", :tag => "v2.3.0" }
+  s.source       = { :git => "https://github.com/vhall20/vhallsdk_live_ios.git", :tag => s.version.to_s }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
