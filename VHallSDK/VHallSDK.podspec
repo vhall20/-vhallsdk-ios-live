@@ -28,7 +28,7 @@ Pod::Spec.new do |s|
   加入Cocoapods进行管理VHallSDK。
                    DESC
 
-  s.homepage     = "http://e.vhall.com/home/vhallapi/iossdk"
+  s.homepage     = "https://github.com/vhall20/vhallsdk_live_ios"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -64,8 +64,8 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  s.platform     = :ios
-  # s.platform     = :ios, "5.0"
+  # s.platform     = :ios
+  s.platform     = :ios, "7.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
@@ -92,7 +92,7 @@ Pod::Spec.new do |s|
   #
 
   s.source_files  = "VHallSDK/*"
-  s.exclude_files = "Classes/Exclude"
+  # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
 
@@ -120,8 +120,8 @@ Pod::Spec.new do |s|
   # s.framework  = "SomeFramework"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
-  # s.library   = "iconv"
-  # s.libraries = "iconv", "xml2"
+  s.library   = "VinnyLive"
+  # s.libraries = "VHallSDK/VHallSDK", "VHallSDK/VHLivePlay", "VHallSDK/VinnyLive"
 
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
