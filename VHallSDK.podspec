@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "VHallSDK"
-  s.version      = "2.4.0"
+  s.version      = "2.3.0"
   s.summary      = "VHallSDK for IOS"
 
   # This description is used to generate tags and improve search results.
@@ -120,9 +120,9 @@ Pod::Spec.new do |s|
   # s.framework  = "SomeFramework"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
-  s.library   = "VinnyLive"
+  # s.library   = "VHLivePlay"
   # s.libraries = "VHallSDK/VHallSDK", "VHallSDK/VHLivePlay", "VHallSDK/VinnyLive"
-
+	vendored_libraries = "VHallSDK/VHallSDK", "VHallSDK/VHLivePlay", "VHallSDK/VinnyLive"
 
   # ――― Project Settings ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
