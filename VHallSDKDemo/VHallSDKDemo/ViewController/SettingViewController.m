@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIView *view2;
 
 @property (weak, nonatomic) IBOutlet UITextField *activityIDTextField;
+@property (weak, nonatomic) IBOutlet UITextField *recordIDTextField;
 
 @property (weak, nonatomic) IBOutlet UIButton    *videoResolutionButton;
 @property (weak, nonatomic) IBOutlet UITextField *liveTokenTextField;
@@ -48,14 +49,16 @@
     [_videoResolutionButton setTitle:_selectArray[[DEMO_Setting.videoResolution intValue]] forState:0];
     
     _activityIDTextField.text = DEMO_Setting.activityID;
+    _recordIDTextField.text = DEMO_Setting.recordID;
     _liveTokenTextField.text = DEMO_Setting.liveToken;
-    _bitRateTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.bitRate];
+    _bitRateTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.videoBitRate];
     _FPSTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.videoCaptureFPS];
     _bufferTimesTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.bufferTimes];
     _nickNameTextField.text = DEMO_Setting.nickName;
     _userIDTextField.text = DEMO_Setting.userID;
     _kValueTextField.text = DEMO_Setting.kValue;
     _activityIDTextField.delegate = self;
+    _recordIDTextField.delegate = self;
     _liveTokenTextField.delegate = self;
     _bitRateTextField.delegate = self;
     _FPSTextField.delegate = self;
@@ -77,6 +80,7 @@
 //    _tokenText.delegate = self;
 //    _streamNameLabel.text = @"活动id";
 //    _roomIdText.text = DEMO_ActivityId;
+//    _recordIDTextField.text = DEMO_Setting.recordID;
 //    _tokenText.text = DEMO_AccessToken;
 //    _passwordTextField.delegate = self;
 //    _passwordTextField.text = nil;
@@ -169,8 +173,10 @@
     [self hideKey];
     
     DEMO_Setting.activityID = _activityIDTextField.text;
+    DEMO_Setting.recordID = _recordIDTextField.text;
     DEMO_Setting.liveToken  = _liveTokenTextField.text;
-    DEMO_Setting.bitRate = [_bitRateTextField.text integerValue];
+    DEMO_Setting.videoBitRate = [_bitRateTextField.text integerValue];
+    DEMO_Setting.audioBitRate = [_bitRateTextField.text integerValue];
     DEMO_Setting.videoCaptureFPS = [_FPSTextField.text integerValue];
     DEMO_Setting.bufferTimes = [_bufferTimesTextField.text integerValue];
     DEMO_Setting.nickName = _nickNameTextField.text;
@@ -211,6 +217,7 @@
 - (void)hideKey
 {
     [_activityIDTextField resignFirstResponder];
+    [_recordIDTextField resignFirstResponder];
     [_liveTokenTextField resignFirstResponder];
     [_bitRateTextField resignFirstResponder];
     [_FPSTextField resignFirstResponder];

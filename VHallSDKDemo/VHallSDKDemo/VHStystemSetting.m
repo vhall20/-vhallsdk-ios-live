@@ -50,6 +50,7 @@ static VHStystemSetting *pub_sharedSetting = nil;
         NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
         //活动设置
         _activityID = [standardUserDefaults objectForKey:@"VHactivityID"];   //活动ID     必填
+        _recordID   = [standardUserDefaults objectForKey:@"VHrecordID"];     //片段ID     可以为空
         _nickName   = [standardUserDefaults objectForKey:@"VHnickName"];     //参会昵称    为空默认随机字符串做昵称
         _userID     = [standardUserDefaults objectForKey:@"VHuserID"];       //用户唯一ID  为空默认使用设备UUID做为唯一ID
         _kValue     = [standardUserDefaults objectForKey:@"VHkValue"];       //K值        可以为空
@@ -57,24 +58,38 @@ static VHStystemSetting *pub_sharedSetting = nil;
         //直播设置
         _videoResolution= [standardUserDefaults objectForKey:@"VHvideoResolution"];//发起直播分辨率
         _liveToken      = [standardUserDefaults objectForKey:@"VHliveToken"];            //直播令牌
-        _bitRate        = [standardUserDefaults integerForKey:@"VHbitRate"];              //发直播视频码率
+        _videoBitRate   = [standardUserDefaults integerForKey:@"VHbitRate"];              //发直播视频码率
+        _audioBitRate   = [standardUserDefaults integerForKey:@"VHbitRate"];              //发直播音频码率
         _videoCaptureFPS= [standardUserDefaults integerForKey:@"VHvideoCaptureFPS"];//发直播视频帧率 ［1～30］ 默认10
         
         //观看设置
         _bufferTimes    = [standardUserDefaults integerForKey:@"VHbufferTimes"];          //RTMP观看缓冲时间
+        
+        _account        = [standardUserDefaults objectForKey:@"VHaccount"];      //账号
+        _password       = [standardUserDefaults objectForKey:@"VHpassword"];     //密码
 
-        if(DEMO_ActivityId && DEMO_ActivityId.length > 0)
+        if(_activityID == nil)
         {
             self.activityID = DEMO_ActivityId;
         }
-        if(DEMO_AccessToken && DEMO_AccessToken.length > 0)
+        if(_liveToken  == nil)
         {
             self.liveToken = DEMO_AccessToken;
         }
         
+        if(_account == nil)
+        {
+            self.account = DEMO_account;
+        }
+        if(_password  == nil)
+        {
+            self.password = DEMO_password;
+        }
+        
+        
         if(_nickName == nil || _nickName.length == 0)
         {
-            _nickName = [NSString stringWithFormat:@"SDKsuer_%d",arc4random()% 100000];
+            _nickName = [UIDevice currentDevice].name;
         }
         if(_userID == nil || _userID.length == 0)
         {
@@ -89,8 +104,11 @@ static VHStystemSetting *pub_sharedSetting = nil;
             self.videoResolution = @"1";
         }
 
-        if(_bitRate<=0)
-            self.bitRate = 600;
+        if(_videoBitRate<=0)
+        {
+            self.videoBitRate = 600;
+            self.audioBitRate = 600;
+        }
         if(_videoCaptureFPS <1)
             self.videoCaptureFPS = 10;
         if(_videoCaptureFPS >30)
@@ -108,6 +126,12 @@ static VHStystemSetting *pub_sharedSetting = nil;
         _activityID = DEMO_ActivityId;
     
     [[NSUserDefaults standardUserDefaults] setObject:_activityID forKey:@"VHactivityID"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)setRecordID:(NSString *)recordID
+{
+    _recordID = recordID;
+    [[NSUserDefaults standardUserDefaults] setObject:_recordID forKey:@"VHrecordID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)setNickName:(NSString*)nickName
@@ -134,6 +158,18 @@ static VHStystemSetting *pub_sharedSetting = nil;
     [[NSUserDefaults standardUserDefaults] setObject:_kValue forKey:@"VHkValue"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+- (void)setAccount:(NSString *)account
+{
+    _account  = account ;
+    [[NSUserDefaults standardUserDefaults] setObject:_account forKey:@"VHaccount"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+- (void)setPassword:(NSString *)password
+{
+    _password  = password ;
+    [[NSUserDefaults standardUserDefaults] setObject:_password forKey:@"VHpassword"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
 - (void)setVideoResolution:(NSString*)videoResolution
 {
     if(videoResolution == nil || videoResolution.length == 0)
@@ -148,19 +184,33 @@ static VHStystemSetting *pub_sharedSetting = nil;
 - (void)setLiveToken:(NSString*)liveToken
 {
     _liveToken = liveToken;
+    if(liveToken == nil || liveToken.length == 0)
+        _liveToken = DEMO_AccessToken;
+    
     [[NSUserDefaults standardUserDefaults] setObject:_liveToken forKey:@"VHliveToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-- (void)setBitRate:(NSInteger)bitRate
+- (void)setVideoBitRate:(NSInteger)videoBitRate
 {
-    if(bitRate<=0)
+    if(videoBitRate<=0)
         return;
-
-    _bitRate = bitRate;
-    [[NSUserDefaults standardUserDefaults] setInteger:bitRate forKey:@"VHbitRate"];
+    
+    _videoBitRate = videoBitRate;
+    [[NSUserDefaults standardUserDefaults] setInteger:videoBitRate forKey:@"VHbitRate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
+
+- (void)setAudioBitRate:(NSInteger)audioBitRate
+{
+    if(audioBitRate<=0)
+        return;
+    
+    _audioBitRate = audioBitRate;
+    [[NSUserDefaults standardUserDefaults] setInteger:audioBitRate forKey:@"VHbitRate"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+}
+
 - (void)setVideoCaptureFPS:(NSInteger)videoCaptureFPS
 {
     if(videoCaptureFPS <1)

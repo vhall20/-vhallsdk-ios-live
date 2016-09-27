@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -7,6 +7,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MainViewController">
             <connections>
+                <outlet property="accountTextField" destination="6uD-ck-VLa" id="1ak-IX-CwR"/>
+                <outlet property="loginBtn" destination="WOA-vL-cY7" id="YJE-0E-9pv"/>
+                <outlet property="passwordTextField" destination="EWn-4T-3VK" id="dZl-FF-mZk"/>
                 <outlet property="versionLabel" destination="Zip-eW-cnQ" id="4I4-vt-Oso"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -16,6 +19,12 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zFs-cE-CO4">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <connections>
+                        <action selector="closeKeyBtnClick:" destination="-1" eventType="touchUpInside" id="51x-jS-qtS"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zip-eW-cnQ">
                     <rect key="frame" x="8" y="534" width="304" height="26"/>
                     <constraints>
@@ -52,36 +61,14 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JOF-l9-X1R">
-                            <rect key="frame" x="214" y="94" width="90" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <rect key="frame" x="173" y="43" width="90" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <state key="normal" title="观看回放">
                                 <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
                             <connections>
                                 <action selector="watchPlaybackBtnClick:" destination="-1" eventType="touchUpInside" id="1Bc-Xa-WXg"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1P6-n5-sQC">
-                            <rect key="frame" x="0.0" y="94" width="93" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="rtmp观看直播">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="rtmpWatchBtnClick:" destination="-1" eventType="touchUpInside" id="6Tw-Dp-YsX"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kQa-JX-F57">
-                            <rect key="frame" x="107" y="94" width="90" height="30"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="hls观看直播">
-                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="hlsWatchBtnClick:" destination="-1" eventType="touchUpInside" id="pBO-gC-joD"/>
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gcr-xc-jtc">
@@ -95,11 +82,73 @@
                                 <action selector="landscapeStartBtnClick:" destination="-1" eventType="touchUpInside" id="hBL-jK-d6i"/>
                             </connections>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1P6-n5-sQC">
+                            <rect key="frame" x="31" y="43" width="89" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="观看直播">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="rtmpWatchBtnClick:" destination="-1" eventType="touchUpInside" id="6Tw-Dp-YsX"/>
+                            </connections>
+                        </button>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6uD-ck-VLa">
+                            <rect key="frame" x="89" y="93" width="168" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="EWn-4T-3VK">
+                            <rect key="frame" x="89" y="126" width="168" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                        </textField>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="账号:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9d-kE-7jj">
+                            <rect key="frame" x="39" y="96" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="密码:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fhh-sk-vqD">
+                            <rect key="frame" x="39" y="129" width="42" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WOA-vL-cY7">
+                            <rect key="frame" x="39" y="162" width="46" height="30"/>
+                            <color key="backgroundColor" red="1" green="0.17276850090000001" blue="0.08734388891" alpha="1" colorSpace="calibratedRGB"/>
+                            <state key="normal" title="登录">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <state key="selected" title="退出"/>
+                            <connections>
+                                <action selector="loginBtnClick:" destination="-1" eventType="touchUpInside" id="kXm-H7-GbK"/>
+                            </connections>
+                        </button>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geU-zW-iHa">
+                            <rect key="frame" x="0.0" y="75" width="304" height="1"/>
+                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="xqa-Kv-ZJo"/>
+                            </constraints>
+                        </view>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用聊天、问答等功能必须登录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YYH-f5-lcT">
+                            <rect key="frame" x="0.0" y="78" width="126" height="11"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="9"/>
+                            <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="304" id="LCv-P2-Ti5"/>
+                        <constraint firstAttribute="trailing" secondItem="geU-zW-iHa" secondAttribute="trailing" id="XFG-0L-tX3"/>
                         <constraint firstAttribute="height" constant="250" id="YZ5-Sc-VII"/>
+                        <constraint firstItem="geU-zW-iHa" firstAttribute="leading" secondItem="1At-sj-6fU" secondAttribute="leading" id="gin-f5-W61"/>
+                        <constraint firstItem="YYH-f5-lcT" firstAttribute="top" secondItem="geU-zW-iHa" secondAttribute="bottom" constant="2" id="uk0-f1-bZF"/>
+                        <constraint firstItem="YYH-f5-lcT" firstAttribute="leading" secondItem="1At-sj-6fU" secondAttribute="leading" id="y06-fP-Ifz"/>
+                        <constraint firstItem="geU-zW-iHa" firstAttribute="top" secondItem="1At-sj-6fU" secondAttribute="top" constant="75" id="ycV-8l-myB"/>
                     </constraints>
                 </view>
                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="vhallLogo.png" translatesAutoresizingMaskIntoConstraints="NO" id="bwb-r8-bcq">
@@ -117,8 +166,12 @@
                 <constraint firstItem="S71-LT-kNd" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="53" id="Mnd-To-gfz"/>
                 <constraint firstItem="Zip-eW-cnQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Ok9-iK-Z2z"/>
                 <constraint firstItem="1At-sj-6fU" firstAttribute="top" secondItem="S71-LT-kNd" secondAttribute="bottom" constant="160" id="Oyt-3h-Spf"/>
+                <constraint firstItem="zFs-cE-CO4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="S7a-YW-OuE"/>
                 <constraint firstItem="bwb-r8-bcq" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="90" id="TLI-oT-eD1"/>
+                <constraint firstAttribute="trailing" secondItem="zFs-cE-CO4" secondAttribute="trailing" id="V7X-yj-slS"/>
                 <constraint firstItem="bwb-r8-bcq" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="ZOH-uP-jt8"/>
+                <constraint firstAttribute="bottom" secondItem="zFs-cE-CO4" secondAttribute="bottom" id="lCL-Tf-k6O"/>
+                <constraint firstItem="zFs-cE-CO4" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="o0T-HS-PfC"/>
                 <constraint firstAttribute="trailing" secondItem="Zip-eW-cnQ" secondAttribute="trailing" constant="8" id="sz3-RM-jsA"/>
                 <constraint firstAttribute="bottom" secondItem="Zip-eW-cnQ" secondAttribute="bottom" constant="8" id="wTy-pR-QCL"/>
             </constraints>

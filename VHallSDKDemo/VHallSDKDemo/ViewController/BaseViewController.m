@@ -38,6 +38,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+}
+
 - (void)dealloc
 {
     
@@ -71,5 +76,16 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void)showMsg:(NSString*)msg afterDelay:(NSTimeInterval)delay
+{
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.mode = MBProgressHUDModeText;
+    hud.labelText = msg;
+    hud.margin = 10.f;
+    //            hud.yOffset = 150.f;
+    hud.removeFromSuperViewOnHide = YES;
+    [hud hide:YES afterDelay:delay];
+}
 
 @end

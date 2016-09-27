@@ -20,12 +20,6 @@
 @property (nonatomic, assign) id<VHallLivePublishFilterDelegate> GPUFilterDelegate;
 @property (nonatomic, assign) BOOL openFilter;
 
-/*! @brief 获取当前微吼SDK的版本号
- *
- * @return 返回当前微吼SDK的版本号
- */
-+(NSString *) getSDKVersion;
-
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;
 /**
@@ -59,13 +53,18 @@
  *  开始发起直播
  *
  *  @param param
- *  param[@"id"] = 活动Id 必传
- *  param[@"app_key"] =    必传
+ *  param[@"id"]           = 活动Id 必传
  *  param[@"access_token"] = 必传
- *  param[@"app_secret_key"] = 必传
  *
  */
--(void)startLive:(NSDictionary*)param;
+- (void)startLive:(NSDictionary*)param;
+
+/**
+ * 停止直播
+ * 与startLive成对出现，如果调用startLive，则需要调用stopLive以释放相应资源
+ */
+- (void)stopLive;
+
 /**
  *  切换摄像头
  *
@@ -89,8 +88,8 @@
  */
 - (BOOL)setDeviceTorchModel:(AVCaptureTorchMode)captureTorchMode;
 
-//断网后重连
--(BOOL)reconnect;
+//重连流
+-(void)reconnect;
 
 /**
  *  销毁初始化数据

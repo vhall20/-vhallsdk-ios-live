@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WatchLiveChatCell" rowHeight="144" id="KGk-i7-Jjw" customClass="WatchLiveChatTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="119"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NickName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OK1-ho-IrX">
+                        <rect key="frame" x="73" y="8" width="239" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.066467218101024628" green="0.58377963304519653" blue="0.96164935827255249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nbe-a5-yeT">
+                        <rect key="frame" x="73" y="25" width="24" height="12"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                        <color key="textColor" red="0.066467218101024628" green="0.58377963304519653" blue="0.96164935827255249" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FNi-oH-Ggf">
+                        <rect key="frame" x="73" y="39" width="247" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="80" id="yji-Z0-Tma"/>
+                        </constraints>
+                        <attributedString key="attributedText">
+                            <fragment content="Content">
+                                <attributes>
+                                    <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <font key="NSFont" size="12" name="HelveticaNeue"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bSh-Qw-lYK">
+                        <rect key="frame" x="15" y="8" width="50" height="50"/>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="nbe-a5-yeT" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="73" id="38U-Me-BRM"/>
+                    <constraint firstItem="FNi-oH-Ggf" firstAttribute="top" secondItem="nbe-a5-yeT" secondAttribute="bottom" constant="2" id="3Xo-ML-nUD"/>
+                    <constraint firstItem="FNi-oH-Ggf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="73" id="I02-N8-b1o"/>
+                    <constraint firstItem="OK1-ho-IrX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="YjD-6f-nXL"/>
+                    <constraint firstAttribute="trailing" secondItem="FNi-oH-Ggf" secondAttribute="trailing" id="bPY-l1-39a"/>
+                    <constraint firstItem="OK1-ho-IrX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="73" id="d6Q-7U-4y1"/>
+                    <constraint firstItem="nbe-a5-yeT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="25" id="pwy-eA-h1v"/>
+                    <constraint firstAttribute="trailing" secondItem="OK1-ho-IrX" secondAttribute="trailing" constant="8" id="sH5-AR-9CW"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="lblContext" destination="FNi-oH-Ggf" id="HDH-4i-N6G"/>
+                <outlet property="lblNickName" destination="OK1-ho-IrX" id="p16-S7-jya"/>
+                <outlet property="lblTime" destination="nbe-a5-yeT" id="bUG-84-ibh"/>
+                <outlet property="pic" destination="bSh-Qw-lYK" id="CUA-4d-deD"/>
+            </connections>
+            <point key="canvasLocation" x="500" y="330"/>
+        </tableViewCell>
+    </objects>
+</document>

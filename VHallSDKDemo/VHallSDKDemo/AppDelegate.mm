@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 #import "Reachability.h"
+#import "VHallApi.h"
 
 static AppDelegate *_appDelegate = nil;
 
@@ -31,20 +32,23 @@ static AppDelegate *_appDelegate = nil;
 
 #pragma mark - Lifecycle Method
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-   // Override point for customization after application launch.
-   _appDelegate = self;
-   //横屏显示状态栏
-   [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
-   [application setStatusBarOrientation:UIInterfaceOrientationPortrait];
-   CGRect bounds = [[UIScreen mainScreen]bounds];
-   
-   self.window = [[UIWindow alloc]initWithFrame:bounds];
-   MainViewController * mainVC = [[MainViewController alloc]init];
-   self.window.rootViewController = mainVC;
-   
-   [self.window makeKeyAndVisible];
-   
-   return YES;
+    // Override point for customization after application launch.
+    _appDelegate = self;
+    //横屏显示状态栏
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+    [application setStatusBarOrientation:UIInterfaceOrientationPortrait];
+    CGRect bounds = [[UIScreen mainScreen]bounds];
+    
+    [VHallApi registerApp:DEMO_AppKey SecretKey:DEMO_AppSecretKey];
+
+    self.window = [[UIWindow alloc]initWithFrame:bounds];
+    MainViewController * mainVC = [[MainViewController alloc]init];
+    self.window.rootViewController = mainVC;
+
+    [self.window makeKeyAndVisible];
+
+
+    return YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

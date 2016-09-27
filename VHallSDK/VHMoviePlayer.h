@@ -61,7 +61,7 @@
 -(void)stopPlay;
 
 /**
- *  销毁播放器
+ *  销毁播放器，异步销毁的
  */
 - (void)destroyMoivePlayer;
 

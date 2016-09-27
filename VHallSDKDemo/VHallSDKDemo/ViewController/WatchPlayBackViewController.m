@@ -6,14 +6,13 @@
 //  Copyright © 2016年 vhall. All rights reserved.
 //
 
-#import "RtmpLiveViewController.h"
+#import "WatchPlayBackViewController.h"
 #import "ALMoviePlayerController.h"
 #import "ALMoviePlayerControls.h"
-#import "OpenCONSTS.h"
 #import <MediaPlayer/MPMoviePlayerController.h>
 #import <AVFoundation/AVFoundation.h>
-#import "VHallMoviePlayer.h"
-#import "WatchPlayBackViewController.h"
+
+#import "VHallApi.h"
 
 @interface WatchPlayBackViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate>
 {
@@ -167,15 +166,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
     [self initViews];
+    
+    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])
+    {
+        [self showMsg:@"请填写CONSTS.h中的AppKey" afterDelay:1.5];
+        return;
+    }
+    
     if (self.hlsMoviePlayer.view) {
         [MBProgressHUD showHUDAddedTo:self.hlsMoviePlayer.view animated:YES];
     }
     //todo
     NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
     param[@"id"] =  _roomId;
-    param[@"app_key"] = DEMO_AppKey;
-    param[@"app_secret_key"] = DEMO_AppSecretKey;
     param[@"name"] = DEMO_Setting.nickName;
     param[@"email"] = DEMO_Setting.userID;
     if (_password&&_password.length) {

@@ -45,14 +45,15 @@ typedef NS_ENUM(int,LiveStatus)
     kLiveStatusSendError =8,            //直播发送数据错误
     kLiveStatusDownloadSpeed =9,        //播放下载速率
     kLiveStatusUploadSpeed =10,         //直播上传速率
-    kLiveStatusNetworkStatus =11,       //当前的网络状态，>= 0为正常，<0 代表卡顿
+    kLiveStatusNetworkStatus =11,       //保留字段，暂时无用
     kLiveStatusGetUrlError =12,         //获取推流地址失败
     kLiveStatusWidthAndHeight =13,      //返回播放视频的宽和高
     kLiveStatusAudioInfo  =14,          //音频流的信息
     kLiveStatusAudioRecoderError  =15,  //音频采集失败，提示用户查看权限或者重新推流，切记此事件会回调多次，直到音频采集正常为止
     kLiveStatusUploadNetworkException=16,//发起端网络环境差
     kLiveStatusUploadNetworkOK = 17,     //发起端网络环境恢复正常
-    kLiveStatusCDNStartSwitch = 18       //CDN切换
+    kLiveStatusCDNStartSwitch = 18,       //CDN切换
+    kLiveStatusRecvStreamType = 19        //接受流的类型
    
 };
 
@@ -73,6 +74,15 @@ typedef NS_ENUM(int,RTMPMovieScalingMode)
     kRTMPMovieScalingModeAspectFill, // Uniform scale until the movie fills the visible bounds. One dimension may have clipped contents
 };
 
+//流类型
+typedef NS_ENUM(int,VHallStreamType)
+{
+   kVHallStreamTypeNone = 0,
+   kVHallStreamTypeVideoAndAudio,
+   kVHallStreamTypeOnlyVideo,
+   kVHallStreamTypeOnlyAudio,
+};
+
 @protocol CameraEngineRtmpDelegate <NSObject>
 /**
  *  采集到第一帧的回调
@@ -87,7 +97,7 @@ typedef NS_ENUM(int,RTMPMovieScalingMode)
  */
 -(void)publishStatus:(LiveStatus)liveStatus withInfo:(NSDictionary*)info;
 /**
- * code	    含义
+ * code	含义
  * 10030	身份验证出错
  * 10401	活动开始失败
  * 10402	当前活动ID错误
@@ -123,19 +133,20 @@ typedef NS_ENUM(int,RTMPMovieScalingMode)
 - (void)downloadSpeed:(VHMoviePlayer*)moviePlayer info:(NSDictionary*)info;
 
 /**
- *  网络状态的回调
- *
- *  @param moviePlayer
- *  @param info        网络状态信息  content的值越大表示网络越好
- */
-- (void)netWorkStatus:(VHMoviePlayer*)moviePlayer info:(NSDictionary*)info;
-/**
  *  cdn 发生切换时的回调
  *
  *  @param moviePlayer
  *  @param info      
  */
 - (void)cdnSwitch:(VHMoviePlayer*)moviePlayer info:(NSDictionary*)info;
+
+/**
+ *  Streamtype
+ *
+ *  @param moviePlayer moviePlayer
+ *  @param info        info
+ */
+- (void)recStreamtype:(VHMoviePlayer*)moviePlayer info:(NSDictionary*)info;
 
 /**
  *  播放时错误的回调

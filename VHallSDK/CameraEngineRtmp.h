@@ -30,7 +30,7 @@
 /**
  *  视频采集的帧率 范围［10～30］
  */
-@property(nonatomic,assign)int videoCaptureFPS;
+@property(nonatomic,assign) int videoCaptureFPS;
 /**
  *  代理
  */
@@ -40,9 +40,13 @@
  */
 @property(nonatomic,assign)VideoResolution videoResolution;
 /**
- *  码率设置
+ *  视频码率设置
  */
-@property(nonatomic,assign)NSInteger bitRate;
+@property(nonatomic,assign)NSInteger videoBitRate;
+/**
+ *  音频码率设置
+ */
+@property(nonatomic,assign)NSInteger audioBitRate;
 /**
  *  设置静音
  */
@@ -56,6 +60,10 @@
  *  滤镜的回调，在此回调中做滤镜处理
  */
 @property (nonatomic, strong) void (^captureVideoBuf)(CMSampleBufferRef sampleBuffer);
+/**
+ *  当前推流状态
+ */
+@property(assign,nonatomic,readonly)BOOL isPublishing;
 
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;
@@ -84,7 +92,7 @@
 //暂停音频采集
 - (BOOL)pauseAudioCapture;
 
-//停止音频采集
+//停止音频采集,此方法调用了，就要在调用initAudio方法初始化
 - (BOOL)stopAudioCapture;
 
 /**
@@ -117,7 +125,7 @@
 -(BOOL)reconnect;
 
 /**
- *  销毁初始化数据
+ *  销毁初始化数据，同步销毁，如果感觉销毁太慢，可以开线程去销毁
  */
 - (void)destoryObject;
 

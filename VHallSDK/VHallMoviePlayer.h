@@ -15,6 +15,7 @@ typedef NS_ENUM(NSInteger,VHallMovieVideoPlayMode) {
     VHallMovieVideoPlayModeMedia = 1,        //单视频
     VHallMovieVideoPlayModeTextAndVoice = 2, //文档＋声音
     VHallMovieVideoPlayModeTextAndMedia = 3, //文档＋视频
+    VHallMovieVideoPlayModeVoice = 4,        //单音频(预留，暂不支持)
 };
 
 /**
@@ -25,6 +26,7 @@ typedef NS_ENUM(NSInteger,VHallMovieDefinition) {
     VHallMovieDefinitionUHD = 1,        //超高清
     VHallMovieDefinitionHD = 2,         //高清
     VHallMovieDefinitionSD = 3,         //标清
+    VHallMovieDefinitionAudio = 4,      //无视频(预留，暂不支持)
 };
 
 /**
@@ -40,8 +42,11 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
 
 
 
-@class VHallMoviePlayer ;
+@class VHallMoviePlayer;
+
 @protocol VHallMoviePlayerDelegate <NSObject, VHMoviePlayerDelegate>
+@optional
+
 /**
  *  包含文档 获取翻页图片路径
  *
@@ -49,25 +54,29 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 - (void)PPTScrollNextPagechangeImagePath:(NSString*)changeImagePath;
 /**
- *  获取视频播放模式
+ *  获取当前视频播放模式
  *
  *  @param playMode  视频播放模式
  */
 - (void)VideoPlayMode:(VHallMovieVideoPlayMode)playMode;
 /**
+ *  获取当前视频支持的所有播放模式
+ *
+ *  @param playModeList 视频播放模式列表
+ */
+- (void)VideoPlayModeList:(NSArray*)playModeList;
+/**
  *  获取视频活动状态
  *
  *  @param playMode  视频活动状态
  */
-- (void)ActiveState : (VHallMovieActiveState)activeState;
-
+- (void)ActiveState:(VHallMovieActiveState)activeState;
 /**
  *  该直播支持的清晰度列表
  *
  *  @param definitionList  支持的清晰度列表
  */
-- (void)VideoDefinitionList: (NSArray*)definitionList;
-
+- (void)VideoDefinitionList:(NSArray*)definitionList;
 /**
  *  直播结束消息 如果视频正在播放 等下一次loading 直播即结束
  *
@@ -78,11 +87,10 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
 @end
 @interface VHallMoviePlayer : VHMoviePlayer
 
-/*! @brief 获取当前微吼SDK的版本号
- *
- * @return 返回当前微吼SDK的版本号
+/**
+ *  当前视频观看模式 观看直播允许切换观看模式(回放没有)
  */
-+(NSString *) getSDKVersion;
+@property(nonatomic,assign)VHallMovieVideoPlayMode playMode;
 
 /**
  *  当前视频清晰度 观看直播允许切换清晰度(回放没有) 默认是原画播放
@@ -95,7 +103,6 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 
 - (VHallMovieDefinition)setDefinition:(VHallMovieDefinition)definition;
-
 
 
 /**
@@ -111,41 +118,22 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  *  观看直播视频
  *
  *  @param param
- *  param[@"id"] = 活动Id 必传
- *  param[@"app_key"] =   必传
- *  param[@"name"] =      必传
- *  param[@"email"] =     必传
- *  param[@"pass"] =    （活动如果有K值或密码需要传）
- *  param[@"app_secret_key"] =  必传
+ *  param[@"id"]    = 活动Id 必传
+ *  param[@"name"]  = 如未登录SDK要传
+ *  param[@"email"] = 如未登录SDK要传
+ *  param[@"pass"]  = 活动如果有K值或密码需要传
  *
  */
 -(BOOL)startPlay:(NSDictionary*)param;
 
 /**
- *  观看直播视频   (仅HLS可用)
- *
- *  @param param
- *  param[@"id"] = 活动Id 必传
- *  param[@"app_key"] =   必传
- *  param[@"name"] =      必传
- *  param[@"email"] =     必传
- *  param[@"pass"] =    （活动如果有K值或密码需要传）
- *  param[@"app_secret_key"] =  必传
- *
- *  @param moviePlayerController MPMoviePlayerController 对象
- */
--(void)startPlay:(NSDictionary*)param moviePlayer:(MPMoviePlayerController *)moviePlayerController;
-
-/**
  *  观看回放视频   (仅HLS可用)
  *
  *  @param param
- *  param[@"id"] = 活动Id 必传
- *  param[@"app_key"] =   必传
- *  param[@"name"] =      必传
- *  param[@"email"] =     必传
- *  param[@"pass"] =    （活动如果有K值或密码需要传）
- *  param[@"app_secret_key"] =  必传
+ *  param[@"id"]    = 活动Id 必传
+ *  param[@"name"]  = 如未登录SDK要传
+ *  param[@"email"] = 如未登录SDK要传
+ *  param[@"pass"]  = 活动如果有K值或密码需要传
  *
  *  @param moviePlayerController MPMoviePlayerController 对象
  */
@@ -180,4 +168,17 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 - (void)destroyMoivePlayer;
 
+
+/**
+ *  观看直播视频   (仅HLS可用) 已弃用 不再维护
+ *
+ *  @param param
+ *  param[@"id"]    = 活动Id 必传
+ *  param[@"name"]  = 如未登录SDK要传
+ *  param[@"email"] = 如未登录SDK要传
+ *  param[@"pass"]  = 活动如果有K值或密码需要传）
+ *
+ *  @param moviePlayerController MPMoviePlayerController 对象
+ */
+-(void)startPlay:(NSDictionary*)param moviePlayer:(MPMoviePlayerController *)moviePlayerController __attribute__ ((deprecated));
 @end
