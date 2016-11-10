@@ -18,6 +18,7 @@
 #define DEMO_account        @"" //账号 详见：▪ 自助式网络直播API -> 活动管理 ->user/register 创建用户
 #define DEMO_password       @"" //密码 详见：▪ 自助式网络直播API -> 活动管理 ->user/register 创建用户
 
+
 //#if DEBUG  // 调试状态, 打开LOG功能
 #define VHLog(...) NSLog(__VA_ARGS__)
 //#else // 发布状态, 关闭LOG功能

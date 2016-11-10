@@ -13,6 +13,7 @@
 #import "VHallMoviePlayer.h"
 #import "VHallChat.h"
 #import "VHallQAndA.h"
+#import "VHallLottery.h"
 #import "VHallMsgModels.h"
 
 @interface VHallApi : NSObject 

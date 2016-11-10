@@ -15,7 +15,7 @@ typedef NS_ENUM(NSInteger,VHallMovieVideoPlayMode) {
     VHallMovieVideoPlayModeMedia = 1,        //单视频
     VHallMovieVideoPlayModeTextAndVoice = 2, //文档＋声音
     VHallMovieVideoPlayModeTextAndMedia = 3, //文档＋视频
-    VHallMovieVideoPlayModeVoice = 4,        //单音频(预留，暂不支持)
+    VHallMovieVideoPlayModeVoice = 4,        //单音频
 };
 
 /**
@@ -26,7 +26,7 @@ typedef NS_ENUM(NSInteger,VHallMovieDefinition) {
     VHallMovieDefinitionUHD = 1,        //超高清
     VHallMovieDefinitionHD = 2,         //高清
     VHallMovieDefinitionSD = 3,         //标清
-    VHallMovieDefinitionAudio = 4,      //无视频(预留，暂不支持)
+    VHallMovieDefinitionAudio = 4,      //无视频
 };
 
 /**

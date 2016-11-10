@@ -25,6 +25,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton    *videoResolutionButton;
 @property (weak, nonatomic) IBOutlet UITextField *liveTokenTextField;
+@property (weak, nonatomic) IBOutlet UITextField *audiobitRateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *bitRateTextField;
 @property (weak, nonatomic) IBOutlet UITextField *FPSTextField;
 
@@ -41,7 +42,7 @@
 -(void)initDatas
 {
     _selectArray = @[@"352X288",@"640X480",@"960X540",@"1280X720"];
-    EnableVHallDebugModel(NO);
+    EnableVHallDebugModel(YES);
 }
 
 - (void)initViews
@@ -52,6 +53,7 @@
     _recordIDTextField.text = DEMO_Setting.recordID;
     _liveTokenTextField.text = DEMO_Setting.liveToken;
     _bitRateTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.videoBitRate];
+    _audiobitRateTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.audioBitRate];
     _FPSTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.videoCaptureFPS];
     _bufferTimesTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.bufferTimes];
     _nickNameTextField.text = DEMO_Setting.nickName;
@@ -61,6 +63,7 @@
     _recordIDTextField.delegate = self;
     _liveTokenTextField.delegate = self;
     _bitRateTextField.delegate = self;
+    _audiobitRateTextField.delegate = self;
     _FPSTextField.delegate = self;
     _bufferTimesTextField.delegate = self;
     _nickNameTextField.delegate = self;
@@ -176,7 +179,7 @@
     DEMO_Setting.recordID = _recordIDTextField.text;
     DEMO_Setting.liveToken  = _liveTokenTextField.text;
     DEMO_Setting.videoBitRate = [_bitRateTextField.text integerValue];
-    DEMO_Setting.audioBitRate = [_bitRateTextField.text integerValue];
+    DEMO_Setting.audioBitRate = [_audiobitRateTextField.text integerValue];
     DEMO_Setting.videoCaptureFPS = [_FPSTextField.text integerValue];
     DEMO_Setting.bufferTimes = [_bufferTimesTextField.text integerValue];
     DEMO_Setting.nickName = _nickNameTextField.text;

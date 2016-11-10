@@ -8,17 +8,7 @@
 
 #import "CameraEngineRtmp.h"
 
-@class GPUImageVideoCamera;
-@class GPUImageRawDataOutput;
-
-@protocol VHallLivePublishFilterDelegate <NSObject>
-@optional
-- (void)addGPUImageFilter:(GPUImageVideoCamera *)source Output:(GPUImageRawDataOutput *)output;
-@end
-
 @interface VHallLivePublish : CameraEngineRtmp
-@property (nonatomic, assign) id<VHallLivePublishFilterDelegate> GPUFilterDelegate;
-@property (nonatomic, assign) BOOL openFilter;
 
 //采集设备初始化
 - (id)initWithOrgiation:(DeviceOrgiation)orgiation;

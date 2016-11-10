@@ -28,14 +28,15 @@
 
 -(void)initDatas
 {
-   EnableVHallDebugModel(NO);
+   EnableVHallDebugModel(YES);
 }
 
 - (void)initViews
 {
-    NSDictionary * info = [[NSBundle mainBundle] infoDictionary];
+//    NSDictionary * info = [[NSBundle mainBundle] infoDictionary];
 //    _versionLabel.text = [NSString stringWithFormat:@"v%@.%@",info[@"CFBundleShortVersionString"],info[@"CFBundleVersion"]];
-    _versionLabel.text = [NSString stringWithFormat:@"v%@",info[@"CFBundleShortVersionString"]];
+//    _versionLabel.text = [NSString stringWithFormat:@"v%@",info[@"CFBundleShortVersionString"]];
+    _versionLabel.text = [NSString stringWithFormat:@"v%@",[VHallApi sdkVersion]];
     _loginBtn.selected = [VHallApi isLoggedIn];
     _accountTextField.text  = DEMO_Setting.account;
     _passwordTextField.text = DEMO_Setting.password;

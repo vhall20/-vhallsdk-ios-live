@@ -13,18 +13,23 @@
 #import "WatchLiveOnlineTableViewCell.h"
 #import "WatchLiveChatTableViewCell.h"
 #import "WatchLiveQATableViewCell.h"
+#import "WatchLiveLotteryViewController.h"
 
 #import "VHallApi.h"
 
-@interface WatchLiveViewController ()<VHallMoviePlayerDelegate, VHallChatDelegate, VHallQADelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface WatchLiveViewController ()<VHallMoviePlayerDelegate, VHallChatDelegate, VHallQADelegate, VHallLotteryDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 {
     VHallMoviePlayer  *_moviePlayer;//播放器
+    UIView            *_showView;
     VHallChat         *_chat;       //聊天
     VHallQAndA        *_QA;         //问答
+    VHallLottery      *_lottery;    //抽奖
     UIImageView       *_logView;    //当播放音频时显示的图片
+    WatchLiveLotteryViewController *_lotteryVC; //抽奖VC
     BOOL _isStart;
     BOOL _isMute;
     BOOL _isAllScreen;
+    BOOL _isReciveHistory;
     int  _bufferCount;
     NSMutableArray    *_chatDataArray;
     NSMutableArray    *_QADataArray;
@@ -104,6 +109,8 @@
     _chat.delegate = self;
     _QA = [[VHallQAndA alloc] init];
     _QA.delegate = self;
+    _lottery = [[VHallLottery alloc] init];
+    _lottery.delegate = self;
     _moviePlayer = [[VHallMoviePlayer alloc]initWithDelegate:self];
     self.view.clipsToBounds = YES;
     _moviePlayer.movieScalingMode = kRTMPMovieScalingModeAspectFit;
@@ -114,7 +121,10 @@
     _logView.contentMode = UIViewContentModeCenter;
     [self.backView addSubview:_moviePlayer.moviePlayerView];
     [self.backView sendSubviewToBack:_moviePlayer.moviePlayerView];
-    [_moviePlayer.moviePlayerView addSubview:_logView];
+    [_moviePlayer.moviePlayerView addSubview:_logView];    
+    [self.view bringSubviewToFront:self.backView];
+    _textImageView.hidden = YES;
+    _logView.hidden = YES;
 }
 
 - (void)destoryMoivePlayer
@@ -253,13 +263,14 @@
         if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait// UIInterfaceOrientationPortrait
             || [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown) { //UIInterfaceOrientationPortraitUpsideDown
             //竖屏
-            frame = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
+            frame = self.backView.bounds;
         } else {
             //横屏
             frame = CGRectMake(0, 0, bounds.size.height, bounds.size.width);
         }
         _moviePlayer.moviePlayerView.frame = frame;
         _logView.frame = _moviePlayer.moviePlayerView.bounds;
+        _lotteryVC.view.frame = _showView.bounds;
     }
 }
 
@@ -273,15 +284,18 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     [self initViews];
-    _moviePlayer.moviePlayerView.frame = CGRectMake(0, 10, self.view.frame.size.width, self.backView.height-20);
-    _logView.frame = _moviePlayer.moviePlayerView.bounds;
-    [self.view bringSubviewToFront:self.backView];
-    _textImageView.hidden = YES;
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+}
+
+-(void)viewWillLayoutSubviews
+{
+    _moviePlayer.moviePlayerView.frame = self.backView.bounds;
+    _logView.frame = _moviePlayer.moviePlayerView.bounds;
+    _lotteryVC.view.frame = _showView.bounds;
 }
 
 - (void)didReceiveMemoryWarning
@@ -298,6 +312,17 @@
     
     if (_QA) {
         _QA = nil;
+    }
+    
+    if (_lottery) {
+        _lottery = nil;
+    }
+    
+    if (_lotteryVC) {
+        [_lotteryVC.view removeFromSuperview];
+        [_lotteryVC removeFromParentViewController];
+        [_lotteryVC destory];
+        _lotteryVC = nil;
     }
     
     //阻止iOS设备锁屏
@@ -674,6 +699,33 @@
     }
 }
 
+#pragma mark - VHallLotteryDelegate
+- (void)startLottery:(VHallStartLotteryModel *)msg
+{
+    if (_lotteryVC) {
+        [_lotteryVC.view removeFromSuperview];
+        [_lotteryVC removeFromParentViewController];
+        _lotteryVC = nil;
+    }
+    
+    _lotteryVC = [[WatchLiveLotteryViewController alloc] initWithNibName:@"WatchLiveLotteryViewController" bundle:nil];
+    _lotteryVC.lottery = _lottery;
+    _lotteryVC.view.frame = _showView.bounds;
+    [_showView addSubview:_lotteryVC.view];
+}
+
+- (void)endLottery:(VHallEndLotteryModel *)msg
+{
+    if (!_lotteryVC) {
+        _lotteryVC = [[WatchLiveLotteryViewController alloc] initWithNibName:@"WatchLiveLotteryViewController" bundle:nil];
+        _lotteryVC.lottery = _lottery;
+        _lotteryVC.view.frame = _showView.bounds;
+        [_showView addSubview:_lotteryVC.view];
+    }
+    _lotteryVC.lotteryOver = YES;
+    _lotteryVC.endLotteryModel = msg;
+}
+
 #pragma mark - UIPanGestureRecognizer
 -(void)handlePan:(UIPanGestureRecognizer*)pan
 {
@@ -702,9 +754,9 @@
 {
     if([keyPath isEqualToString:kViewFramePath])
     {
-        //CGRect frame = [[change objectForKey:NSKeyValueChangeNewKey]CGRectValue];
-        _moviePlayer.moviePlayerView.frame = CGRectMake(0, 10, self.view.frame.size.width, self.backView.height-20);
+        _moviePlayer.moviePlayerView.frame = self.backView.bounds;
         _logView.frame = _moviePlayer.moviePlayerView.bounds;
+        _lotteryVC.view.frame = _showView.bounds;
     }
 }
 
@@ -778,6 +830,27 @@
     self.QABtn.selected = NO;
     self.chatMsgInput.text = @"";
     [_chatView reloadData];
+    
+    if (!_isReciveHistory)
+    {
+        [_chat getHistoryWithType:YES success:^(NSArray * msgs) {
+            
+            if (msgs.count > 0) {
+                [_chatDataArray addObjectsFromArray:msgs];
+                if (_chatBtn.selected) {
+                    [_chatView reloadData];
+                    [_chatView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_chatDataArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                }
+            }
+            
+        } failed:^(NSDictionary *failedData) {
+            
+            NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
+            [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
+            
+        }];
+        _isReciveHistory = YES;
+    }
 }
 
 #pragma mark - 问答

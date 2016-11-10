@@ -138,7 +138,7 @@
         if ([[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait// UIInterfaceOrientationPortrait
             || [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown) { //UIInterfaceOrientationPortraitUpsideDown
             //竖屏
-            frame = CGRectMake(0, 0, bounds.size.width, bounds.size.height);
+            frame = _backView.bounds;
         } else {
             //横屏
             frame = CGRectMake(0, 0, bounds.size.height, bounds.size.width);
@@ -161,6 +161,19 @@
     return UIInterfaceOrientationMaskPortrait|UIInterfaceOrientationMaskLandscapeLeft|UIInterfaceOrientationMaskLandscapeRight;
 }
 
+-(void)viewWillLayoutSubviews
+{
+    if (self.watchVideoType == kWatchVideoRTMP)
+    {
+        _moviePlayer.moviePlayerView.frame = _backView.bounds;
+        
+    }else if(self.watchVideoType == kWatchVideoHLS||self.watchVideoType == kWatchVideoPlayback)
+    {
+        _hlsMoviePlayer.view.frame = _backView.bounds;
+        [self.backView addSubview:self.hlsMoviePlayer.view];
+        [self.backView sendSubviewToBack:_hlsMoviePlayer.view];
+    }
+}
 
 #pragma mark - viewDidLoad
 - (void)viewDidLoad {
@@ -183,6 +196,7 @@
     param[@"id"] =  _roomId;
     param[@"name"] = DEMO_Setting.nickName;
     param[@"email"] = DEMO_Setting.userID;
+    param[@"record_id"] = DEMO_Setting.recordID;
     if (_password&&_password.length) {
         param[@"pass"] = _password;
     }
@@ -255,9 +269,11 @@
 - (void)playError:(LivePlayErrorType)livePlayErrorType info:(NSDictionary *)info;
 {
     if (self.hlsMoviePlayer.view) {
-        [MBProgressHUD hideAllHUDsForView:self.hlsMoviePlayer.view animated:YES];
-
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [MBProgressHUD hideAllHUDsForView:self.hlsMoviePlayer.view animated:YES];
+        });
     }
+    
     void (^resetStartPlay)(NSString * msg) = ^(NSString * msg){
         dispatch_async(dispatch_get_main_queue(), ^{
             if (APPDELEGATE.isNetworkReachable) {
@@ -267,7 +283,7 @@
             }
         });
     };
-
+    
     NSString * msg = @"";
     switch (livePlayErrorType) {
         case kLivePlayParamError:

@@ -59,7 +59,7 @@ static VHStystemSetting *pub_sharedSetting = nil;
         _videoResolution= [standardUserDefaults objectForKey:@"VHvideoResolution"];//发起直播分辨率
         _liveToken      = [standardUserDefaults objectForKey:@"VHliveToken"];            //直播令牌
         _videoBitRate   = [standardUserDefaults integerForKey:@"VHbitRate"];              //发直播视频码率
-        _audioBitRate   = [standardUserDefaults integerForKey:@"VHbitRate"];              //发直播音频码率
+        _audioBitRate   = [standardUserDefaults integerForKey:@"VHaudiobitRate"];              //发直播音频码率
         _videoCaptureFPS= [standardUserDefaults integerForKey:@"VHvideoCaptureFPS"];//发直播视频帧率 ［1～30］ 默认10
         
         //观看设置
@@ -107,7 +107,10 @@ static VHStystemSetting *pub_sharedSetting = nil;
         if(_videoBitRate<=0)
         {
             self.videoBitRate = 600;
-            self.audioBitRate = 600;
+        }
+        if(_audioBitRate<=0)
+        {
+            self.audioBitRate = 16;
         }
         if(_videoCaptureFPS <1)
             self.videoCaptureFPS = 10;
@@ -207,7 +210,7 @@ static VHStystemSetting *pub_sharedSetting = nil;
         return;
     
     _audioBitRate = audioBitRate;
-    [[NSUserDefaults standardUserDefaults] setInteger:audioBitRate forKey:@"VHbitRate"];
+    [[NSUserDefaults standardUserDefaults] setInteger:audioBitRate forKey:@"VHaudiobitRate"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 

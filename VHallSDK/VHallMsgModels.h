@@ -62,3 +62,34 @@
 @property (nonatomic, strong) VHallQuestionModel * questionModel;                   //提问消息
 @property (nonatomic, strong) NSMutableArray<VHallAnswerModel *> * answerModels;    //回答消息数组
 @end
+
+/**
+ *  抽奖消息
+ */
+@interface VHallLotteryModel : NSObject
+@property (nonatomic, copy) NSString * lottery_id;      //抽奖ID
+@property (nonatomic, copy) NSString * survey_id;       //活动ID
+@end
+
+/**
+ *  开始抽奖消息
+ */
+@interface VHallStartLotteryModel : VHallLotteryModel
+@property (nonatomic, copy) NSString * num;             //抽奖人数
+@end
+
+/**
+ *  抽奖结果
+ */
+@interface VHallLotteryResultModel : NSObject
+@property (nonatomic, copy) NSString * nick_name;       //中奖人昵称
+@end
+
+/**
+ *  结束抽奖消息
+ */
+@interface VHallEndLotteryModel : VHallLotteryModel
+@property (nonatomic, assign) BOOL isWin;               //是否中奖
+@property (nonatomic, copy) NSString * account;         //登录账号
+@property (nonatomic, copy) NSMutableArray<VHallLotteryResultModel *> * resultModels; //中奖结果
+@end
