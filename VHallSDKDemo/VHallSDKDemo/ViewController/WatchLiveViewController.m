@@ -145,7 +145,7 @@
 #pragma mark - UIButton Event
 - (IBAction)stopWatchBtnClick:(id)sender
 {
-    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])
+    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])//此处只用于提示信息判断，只替换CONSTS.h中的AppKey即可
     {
         [self showMsg:@"请填写CONSTS.h中的AppKey" afterDelay:1.5];
         return;
@@ -167,7 +167,7 @@
         NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
         param[@"id"] =  _roomId;
         param[@"name"] = DEMO_Setting.nickName;
-        param[@"email"] = DEMO_Setting.userID;
+        param[@"email"] = DEMO_Setting.email;
         if (_kValue&&_kValue.length>0) {
             param[@"pass"] = _kValue;
         }
@@ -359,8 +359,7 @@
             ((WatchLiveChatTableViewCell *)cell).model = model;
         }
     }
-    
-    if (_QABtn.selected)
+    else if (_QABtn.selected)
     {
         static NSString * qaIndetify = @"WatchLiveQACell";
         cell = [tableView dequeueReusableCellWithIdentifier:qaIndetify];
@@ -369,7 +368,14 @@
         }
         ((WatchLiveQATableViewCell *)cell).model = [_QADataArray objectAtIndex:indexPath.row];
     }
-    
+   else
+    {
+        static NSString * qaIndetify = @"identifiCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:qaIndetify];
+        if (!cell) {
+            cell =[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:qaIndetify];
+        }
+    }
     cell.width = self.view.bounds.size.width;
     return cell;
 }

@@ -152,7 +152,7 @@
 {
     [self closeKeyBtnClick:nil];
 
-    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])
+    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])//此处只用于提示信息判断，只替换CONSTS.h中的AppKey即可
     {
         [self showMsg:@"请填写CONSTS.h中的AppKey" afterDelay:1.5];
         return;

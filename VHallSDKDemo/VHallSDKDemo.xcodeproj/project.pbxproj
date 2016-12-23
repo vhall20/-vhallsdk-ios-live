@@ -85,11 +85,15 @@
 		7B17F12D1C97FA2300FF0C8F /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B17F1241C97FA2300FF0C8F /* MainViewController.m */; };
 		7B17F12E1C97FA2300FF0C8F /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7B17F1251C97FA2300FF0C8F /* MainViewController.xib */; };
 		7B17F12F1C97FA2300FF0C8F /* LaunchLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B17F1271C97FA2300FF0C8F /* LaunchLiveViewController.m */; };
+		C0032E951E08C9F200D12E04 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = C0032E941E08C9F200D12E04 /* libicucore.tbd */; };
+		C0032E971E08CA0B00D12E04 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0032E961E08CA0B00D12E04 /* Security.framework */; };
 		C004029A1CDCBAE1009D4C33 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */; };
 		C005BE791DB4E7480088B564 /* WatchLiveLotteryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C005BE741DB4E7480088B564 /* WatchLiveLotteryTableViewCell.m */; };
 		C005BE7A1DB4E7480088B564 /* WatchLiveLotteryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C005BE751DB4E7480088B564 /* WatchLiveLotteryTableViewCell.xib */; };
 		C005BE7B1DB4E7480088B564 /* WatchLiveLotteryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C005BE771DB4E7480088B564 /* WatchLiveLotteryViewController.m */; };
 		C005BE7C1DB4E7480088B564 /* WatchLiveLotteryViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C005BE781DB4E7480088B564 /* WatchLiveLotteryViewController.xib */; };
+		C005BF6F1DB60D2D0088B564 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C005BF6C1DB60D2D0088B564 /* libGPUImage.a */; };
+		C005BF701DB60D2D0088B564 /* libVHallFilterSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C005BF6D1DB60D2D0088B564 /* libVHallFilterSDK.a */; };
 		C01B74F21D6D4F1C00B28C75 /* WatchLiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C01B74F01D6D4F1C00B28C75 /* WatchLiveViewController.m */; };
 		C01B74F31D6D4F1C00B28C75 /* WatchLiveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C01B74F11D6D4F1C00B28C75 /* WatchLiveViewController.xib */; };
 		C094724E1D7ED405009C7D65 /* VHallSDKDemo-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C094724D1D7ED405009C7D65 /* VHallSDKDemo-info.plist */; };
@@ -100,6 +104,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2F4324D61DF7A85800E589E6 /* VHallComment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallComment.h; sourceTree = "<group>"; };
 		3A4C41351D780D4F00934CD6 /* LaunchLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchLiveViewController.xib; sourceTree = "<group>"; };
 		3A7ED1831CFC39920077097B /* ALAirplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALAirplayView.h; sourceTree = "<group>"; };
 		3A7ED1841CFC39920077097B /* ALAirplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAirplayView.m; sourceTree = "<group>"; };
@@ -219,6 +224,8 @@
 		7B17F1261C97FA2300FF0C8F /* LaunchLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchLiveViewController.h; sourceTree = "<group>"; };
 		7B17F1271C97FA2300FF0C8F /* LaunchLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchLiveViewController.m; sourceTree = "<group>"; };
 		7B17F1801C97FBDB00FF0C8F /* VHallSDKDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VHallSDKDemo-Prefix.pch"; sourceTree = "<group>"; };
+		C0032E941E08C9F200D12E04 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		C0032E961E08CA0B00D12E04 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		C005BE731DB4E7480088B564 /* WatchLiveLotteryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchLiveLotteryTableViewCell.h; sourceTree = "<group>"; };
 		C005BE741DB4E7480088B564 /* WatchLiveLotteryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchLiveLotteryTableViewCell.m; sourceTree = "<group>"; };
@@ -236,6 +243,9 @@
 		C005BF661DB60B810088B564 /* VHallMsgModels.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VHallMsgModels.h; sourceTree = "<group>"; };
 		C005BF671DB60B810088B564 /* VHallQAndA.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VHallQAndA.h; sourceTree = "<group>"; };
 		C005BF681DB60B810088B564 /* VHMoviePlayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VHMoviePlayer.h; sourceTree = "<group>"; };
+		C005BF6C1DB60D2D0088B564 /* libGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGPUImage.a; sourceTree = "<group>"; };
+		C005BF6D1DB60D2D0088B564 /* libVHallFilterSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libVHallFilterSDK.a; sourceTree = "<group>"; };
+		C005BF721DB610720088B564 /* VHallLivePublishFilter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VHallLivePublishFilter.h; sourceTree = "<group>"; };
 		C01B74EF1D6D4F1C00B28C75 /* WatchLiveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WatchLiveViewController.h; sourceTree = "<group>"; };
 		C01B74F01D6D4F1C00B28C75 /* WatchLiveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WatchLiveViewController.m; sourceTree = "<group>"; };
 		C01B74F11D6D4F1C00B28C75 /* WatchLiveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = WatchLiveViewController.xib; sourceTree = "<group>"; };
@@ -254,22 +264,26 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C004029A1CDCBAE1009D4C33 /* JavaScriptCore.framework in Frameworks */,
 				7B17F1001C97F81200FF0C8F /* libiconv.tbd in Frameworks */,
 				7B17F0FE1C97F7D800FF0C8F /* libbz2.1.0.tbd in Frameworks */,
+				C0032E951E08C9F200D12E04 /* libicucore.tbd in Frameworks */,
 				7B17F0FC1C97F7CB00FF0C8F /* libz.tbd in Frameworks */,
-				7B17F0FA1C97F7A400FF0C8F /* CoreTelephony.framework in Frameworks */,
-				7B17F0F81C97F75900FF0C8F /* CoreMedia.framework in Frameworks */,
-				7B17F0F61C97F74B00FF0C8F /* QuartzCore.framework in Frameworks */,
-				7B17F0F41C97F74100FF0C8F /* OpenGLES.framework in Frameworks */,
 				3AC626361D128E2800D94010 /* libVinnyLive.a in Frameworks */,
-				7B17F0F21C97F73700FF0C8F /* OpenAL.framework in Frameworks */,
-				7B17F0F01C97F72D00FF0C8F /* AssetsLibrary.framework in Frameworks */,
-				7B17F0EE1C97F72100FF0C8F /* VideoToolbox.framework in Frameworks */,
-				7B17F0EC1C97F71400FF0C8F /* AVFoundation.framework in Frameworks */,
 				3AC626341D128E2800D94010 /* libVHallSDK.a in Frameworks */,
 				3AC626351D128E2800D94010 /* libVHLivePlay.a in Frameworks */,
+				C005BF701DB60D2D0088B564 /* libVHallFilterSDK.a in Frameworks */,
+				C005BF6F1DB60D2D0088B564 /* libGPUImage.a in Frameworks */,
+				7B17F0EC1C97F71400FF0C8F /* AVFoundation.framework in Frameworks */,
+				7B17F0EE1C97F72100FF0C8F /* VideoToolbox.framework in Frameworks */,
+				7B17F0F21C97F73700FF0C8F /* OpenAL.framework in Frameworks */,
+				7B17F0F81C97F75900FF0C8F /* CoreMedia.framework in Frameworks */,
+				7B17F0FA1C97F7A400FF0C8F /* CoreTelephony.framework in Frameworks */,
+				7B17F0F41C97F74100FF0C8F /* OpenGLES.framework in Frameworks */,
 				7B17F0EA1C97F70A00FF0C8F /* MediaPlayer.framework in Frameworks */,
+				7B17F0F01C97F72D00FF0C8F /* AssetsLibrary.framework in Frameworks */,
+				7B17F0F61C97F74B00FF0C8F /* QuartzCore.framework in Frameworks */,
+				C004029A1CDCBAE1009D4C33 /* JavaScriptCore.framework in Frameworks */,
+				C0032E971E08CA0B00D12E04 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,6 +433,7 @@
 		3A7ED2031CFC39E00077097B /* VHallSDK */ = {
 			isa = PBXGroup;
 			children = (
+				2F4324D61DF7A85800E589E6 /* VHallComment.h */,
 				C005BF5F1DB60B810088B564 /* CameraEngineRtmp.h */,
 				C005BF601DB60B810088B564 /* OpenCONSTS.h */,
 				C005BF611DB60B810088B564 /* VHallApi.h */,
@@ -432,6 +447,7 @@
 				3AC6262D1D128E2800D94010 /* libVHallSDK.a */,
 				3AC6262E1D128E2800D94010 /* libVHLivePlay.a */,
 				3AC6262F1D128E2800D94010 /* libVinnyLive.a */,
+				C005BF6B1DB60D2D0088B564 /* VHallFilterSDK */,
 			);
 			name = VHallSDK;
 			path = ../../../VHallSDK;
@@ -442,6 +458,7 @@
 			children = (
 				7B17F0C01C97D8D400FF0C8F /* VHallSDKDemo */,
 				7B17F0BF1C97D8D400FF0C8F /* Products */,
+				C0032E7D1E07C97400D12E04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -459,14 +476,13 @@
 				C094725E1D7FCBD1009C7D65 /* CONSTS.h */,
 				7B17F0C41C97D8D400FF0C8F /* AppDelegate.h */,
 				7B17F0C51C97D8D400FF0C8F /* AppDelegate.mm */,
-				7B17F1201C97FA2300FF0C8F /* ViewController */,
 				C094D7611CE3443E00EBB609 /* VHStystemSetting.h */,
 				C094D7621CE3443E00EBB609 /* VHStystemSetting.m */,
+				7B17F1201C97FA2300FF0C8F /* ViewController */,
 				3A7ED1811CFC39920077097B /* libs */,
-				7B17F0D31C97D8D400FF0C8F /* Assets.xcassets */,
-				C094D7B31CE4CD2D00EBB609 /* framework */,
 				7B17F0C11C97D8D400FF0C8F /* Supporting Files */,
 				7B17F0E51C97DA8D00FF0C8F /* LaunchScreen.storyboard */,
+				7B17F0D31C97D8D400FF0C8F /* Assets.xcassets */,
 			);
 			path = VHallSDKDemo;
 			sourceTree = "<group>";
@@ -497,6 +513,38 @@
 				C01B75111D6D7B6B00B28C75 /* 设置 */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		C0032E7D1E07C97400D12E04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C0032E941E08C9F200D12E04 /* libicucore.tbd */,
+				7B17F0FF1C97F81200FF0C8F /* libiconv.tbd */,
+				7B17F0FD1C97F7D800FF0C8F /* libbz2.1.0.tbd */,
+				7B17F0FB1C97F7CB00FF0C8F /* libz.tbd */,
+				C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */,
+				7B17F0F91C97F7A400FF0C8F /* CoreTelephony.framework */,
+				7B17F0F71C97F75900FF0C8F /* CoreMedia.framework */,
+				7B17F0F51C97F74B00FF0C8F /* QuartzCore.framework */,
+				7B17F0F31C97F74100FF0C8F /* OpenGLES.framework */,
+				7B17F0F11C97F73700FF0C8F /* OpenAL.framework */,
+				7B17F0EF1C97F72D00FF0C8F /* AssetsLibrary.framework */,
+				7B17F0ED1C97F72100FF0C8F /* VideoToolbox.framework */,
+				7B17F0EB1C97F71400FF0C8F /* AVFoundation.framework */,
+				7B17F0E91C97F70A00FF0C8F /* MediaPlayer.framework */,
+				C0032E961E08CA0B00D12E04 /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C005BF6B1DB60D2D0088B564 /* VHallFilterSDK */ = {
+			isa = PBXGroup;
+			children = (
+				C005BF721DB610720088B564 /* VHallLivePublishFilter.h */,
+				C005BF6C1DB60D2D0088B564 /* libGPUImage.a */,
+				C005BF6D1DB60D2D0088B564 /* libVHallFilterSDK.a */,
+			);
+			path = VHallFilterSDK;
 			sourceTree = "<group>";
 		};
 		C01B750E1D6D58A100B28C75 /* 发直播 */ = {
@@ -552,26 +600,6 @@
 				C094D7661CE3574200EBB609 /* SettingViewController.xib */,
 			);
 			name = "设置";
-			sourceTree = "<group>";
-		};
-		C094D7B31CE4CD2D00EBB609 /* framework */ = {
-			isa = PBXGroup;
-			children = (
-				7B17F0FF1C97F81200FF0C8F /* libiconv.tbd */,
-				7B17F0FD1C97F7D800FF0C8F /* libbz2.1.0.tbd */,
-				7B17F0FB1C97F7CB00FF0C8F /* libz.tbd */,
-				C00402991CDCBAE1009D4C33 /* JavaScriptCore.framework */,
-				7B17F0F91C97F7A400FF0C8F /* CoreTelephony.framework */,
-				7B17F0F71C97F75900FF0C8F /* CoreMedia.framework */,
-				7B17F0F51C97F74B00FF0C8F /* QuartzCore.framework */,
-				7B17F0F31C97F74100FF0C8F /* OpenGLES.framework */,
-				7B17F0F11C97F73700FF0C8F /* OpenAL.framework */,
-				7B17F0EF1C97F72D00FF0C8F /* AssetsLibrary.framework */,
-				7B17F0ED1C97F72100FF0C8F /* VideoToolbox.framework */,
-				7B17F0EB1C97F71400FF0C8F /* AVFoundation.framework */,
-				7B17F0E91C97F70A00FF0C8F /* MediaPlayer.framework */,
-			);
-			name = framework;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -811,6 +839,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPYING_PRESERVES_HFS_DATA = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = S82ZX9394G;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";
@@ -840,7 +869,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPYING_PRESERVES_HFS_DATA = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = S82ZX9394G;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "";

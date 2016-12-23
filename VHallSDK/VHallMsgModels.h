@@ -34,6 +34,16 @@
 @property (nonatomic, copy) NSString * text;            //聊天消息
 @end
 
+
+/**
+ *  历史评论
+ */
+
+@interface VHCommentModel : VHallMsgModels
+@property (nonatomic, copy) NSString * text;            //评论内容
+@property(nonatomic,copy)   NSString *commentId;        //评论ID
+@end
+
 /**
  *  提问消息
  */

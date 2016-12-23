@@ -52,7 +52,7 @@ static VHStystemSetting *pub_sharedSetting = nil;
         _activityID = [standardUserDefaults objectForKey:@"VHactivityID"];   //活动ID     必填
         _recordID   = [standardUserDefaults objectForKey:@"VHrecordID"];     //片段ID     可以为空
         _nickName   = [standardUserDefaults objectForKey:@"VHnickName"];     //参会昵称    为空默认随机字符串做昵称
-        _userID     = [standardUserDefaults objectForKey:@"VHuserID"];       //用户唯一ID  为空默认使用设备UUID做为唯一ID
+        _email     = [standardUserDefaults objectForKey:@"VHuserID"];        //标示该游客用户唯一id 可填写用户邮箱  为空默认使用设备UUID做为唯一ID
         _kValue     = [standardUserDefaults objectForKey:@"VHkValue"];       //K值        可以为空
 
         //直播设置
@@ -70,20 +70,20 @@ static VHStystemSetting *pub_sharedSetting = nil;
 
         if(_activityID == nil)
         {
-            self.activityID = DEMO_ActivityId;
+            _activityID = DEMO_ActivityId;
         }
         if(_liveToken  == nil)
         {
-            self.liveToken = DEMO_AccessToken;
+            _liveToken = DEMO_AccessToken;
         }
         
         if(_account == nil)
         {
-            self.account = DEMO_account;
+            _account = DEMO_account;
         }
         if(_password  == nil)
         {
-            self.password = DEMO_password;
+            _password = DEMO_password;
         }
         
         
@@ -91,33 +91,33 @@ static VHStystemSetting *pub_sharedSetting = nil;
         {
             _nickName = [UIDevice currentDevice].name;
         }
-        if(_userID == nil || _userID.length == 0)
+        if(_email == nil || _email.length == 0)
         {
-            self.userID = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
-            if(_userID == nil || _userID.length == 0)
+            _email = [[[UIDevice currentDevice] identifierForVendor] UUIDString];
+            if(_email == nil || _email.length == 0)
             {
-                self.userID = @"unknown";
+                _email = @"unknown";
             }
         }
         if(_videoResolution == nil || _videoResolution.length == 0)
         {
-            self.videoResolution = @"1";
+            _videoResolution = @"1";
         }
 
         if(_videoBitRate<=0)
         {
-            self.videoBitRate = 600;
+            _videoBitRate = 600;
         }
         if(_audioBitRate<=0)
         {
-            self.audioBitRate = 16;
+            _audioBitRate = 16;
         }
         if(_videoCaptureFPS <1)
-            self.videoCaptureFPS = 10;
+            _videoCaptureFPS = 10;
         if(_videoCaptureFPS >30)
-            self.videoCaptureFPS = 30;
+            _videoCaptureFPS = 30;
         if(_bufferTimes <=0)
-            self.bufferTimes = 2;
+            _bufferTimes = 2;
     }
     return self;
 }
@@ -126,7 +126,12 @@ static VHStystemSetting *pub_sharedSetting = nil;
 {
     _activityID = activityID;
     if(activityID == nil || activityID.length == 0)
+    {
         _activityID = DEMO_ActivityId;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"VHactivityID"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        return;
+    }
     
     [[NSUserDefaults standardUserDefaults] setObject:_activityID forKey:@"VHactivityID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -146,13 +151,13 @@ static VHStystemSetting *pub_sharedSetting = nil;
     [[NSUserDefaults standardUserDefaults] setObject:_nickName forKey:@"VHnickName"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
-- (void)setUserID:(NSString*)userID
+- (void)setEmail:(NSString*)email
 {
-    if(userID == nil || userID.length == 0)
+    if(email == nil || email.length == 0)
         return;
     
-    _userID = userID;
-    [[NSUserDefaults standardUserDefaults] setObject:_userID forKey:@"VHuserID"];
+    _email = email;
+    [[NSUserDefaults standardUserDefaults] setObject:_email forKey:@"VHuserID"];
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 - (void)setKValue:(NSString*)kValue
@@ -188,7 +193,11 @@ static VHStystemSetting *pub_sharedSetting = nil;
 {
     _liveToken = liveToken;
     if(liveToken == nil || liveToken.length == 0)
+    {
         _liveToken = DEMO_AccessToken;
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"VHliveToken"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+    }
     
     [[NSUserDefaults standardUserDefaults] setObject:_liveToken forKey:@"VHliveToken"];
     [[NSUserDefaults standardUserDefaults] synchronize];

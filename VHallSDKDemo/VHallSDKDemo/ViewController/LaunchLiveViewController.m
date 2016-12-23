@@ -6,6 +6,10 @@
 //  Copyright (c) 2015年 vhall. All rights reserved.
 //
 
+#if VHallFilterSDK_ENABLE
+#import "VHallLivePublishFilter.h"
+#else
+#endif
 #import "LaunchLiveViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "UIAlertView+ITTAdditions.h"
@@ -15,7 +19,13 @@
 #import "WatchLiveChatTableViewCell.h"
 #import "VHallApi.h"
 
+
+
+#if VHallFilterSDK_ENABLE
+@interface LaunchLiveViewController ()<CameraEngineRtmpDelegate, VHallChatDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, VHallLivePublishFilterDelegate>
+#else
 @interface LaunchLiveViewController ()<CameraEngineRtmpDelegate, VHallChatDelegate, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+#endif
 {
     BOOL  _isVideoStart;
     BOOL  _isAudioStart;
@@ -26,7 +36,12 @@
     MBProgressHUD * _hud;
     UIButton * _lastFilterSelectBtn;
 }
+
+#if VHallFilterSDK_ENABLE
+@property (strong, nonatomic)VHallLivePublishFilter *engine;
+#else
 @property (strong, nonatomic)VHallLivePublish *engine;
+#endif
 @property (weak, nonatomic) IBOutlet UIView *perView;
 @property (weak, nonatomic) IBOutlet UIImageView *logView;
 @property (weak, nonatomic) IBOutlet UILabel *bitRateLabel;
@@ -60,7 +75,6 @@
     self = [super init];
     if (self) {
         [self initDatas];
-        
     }
     return self;
 }
@@ -114,7 +128,11 @@
 
 - (IBAction)closeBtnClick:(id)sender
 {
-    [_engine stopLive];//停止活动
+    if (_engine.isPublishing)
+    {
+         [_engine stopLive];//停止活动
+    }
+   
     [self dismissViewControllerAnimated:YES completion:^{
     }];
     [self.navigationController popViewControllerAnimated:NO];
@@ -157,7 +175,13 @@
     [self filterSettingBtnClick:_defaultFilterSelectBtn];
     // TODO:暂时不支持此功能，但保留。
     _audioStartAndStopBtn.hidden = YES;
-    _filterBtn.hidden=YES;
+    
+    
+#if VHallFilterSDK_ENABLE
+    _filterBtn.hidden = NO;
+#else
+    _filterBtn.hidden = YES;
+#endif
 }
 
 - (void)initCameraEngine
@@ -169,8 +193,15 @@
     }else{
         deviceOrgiation = kDeviceLandSpaceRight;
     }
+#if VHallFilterSDK_ENABLE
+    self.engine = [[VHallLivePublishFilter alloc] initWithOrgiation:deviceOrgiation];
+    BOOL ret = [_engine initCaptureVideo:AVCaptureDevicePositionFront];
+    _torchBtn.hidden = YES;
+    _isFontVideo = YES;
+#else
     self.engine = [[VHallLivePublish alloc] initWithOrgiation:deviceOrgiation];
     BOOL ret = [_engine initCaptureVideo:AVCaptureDevicePositionBack];
+#endif
     if (!ret) {
         VHLog(@"initCaptureVideo 调用失败！");
     }
@@ -182,10 +213,14 @@
     self.engine.videoCaptureFPS = (int)_videoCaptureFPS;
     self.engine.delegate = self;
     [self.perView insertSubview:_engine.displayView atIndex:0];
-    
+    _engine.videoResolution = _videoResolution;
     //开始视频采集
     [_engine startVideoCapture];
-
+    
+#if VHallFilterSDK_ENABLE
+    _engine.openFilter = YES;
+    [_engine setBeautifyFilterWithBilateral:10.0f Brightness:1.0f Saturation:1.0f];
+#endif
 }
 
 #pragma mark - Lifecycle(ObserveValueForKeyPath)
@@ -270,7 +305,7 @@
     return;
 #endif
     
-    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])
+    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])//此处只用于提示信息判断，只替换CONSTS.h中的AppKey即可
     {
         [self showMsg:@"请填写CONSTS.h中的AppKey" afterDelay:1.5];
         return;
@@ -281,10 +316,13 @@
         //        _isAudioStart = YES;
         //        [self startAudioPlayer];
         //    self.engine.audioBitRate = _audioBitRate;
-        
-        _engine.videoResolution = _videoResolution;
+#if VHallFilterSDK_ENABLE
+        _engine.videoBitRate = 1200 * 1000;
+#else
         _engine.videoBitRate = _videoBitRate;
+#endif
         _engine.audioBitRate = _audioBitRate;
+        
         _chatBtn.hidden = NO;
         [_hud show:YES];
         NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
@@ -293,15 +331,16 @@
         param[@"is_single_audio"] = @"0";    // 0 ：视频， 1：音频
         [_engine startLive:param];
     }else{
-        
+        _isVideoStart=NO;
         _bitRateLabel.text = @"";
         _chatBtn.hidden = YES;
         [_hud hide:YES];
         [_videoStartAndStopBtn setTitle:@"开始直播" forState:UIControlStateNormal];
         [_engine stopLive];//停止活动
+       
     }
     _logView.hidden = YES;
-    _isVideoStart = !_isVideoStart;
+    //_isVideoStart = !_isVideoStart;
 }
 
 - (IBAction)startAudioPlayer
@@ -368,6 +407,7 @@
             break;
         case kLiveStatusPushConnectSucceed:
         {
+            _isVideoStart=YES;
             if (_isVideoStart) {
                 [_videoStartAndStopBtn setTitle:@"停止直播" forState:UIControlStateNormal];
             }
@@ -397,6 +437,7 @@
             break;
         case kLiveStatusGetUrlError:
         {
+            _isVideoStart=NO;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [MBHUDHelper showWarningWithText:content];
             });
@@ -474,7 +515,49 @@
     sender.selected = YES;
     [sender setBackgroundColor:[UIColor colorWithRed:0.3f green:0.6f blue:0.6f alpha:1.0f]];
     _lastFilterSelectBtn = sender;
+    
+#if VHallFilterSDK_ENABLE
+    switch (sender.tag) {
+        case 1:
+            _engine.openFilter = YES;
+            [_engine setBeautifyFilterWithBilateral:10.0f Brightness:1.0f Saturation:1.0f];
+            break;
+        case 2:
+            _engine.openFilter = YES;
+            [_engine setBeautifyFilterWithBilateral:8.0f Brightness:1.05f Saturation:1.0f];
+            break;
+        case 3:
+            _engine.openFilter = YES;
+            [_engine setBeautifyFilterWithBilateral:6.0f Brightness:1.10f Saturation:1.0f];
+            break;
+        case 4:
+            _engine.openFilter = YES;
+            [_engine setBeautifyFilterWithBilateral:4.0f Brightness:1.15f Saturation:1.0f];
+            break;
+        case 5:
+            _engine.openFilter = YES;
+            [_engine setBeautifyFilterWithBilateral:2.0f Brightness:1.20f Saturation:1.0f];
+            break;
+        default:
+        case 0:
+            _engine.openFilter = NO;
+            break;
+    }
+    
+#endif
 }
+
+#pragma mark - Filter(LivePublishFilterDelegate)
+#if VHallFilterSDK_ENABLE
+- (void)addGPUImageFilter:(GPUImageVideoCamera *)source Output:(GPUImageView *)output
+{
+//    GPUImageiOSBlurFilter *filter = [[GPUImageiOSBlurFilter alloc] init];
+//    filter.saturation = 2.0f;
+//    [source addTarget:filter];
+//    [filter addTarget:output];
+}
+#endif
+
 #pragma mark -
 #pragma mark - Chat && QA
 

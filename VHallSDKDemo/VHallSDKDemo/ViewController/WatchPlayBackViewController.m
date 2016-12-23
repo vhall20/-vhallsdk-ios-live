@@ -11,13 +11,15 @@
 #import "ALMoviePlayerControls.h"
 #import <MediaPlayer/MPMoviePlayerController.h>
 #import <AVFoundation/AVFoundation.h>
-
+#import "WatchLiveChatTableViewCell.h"
 #import "VHallApi.h"
 
-@interface WatchPlayBackViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate>
+@interface WatchPlayBackViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate,UITableViewDelegate,UITableViewDataSource>
 {
     VHallMoviePlayer  *_moviePlayer;//播放器
+    VHallComment*_comment;
     int  _bufferCount;
+    NSMutableArray *_commentsArray;//评论
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *bufferCountLabel;
@@ -26,6 +28,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *textImageView;
 @property (nonatomic,assign) VHallMovieVideoPlayMode playModelTemp;
 @property (nonatomic,strong) UILabel*textLabel;
+@property (weak, nonatomic) IBOutlet UITextField *commentTextField;
+@property (weak, nonatomic) IBOutlet UITableView *historyCommentTableView;
+@property (weak, nonatomic) IBOutlet UIButton *getHistoryCommentBtn;
 @property (weak, nonatomic) IBOutlet UILabel *liveTypeLabel;
 @end
 
@@ -53,6 +58,7 @@
 
 - (void)initViews
 {
+    _comment = [[VHallComment alloc] init];
     //阻止iOS设备锁屏
     [[UIApplication sharedApplication] setIdleTimerDisabled:YES];
     [self addPanGestureRecognizer];
@@ -181,8 +187,8 @@
     // Do any additional setup after loading the view from its nib.
     
     [self initViews];
-    
-    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])
+    _commentsArray=[NSMutableArray array];//初始化评论数组
+    if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])//此处只用于提示信息判断，只替换CONSTS.h中的AppKey即可
     {
         [self showMsg:@"请填写CONSTS.h中的AppKey" afterDelay:1.5];
         return;
@@ -195,7 +201,7 @@
     NSMutableDictionary * param = [[NSMutableDictionary alloc]init];
     param[@"id"] =  _roomId;
     param[@"name"] = DEMO_Setting.nickName;
-    param[@"email"] = DEMO_Setting.userID;
+    param[@"email"] = DEMO_Setting.email;
     param[@"record_id"] = DEMO_Setting.recordID;
     if (_password&&_password.length) {
         param[@"pass"] = _password;
@@ -360,7 +366,7 @@
             break;
     }
 
-
+    
     [self alertWithMessage:playMode];
 }
 
@@ -444,6 +450,9 @@
         case MPMoviePlaybackStatePaused:
         {
             VHLog(@"暂停");
+            if (self.hlsMoviePlayer.view) {
+                [MBProgressHUD hideAllHUDsForView:self.hlsMoviePlayer.view animated:YES];
+            }
             if (self.playModelTemp == VHallMovieVideoPlayModeTextAndVoice )
             self.liveTypeLabel.text = @"已暂停语音回放";
         }
@@ -521,11 +530,84 @@
 #pragma mark - 详情
 - (IBAction)detailsButtonClick:(UIButton *)sender {
     self.textImageView.hidden = YES;
+    [self getHistoryComment];
+ 
 }
 
 #pragma mark - 文档
 - (IBAction)textButtonClick:(UIButton *)sender {
     self.textImageView.hidden = NO;
+
+}
+
+#pragma mark - 历史记录
+- (IBAction)historyCommentButtonClick:(id)sender
+{
+    
+    __weak typeof(self) weakSelf = self;
+    _getHistoryCommentBtn.selected=YES;
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_comment getHistoryCommentPageCountLimit:20 offSet:_commentsArray.count success:^(NSArray *msgs) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (msgs.count > 0)
+        {
+            [_commentsArray addObjectsFromArray:msgs];
+            dispatch_async(dispatch_get_main_queue(), ^{
+              [weakSelf.historyCommentTableView reloadData];
+                if (sender == nil)
+                {
+                     [_historyCommentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+                }else
+                    
+                {
+                      [_historyCommentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
+                }
+        
+            });
+            
+           
+        }
+        
+    } failed:^(NSDictionary *failedData) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
+        [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
+    }];
+}
+
+#pragma mark - 发表评论
+- (IBAction)sendCommentBtnClicked:(id)sender {
+    __weak typeof(self) weakSelf=self;
+    [_commentTextField resignFirstResponder];
+    if(_commentTextField.text.length>0)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [_comment sendComment:_commentTextField.text success:^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            _commentTextField.text = @"";
+            [UIAlertView popupAlertByDelegate:nil title:@"发表成功" message:nil];
+            [weakSelf getHistoryComment];
+            
+        } failed:^(NSDictionary *failedData) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
+            [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
+        }];
+    }
+}
+
+#pragma mark -拉取前20条评论
+
+-(void)getHistoryComment
+{
+    [_commentsArray removeAllObjects];
+    [self historyCommentButtonClick:nil];
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_commentTextField resignFirstResponder];
+    return YES;
 }
 
 
@@ -553,6 +635,52 @@
 
     UIAlertView*alert = [[UIAlertView alloc]initWithTitle:@"提示" message:message delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
     [alert show];
+}
+
+
+#pragma mark  tableView Delegate
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    UITableViewCell *cell =nil;
+    if (_getHistoryCommentBtn.selected)
+    {
+        id model = [_commentsArray objectAtIndex:indexPath.row];
+        static NSString * indetify = @"WatchLiveChatCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:indetify];
+        if (!cell) {
+            cell = [[[NSBundle mainBundle] loadNibNamed:@"WatchLiveChatTableViewCell" owner:self options:nil] objectAtIndex:0];
+        }
+        ((WatchLiveChatTableViewCell *)cell).model = model;
+    }else
+    {
+        static  NSString *indetify = @"identifyCell";
+        cell = [tableView dequeueReusableCellWithIdentifier:indetify];
+        if (!cell) {
+            cell =[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:indetify];
+        }
+    }
+    return cell;
+}
+
+-(NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
+{
+    if (_getHistoryCommentBtn.selected)
+    {
+        return _commentsArray.count ;
+    }
+    return 0;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    CGFloat height = 0;
+    if (_getHistoryCommentBtn.selected)
+    {
+        height =120;
+    }
+    return height;
+    
 }
 
 @end

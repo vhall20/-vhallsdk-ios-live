@@ -57,7 +57,7 @@
     _FPSTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.videoCaptureFPS];
     _bufferTimesTextField.text = [NSString stringWithFormat:@"%ld",(long)DEMO_Setting.bufferTimes];
     _nickNameTextField.text = DEMO_Setting.nickName;
-    _userIDTextField.text = DEMO_Setting.userID;
+    _userIDTextField.text = DEMO_Setting.email;
     _kValueTextField.text = DEMO_Setting.kValue;
     _activityIDTextField.delegate = self;
     _recordIDTextField.delegate = self;
@@ -183,7 +183,7 @@
     DEMO_Setting.videoCaptureFPS = [_FPSTextField.text integerValue];
     DEMO_Setting.bufferTimes = [_bufferTimesTextField.text integerValue];
     DEMO_Setting.nickName = _nickNameTextField.text;
-    DEMO_Setting.userID = _userIDTextField.text;
+    DEMO_Setting.email = _userIDTextField.text;
     DEMO_Setting.kValue = _kValueTextField.text;
     
     [self dismissViewControllerAnimated:YES completion:^{

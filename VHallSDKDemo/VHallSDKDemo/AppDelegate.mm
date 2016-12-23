@@ -10,6 +10,7 @@
 #import "MainViewController.h"
 #import "Reachability.h"
 #import "VHallApi.h"
+#import <objc/message.h>
 
 static AppDelegate *_appDelegate = nil;
 

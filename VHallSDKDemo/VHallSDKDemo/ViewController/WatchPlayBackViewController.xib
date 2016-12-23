@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11201" systemVersion="16A323" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -10,6 +10,9 @@
             <connections>
                 <outlet property="backView" destination="Jzh-oH-Jp7" id="3AS-2Q-GFg"/>
                 <outlet property="bufferCountLabel" destination="Z7f-xS-NdP" id="owh-F2-NqR"/>
+                <outlet property="commentTextField" destination="9Nh-JA-Gzw" id="9QN-UK-TZ6"/>
+                <outlet property="getHistoryCommentBtn" destination="TvZ-tu-hxg" id="08z-K5-AAm"/>
+                <outlet property="historyCommentTableView" destination="87u-rY-ksZ" id="noh-ci-fGL"/>
                 <outlet property="liveTypeLabel" destination="3LA-sD-QBG" id="ebY-sK-cix"/>
                 <outlet property="textImageView" destination="Zpm-nw-viq" id="6cq-RA-XOR"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -17,7 +20,7 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jzh-oH-Jp7">
@@ -104,7 +107,7 @@
                                 <constraint firstAttribute="width" constant="50" id="nCB-Jt-yGf"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <state key="normal" title="详情">
+                            <state key="normal" title="评论">
                                 <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
@@ -126,14 +129,57 @@
                         </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nKg-wQ-zdc">
                             <subviews>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="87u-rY-ksZ">
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <connections>
+                                        <outlet property="dataSource" destination="-1" id="eMC-hH-oDB"/>
+                                        <outlet property="delegate" destination="-1" id="Mvc-lq-WJa"/>
+                                    </connections>
+                                </tableView>
+                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="9Nh-JA-Gzw">
+                                    <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <nil key="textColor"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                    <connections>
+                                        <outlet property="delegate" destination="-1" id="TLl-9h-aZx"/>
+                                    </connections>
+                                </textField>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k26-lM-ZDS">
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" title="发表评论"/>
+                                    <connections>
+                                        <action selector="sendCommentBtnClicked:" destination="-1" eventType="touchUpInside" id="sej-Xd-nZj"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TvZ-tu-hxg">
+                                    <state key="normal" title="下一页"/>
+                                    <connections>
+                                        <action selector="historyCommentButtonClick:" destination="-1" eventType="touchUpInside" id="mBs-Et-0hC"/>
+                                    </connections>
+                                </button>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zpm-nw-viq">
-                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </imageView>
                             </subviews>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
+                                <constraint firstItem="87u-rY-ksZ" firstAttribute="leading" secondItem="nKg-wQ-zdc" secondAttribute="leading" id="3x8-rO-7mX"/>
                                 <constraint firstAttribute="bottom" secondItem="Zpm-nw-viq" secondAttribute="bottom" id="9Nd-s1-SJF"/>
+                                <constraint firstAttribute="bottom" secondItem="9Nh-JA-Gzw" secondAttribute="bottom" constant="17" id="DaJ-sJ-le3"/>
+                                <constraint firstAttribute="trailing" secondItem="TvZ-tu-hxg" secondAttribute="trailing" constant="18" id="Kua-0y-aGN"/>
+                                <constraint firstAttribute="bottom" secondItem="k26-lM-ZDS" secondAttribute="bottom" constant="18" id="OMz-g8-Sjg"/>
+                                <constraint firstItem="k26-lM-ZDS" firstAttribute="top" secondItem="87u-rY-ksZ" secondAttribute="bottom" constant="8" id="Oa2-OM-jRj"/>
+                                <constraint firstItem="9Nh-JA-Gzw" firstAttribute="leading" secondItem="nKg-wQ-zdc" secondAttribute="leading" constant="8" id="SkQ-Da-qXv"/>
+                                <constraint firstItem="9Nh-JA-Gzw" firstAttribute="top" secondItem="87u-rY-ksZ" secondAttribute="bottom" constant="9" id="Sx9-5d-1Ts"/>
                                 <constraint firstItem="Zpm-nw-viq" firstAttribute="leading" secondItem="nKg-wQ-zdc" secondAttribute="leading" id="UqY-Xi-VI7"/>
+                                <constraint firstItem="87u-rY-ksZ" firstAttribute="top" secondItem="nKg-wQ-zdc" secondAttribute="top" id="VVt-Lb-21V"/>
+                                <constraint firstItem="k26-lM-ZDS" firstAttribute="leading" secondItem="9Nh-JA-Gzw" secondAttribute="trailing" constant="15" id="cZz-ts-3W9"/>
+                                <constraint firstAttribute="bottom" secondItem="87u-rY-ksZ" secondAttribute="bottom" constant="56" id="fCB-wN-EFV"/>
+                                <constraint firstAttribute="trailing" secondItem="87u-rY-ksZ" secondAttribute="trailing" id="ioy-1b-li8"/>
+                                <constraint firstItem="TvZ-tu-hxg" firstAttribute="top" secondItem="87u-rY-ksZ" secondAttribute="bottom" constant="8" id="jIZ-Wx-XMg"/>
+                                <constraint firstItem="TvZ-tu-hxg" firstAttribute="leading" secondItem="k26-lM-ZDS" secondAttribute="trailing" constant="8" id="mlL-Be-6x8"/>
+                                <constraint firstAttribute="bottom" secondItem="TvZ-tu-hxg" secondAttribute="bottom" constant="18" id="pOL-eZ-2Bd"/>
                                 <constraint firstAttribute="trailing" secondItem="Zpm-nw-viq" secondAttribute="trailing" id="tQf-Wn-iHY"/>
                                 <constraint firstItem="Zpm-nw-viq" firstAttribute="top" secondItem="nKg-wQ-zdc" secondAttribute="top" id="uCd-8O-THO"/>
                             </constraints>
@@ -162,6 +208,7 @@
                 <constraint firstAttribute="trailing" secondItem="pVi-rt-pU8" secondAttribute="trailing" id="sdX-mL-AJA"/>
                 <constraint firstItem="pVi-rt-pU8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="yKi-v5-EXh"/>
             </constraints>
+            <point key="canvasLocation" x="35.5" y="54.5"/>
         </view>
     </objects>
 </document>
