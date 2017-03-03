@@ -15,6 +15,7 @@
 #import "VHallLottery.h"
 #import "VHallMsgModels.h"
 #import "VHallComment.h"
+#import "VHallSign.h"
 
 @interface VHallApi : NSObject 
 
@@ -79,6 +80,23 @@
  *  @result 前登录用户id
  */
 + (NSString *)currentUserID;
+
+
+
+/*!
+ *  获取当前登录用户头像
+ *
+ *  @result 当前登陆用户头像地址
+ */
++(NSString*)currentUserHeadUrl;
+
+
+/*!
+ *  获取当前登录用户昵称
+ *
+ *  @result 当前登陆用户昵称
+ */
++(NSString*)currentUserNickName;
 
 //以下是所有接口请求错误的错误码及错误内容
 /*

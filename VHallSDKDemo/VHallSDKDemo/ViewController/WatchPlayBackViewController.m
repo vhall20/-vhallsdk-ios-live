@@ -13,13 +13,17 @@
 #import <AVFoundation/AVFoundation.h>
 #import "WatchLiveChatTableViewCell.h"
 #import "VHallApi.h"
-
-@interface WatchPlayBackViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate,UITableViewDelegate,UITableViewDataSource>
+#import "VHMessageToolView.h"
+#import "VHPullingRefreshTableView.h"
+#import "AnnouncementView.h"
+@interface WatchPlayBackViewController ()<ALMoviePlayerControllerDelegate,VHallMoviePlayerDelegate,UITableViewDelegate,UITableViewDataSource,VHPullingRefreshTableViewDelegate>
 {
     VHallMoviePlayer  *_moviePlayer;//播放器
     VHallComment*_comment;
     int  _bufferCount;
     NSMutableArray *_commentsArray;//评论
+    VHPullingRefreshTableView* _tableView;
+    UIButton              *_toolViewBackView;//遮罩
 }
 
 @property (weak, nonatomic) IBOutlet UILabel *bufferCountLabel;
@@ -29,9 +33,18 @@
 @property (nonatomic,assign) VHallMovieVideoPlayMode playModelTemp;
 @property (nonatomic,strong) UILabel*textLabel;
 @property (weak, nonatomic) IBOutlet UITextField *commentTextField;
-@property (weak, nonatomic) IBOutlet UITableView *historyCommentTableView;
+
 @property (weak, nonatomic) IBOutlet UIButton *getHistoryCommentBtn;
 @property (weak, nonatomic) IBOutlet UILabel *liveTypeLabel;
+
+@property (nonatomic,strong) VHMessageToolView * messageToolView;  //输入框
+@property (weak, nonatomic) IBOutlet UIView *historyCommentTableView;
+@property (weak, nonatomic) IBOutlet UIButton *commentBtn;
+@property (weak, nonatomic) IBOutlet UIButton *docBtn;
+@property (weak, nonatomic) IBOutlet UIButton *detalBtn;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
+@property (weak, nonatomic) IBOutlet UIView *showView;
+@property(nonatomic,strong) AnnouncementView* announcementView;
 @end
 
 @implementation WatchPlayBackViewController
@@ -69,9 +82,24 @@
     [self.hlsMoviePlayer prepareToPlay];
     [self.hlsMoviePlayer.view setFrame:self.view.bounds];  // player的尺寸
     self.hlsMoviePlayer.shouldAutoplay=YES;
-    self.hlsMoviePlayer.view.backgroundColor = [UIColor whiteColor];
+    self.hlsMoviePlayer.view.backgroundColor = [UIColor blackColor];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlaybackStateDidChange:) name:MPMoviePlayerPlaybackStateDidChangeNotification object:self.hlsMoviePlayer];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(movieLoadStateDidChange:) name:MPMoviePlayerLoadStateDidChangeNotification object:self.hlsMoviePlayer];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayeExitFullScreen:) name:MPMoviePlayerDidExitFullscreenNotification object:self.hlsMoviePlayer];
+    
+    
+    _tableView = [[VHPullingRefreshTableView alloc] initWithFrame:CGRectMake(0, 0, VH_SW, _historyCommentTableView.height) pullingDelegate:self headView:YES  footView:YES];
+    _tableView.backgroundColor = self.view.backgroundColor;
+    _tableView.dataSource=self;
+    _tableView.delegate=self;
+    _tableView.startPos = 0;
+    _tableView.tag = -1;
+    _tableView.dataArr = [NSMutableArray array];
+    _tableView.showsVerticalScrollIndicator = NO;
+    _tableView.separatorColor = self.view.backgroundColor;
+    _tableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
+    [_tableView tableViewDidFinishedLoading];
+    [_historyCommentTableView addSubview:_tableView];
 
 }
 
@@ -105,12 +133,10 @@
 #pragma mark - 屏幕自适应
 - (IBAction)allScreenBtnClick:(UIButton*)sender
 {
-    if (sender.selected) {
-        [self.hlsMoviePlayer setScalingMode: MPMovieScalingModeAspectFill];
-    }else{
-        [self.hlsMoviePlayer setScalingMode:MPMovieScalingModeNone];
-    }
-    sender.selected = !sender.selected;
+    NSInteger mode = self.hlsMoviePlayer.scalingMode+1;
+    if(mode>3)
+        mode = 0;
+    self.hlsMoviePlayer.scalingMode = mode;
 
 }
 
@@ -169,17 +195,24 @@
 
 -(void)viewWillLayoutSubviews
 {
-    if (self.watchVideoType == kWatchVideoRTMP)
-    {
-        _moviePlayer.moviePlayerView.frame = _backView.bounds;
+    if ([UIApplication sharedApplication].statusBarOrientation == UIDeviceOrientationPortrait)
         
-    }else if(self.watchVideoType == kWatchVideoHLS||self.watchVideoType == kWatchVideoPlayback)
     {
-        _hlsMoviePlayer.view.frame = _backView.bounds;
-        [self.backView addSubview:self.hlsMoviePlayer.view];
-        [self.backView sendSubviewToBack:_hlsMoviePlayer.view];
+        _topConstraint.constant = 20;
+    }
+    else
+    {
+        _topConstraint.constant = 0;
     }
 }
+
+- (void)viewDidLayoutSubviews
+{
+    _hlsMoviePlayer.view.frame = _backView.bounds;
+    [self.backView addSubview:self.hlsMoviePlayer.view];
+    [self.backView sendSubviewToBack:self.hlsMoviePlayer.view];
+}
+
 
 #pragma mark - viewDidLoad
 - (void)viewDidLoad {
@@ -239,6 +272,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    //[_tableView launchRefreshing];
+    
+}
 - (void)dealloc
 {
     //阻止iOS设备锁屏
@@ -339,6 +378,28 @@
         self.textLabel = nil;
 
     }
+}
+
+
+
+- (void)Announcement:(NSString*)content publishTime:(NSString*)time
+{
+    NSLog(@"公告:%@",content);
+  
+    if(!_announcementView)
+    { //横屏时frame错误
+        if (_showView.width < [UIScreen mainScreen].bounds.size.height)
+        {
+            _announcementView = [[AnnouncementView alloc]initWithFrame:CGRectMake(0, 0, _showView.width, 35) content:content time:nil];
+        }else
+        {
+            _announcementView = [[AnnouncementView alloc]initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.height, 35) content:content time:nil];
+        }
+        
+    }
+    _announcementView.content = [content stringByAppendingString:time];
+    [_showView addSubview:_announcementView];
+
 }
 -(void)VideoPlayMode:(VHallMovieVideoPlayMode)playMode
 {
@@ -489,11 +550,29 @@
     }
 }
 
+-(void)moviePlayeExitFullScreen:(NSNotification*)note
+{
+    if(_announcementView !=nil)
+    {
+        [_announcementView endAnimation];
+        [_announcementView startAnimation];
+        
+    }
+}
+
 - (void)didBecomeActive
 {
     //观看直播
     [self.hlsMoviePlayer prepareToPlay];
     [self.hlsMoviePlayer play];
+    
+   
+    if(_announcementView !=nil)
+    {   [_announcementView endAnimation];
+        [_announcementView startAnimation];
+        
+    }
+    
 }
 
 - (void)outputDeviceChanged:(NSNotification*)notification
@@ -530,71 +609,37 @@
 #pragma mark - 详情
 - (IBAction)detailsButtonClick:(UIButton *)sender {
     self.textImageView.hidden = YES;
+    [_commentBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_docBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_detalBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [self getHistoryComment];
  
 }
 
 #pragma mark - 文档
 - (IBAction)textButtonClick:(UIButton *)sender {
+    [_docBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      [_detalBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     self.textImageView.hidden = NO;
 
+}
+- (IBAction)detailBtnClick:(id)sender {
+    [_docBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [_commentBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+      [_detalBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
 }
 
 #pragma mark - 历史记录
 - (IBAction)historyCommentButtonClick:(id)sender
 {
     
-    __weak typeof(self) weakSelf = self;
-    _getHistoryCommentBtn.selected=YES;
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    [_comment getHistoryCommentPageCountLimit:20 offSet:_commentsArray.count success:^(NSArray *msgs) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        if (msgs.count > 0)
-        {
-            [_commentsArray addObjectsFromArray:msgs];
-            dispatch_async(dispatch_get_main_queue(), ^{
-              [weakSelf.historyCommentTableView reloadData];
-                if (sender == nil)
-                {
-                     [_historyCommentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-                }else
-                    
-                {
-                      [_historyCommentTableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:_commentsArray.count-1 inSection:0] atScrollPosition:UITableViewScrollPositionNone animated:YES];
-                }
-        
-            });
-            
-           
-        }
-        
-    } failed:^(NSDictionary *failedData) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-        NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
-        [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
-    }];
-}
+    _tableView.startPos=0;
+    [self pullingTableViewDidStartRefreshing:_tableView];
+    
+  }
 
-#pragma mark - 发表评论
-- (IBAction)sendCommentBtnClicked:(id)sender {
-    __weak typeof(self) weakSelf=self;
-    [_commentTextField resignFirstResponder];
-    if(_commentTextField.text.length>0)
-    {
-        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        [_comment sendComment:_commentTextField.text success:^{
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            _commentTextField.text = @"";
-            [UIAlertView popupAlertByDelegate:nil title:@"发表成功" message:nil];
-            [weakSelf getHistoryComment];
-            
-        } failed:^(NSDictionary *failedData) {
-            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-            NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
-            [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
-        }];
-    }
-}
+
 
 #pragma mark -拉取前20条评论
 
@@ -609,7 +654,47 @@
     [_commentTextField resignFirstResponder];
     return YES;
 }
+- (IBAction)sendCommentBtnClick:(id)sender
+{
+    
+        _toolViewBackView=[[UIButton alloc] initWithFrame:CGRectMake(0, 0, VH_SW, VH_SH)];
+        [_toolViewBackView addTarget:self action:@selector(toolViewBackViewClick) forControlEvents:UIControlEventTouchUpInside];
+        _messageToolView=[[VHMessageToolView alloc] initWithFrame:CGRectMake(0, _toolViewBackView.height-[VHMessageToolView  defaultHeight], VHScreenWidth, [VHMessageToolView defaultHeight]) type:3];
+        _messageToolView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleRightMargin;
+        _messageToolView.delegate=self;
+        _messageToolView.hidden=NO;
+        _messageToolView.maxLength=140;
+        [_toolViewBackView addSubview:_messageToolView];
+        [self.view addSubview:_toolViewBackView];
+       [_messageToolView beginTextViewInView];
+}
 
+#pragma mark 点击聊天输入框蒙版
+-(void)toolViewBackViewClick
+{
+    [_messageToolView endEditing:YES];
+    [_toolViewBackView removeFromSuperview];
+}
+#pragma mark messageToolViewDelegate
+- (void)didSendText:(NSString *)text
+{
+    __weak typeof(self) weakSelf=self;
+    if(text.length>0)
+    {
+        [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        [_comment sendComment:text success:^{
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            _commentTextField.text = @"";
+            [UIAlertView popupAlertByDelegate:nil title:@"发表成功" message:nil];
+            [weakSelf getHistoryComment];
+            
+        } failed:^(NSDictionary *failedData) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+            NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
+            [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
+        }];
+    }
+}
 
 #pragma mark - alertView
 -(void)alertWithMessage : (VHallMovieVideoPlayMode)state
@@ -643,7 +728,7 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell =nil;
-    if (_getHistoryCommentBtn.selected)
+    if (_commentsArray.count !=0)
     {
         id model = [_commentsArray objectAtIndex:indexPath.row];
         static NSString * indetify = @"WatchLiveChatCell";
@@ -665,21 +750,60 @@
 
 -(NSInteger)tableView:(UITableView *)aTableView numberOfRowsInSection:(NSInteger)section
 {
-    if (_getHistoryCommentBtn.selected)
-    {
+    
         return _commentsArray.count ;
-    }
-    return 0;
+   
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    CGFloat height = 0;
-    if (_getHistoryCommentBtn.selected)
-    {
-        height =120;
-    }
-    return height;
+    
+  
+    return 60;
+   
+    
+}
+
+#pragma mark delegate
+#pragma mark - PullingRefreshTableViewDelegate
+- (void)pullingTableViewDidStartRefreshing:(VHPullingRefreshTableView *)tableView
+{
+    
+    [_commentsArray removeAllObjects];
+    [self performSelector:@selector(loadData:) withObject:tableView];
+
+    
+}
+
+
+- (void)pullingTableViewDidStartLoading:(VHPullingRefreshTableView *)tableView
+{
+    [self performSelector:@selector(loadData:) withObject:tableView];
+}
+
+
+- (void)loadData:(VHPullingRefreshTableView *)tableView
+{
+
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [_comment getHistoryCommentPageCountLimit:20 offSet:_commentsArray.count success:^(NSArray *msgs) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        if (msgs.count > 0)
+        {
+            [_commentsArray addObjectsFromArray:msgs];
+            [tableView tableViewDidFinishedLoading];
+            tableView.reachedTheEnd = (msgs == nil || _commentsArray.count <= 5);
+            [tableView reloadData];
+            
+            
+        }
+        
+    } failed:^(NSDictionary *failedData) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+        NSString* code = [NSString stringWithFormat:@"%@", failedData[@"code"]];
+        [UIAlertView popupAlertByDelegate:nil title:failedData[@"content"] message:code];
+    }];
+
     
 }
 

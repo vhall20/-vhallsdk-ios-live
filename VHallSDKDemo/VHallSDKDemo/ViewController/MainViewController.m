@@ -8,13 +8,12 @@
 
 #import "MainViewController.h"
 
-#import "SettingViewController.h"
 #import "VHallApi.h"
-#import "LaunchLiveViewController.h"   //发起直播
-#import "WatchLiveViewController.h"    //观看直播
-#import "WatchPlayBackViewController.h"//观看回放
-
-@interface MainViewController ()
+//#import "LaunchLiveViewController.h"   //发起直播
+//#import "WatchLiveViewController.h"    //观看直播
+//#import "WatchPlayBackViewController.h"//观看回放
+#import "VHHomeViewController.h"
+@interface MainViewController ()<UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *versionLabel;
 @property (weak, nonatomic) IBOutlet UITextField *accountTextField;
@@ -28,7 +27,7 @@
 
 -(void)initDatas
 {
-   EnableVHallDebugModel(YES);
+   EnableVHallDebugModel(NO);
 }
 
 - (void)initViews
@@ -42,115 +41,115 @@
     _passwordTextField.text = DEMO_Setting.password;
 }
 
-#pragma mark - UIButton Event
-- (IBAction)settingBtnClicked:(id)sender {
-    SettingViewController * settingVC = [[SettingViewController alloc]init];
-    [self presentViewController:settingVC animated:YES completion:^{
-        
-    }];
-}
-- (IBAction)protraitStartBtnClick:(id)sender
-{
-    BOOL isAnimated = NO;
-    if (sender) {
-        isAnimated = YES;
-    }
-    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID.length<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
-        return;
-    }
-    if (DEMO_Setting.liveToken == nil||DEMO_Setting.liveToken<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入token" message:nil];
-        return;
-    }
-    if (DEMO_Setting.videoBitRate<=0 || DEMO_Setting.audioBitRate<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"码率不能为负数" message:nil];
-        return;
-    }
-    if (DEMO_Setting.videoCaptureFPS< 1 || DEMO_Setting.videoCaptureFPS>30) {
-        [UIAlertView popupAlertByDelegate:nil title:@"帧率设置错误[1-30]" message:nil];
-        return;
-    }
-    
-    LaunchLiveViewController * rtmpLivedemoVC = [[LaunchLiveViewController alloc] init];
-    rtmpLivedemoVC.videoResolution = [DEMO_Setting.videoResolution intValue];
-    rtmpLivedemoVC.roomId = DEMO_Setting.activityID;
-    rtmpLivedemoVC.token = DEMO_Setting.liveToken;
-    rtmpLivedemoVC.videoBitRate = DEMO_Setting.videoBitRate*1000;
-    rtmpLivedemoVC.audioBitRate = DEMO_Setting.audioBitRate*1000;
-    rtmpLivedemoVC.videoCaptureFPS = DEMO_Setting.videoCaptureFPS;
-    [self presentViewController:rtmpLivedemoVC animated:isAnimated completion:^{
-
-    }];
-}
-
-- (IBAction)landscapeStartBtnClick:(id)sender
-{
-    BOOL isAnimated = NO;
-    if (sender) {
-        isAnimated = YES;
-    }
-    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID.length<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
-        return;
-    }
-    if (DEMO_Setting.liveToken == nil||DEMO_Setting.liveToken<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入token" message:nil];
-        return;
-    }
-    if (DEMO_Setting.videoBitRate<=0 || DEMO_Setting.audioBitRate<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"码率不能为负数" message:nil];
-        return;
-    }
-    LaunchLiveViewController * rtmpLivedemoVC = [[LaunchLiveViewController alloc]init];
-    rtmpLivedemoVC.videoResolution = [DEMO_Setting.videoResolution intValue];
-    rtmpLivedemoVC.roomId = DEMO_Setting.activityID;
-    rtmpLivedemoVC.token = DEMO_Setting.liveToken;
-    rtmpLivedemoVC.videoBitRate = DEMO_Setting.videoBitRate*1000;
-    rtmpLivedemoVC.audioBitRate = DEMO_Setting.audioBitRate*1000;
-    rtmpLivedemoVC.videoCaptureFPS = DEMO_Setting.videoCaptureFPS;
-    rtmpLivedemoVC.interfaceOrientation = UIInterfaceOrientationLandscapeRight;
-    [self presentViewController:rtmpLivedemoVC animated:isAnimated completion:^{
-
-    }];
-}
-
-- (IBAction)rtmpWatchBtnClick:(id)sender
-{
-    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
-        return;
-    }
-    if (DEMO_Setting.bufferTimes<0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入bufferTimes,切值>=0" message:nil];
-        return;
-    }
-
-    WatchLiveViewController * watchVC  =[[WatchLiveViewController alloc]init];
-    watchVC.roomId = DEMO_Setting.activityID;
-    watchVC.kValue = DEMO_Setting.kValue;
-    watchVC.bufferTimes = DEMO_Setting.bufferTimes;
-    watchVC.watchVideoType = kWatchVideoRTMP;
-    [self presentViewController:watchVC animated:YES completion:nil];
-}
-
-- (IBAction)watchPlaybackBtnClick:(id)sender
-{
-    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID<=0) {
-        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
-        return;
-    }
-    
-    WatchPlayBackViewController * watchVC  =[[WatchPlayBackViewController alloc]init];
-    watchVC.roomId = DEMO_Setting.activityID;
-    watchVC.password = DEMO_Setting.kValue;
-    watchVC.watchVideoType = kWatchVideoPlayback;
-    [self presentViewController:watchVC animated:YES completion:nil];
-}
+//#pragma mark - UIButton Event
+//- (IBAction)settingBtnClicked:(id)sender {
+//    SettingViewController * settingVC = [[SettingViewController alloc]init];
+//    [self presentViewController:settingVC animated:YES completion:^{
+//        
+//    }];
+//}
+//- (IBAction)protraitStartBtnClick:(id)sender
+//{
+//    BOOL isAnimated = NO;
+//    if (sender) {
+//        isAnimated = YES;
+//    }
+//    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID.length<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.liveToken == nil||DEMO_Setting.liveToken<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入token" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.videoBitRate<=0 || DEMO_Setting.audioBitRate<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"码率不能为负数" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.videoCaptureFPS< 1 || DEMO_Setting.videoCaptureFPS>30) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"帧率设置错误[1-30]" message:nil];
+//        return;
+//    }
+//    
+//    LaunchLiveViewController * rtmpLivedemoVC = [[LaunchLiveViewController alloc] init];
+//    rtmpLivedemoVC.videoResolution = [DEMO_Setting.videoResolution intValue];
+//    rtmpLivedemoVC.roomId = DEMO_Setting.activityID;
+//    rtmpLivedemoVC.token = DEMO_Setting.liveToken;
+//    rtmpLivedemoVC.videoBitRate = DEMO_Setting.videoBitRate*1000;
+//    rtmpLivedemoVC.audioBitRate = DEMO_Setting.audioBitRate*1000;
+//    rtmpLivedemoVC.videoCaptureFPS = DEMO_Setting.videoCaptureFPS;
+//    [self presentViewController:rtmpLivedemoVC animated:isAnimated completion:^{
+//
+//    }];
+//}
+//
+//- (IBAction)landscapeStartBtnClick:(id)sender
+//{
+//    BOOL isAnimated = NO;
+//    if (sender) {
+//        isAnimated = YES;
+//    }
+//    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID.length<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.liveToken == nil||DEMO_Setting.liveToken<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入token" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.videoBitRate<=0 || DEMO_Setting.audioBitRate<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"码率不能为负数" message:nil];
+//        return;
+//    }
+//    LaunchLiveViewController * rtmpLivedemoVC = [[LaunchLiveViewController alloc]init];
+//    rtmpLivedemoVC.videoResolution = [DEMO_Setting.videoResolution intValue];
+//    rtmpLivedemoVC.roomId = DEMO_Setting.activityID;
+//    rtmpLivedemoVC.token = DEMO_Setting.liveToken;
+//    rtmpLivedemoVC.videoBitRate = DEMO_Setting.videoBitRate*1000;
+//    rtmpLivedemoVC.audioBitRate = DEMO_Setting.audioBitRate*1000;
+//    rtmpLivedemoVC.videoCaptureFPS = DEMO_Setting.videoCaptureFPS;
+//    rtmpLivedemoVC.interfaceOrientation = UIInterfaceOrientationLandscapeRight;
+//    [self presentViewController:rtmpLivedemoVC animated:isAnimated completion:^{
+//
+//    }];
+//}
+//
+//- (IBAction)rtmpWatchBtnClick:(id)sender
+//{
+//    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
+//        return;
+//    }
+//    if (DEMO_Setting.bufferTimes<0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入bufferTimes,切值>=0" message:nil];
+//        return;
+//    }
+//
+//    WatchLiveViewController * watchVC  =[[WatchLiveViewController alloc]init];
+//    watchVC.roomId = DEMO_Setting.activityID;
+//    watchVC.kValue = DEMO_Setting.kValue;
+//    watchVC.bufferTimes = DEMO_Setting.bufferTimes;
+//    watchVC.watchVideoType = kWatchVideoRTMP;
+//    [self presentViewController:watchVC animated:YES completion:nil];
+//}
+////
+//- (IBAction)watchPlaybackBtnClick:(id)sender
+//{
+//    if (DEMO_Setting.activityID == nil||DEMO_Setting.activityID<=0) {
+//        [UIAlertView popupAlertByDelegate:nil title:@"请输入roomId" message:nil];
+//        return;
+//    }
+//    
+//    WatchPlayBackViewController * watchVC  =[[WatchPlayBackViewController alloc]init];
+//    watchVC.roomId = DEMO_Setting.activityID;
+//    watchVC.password = DEMO_Setting.kValue;
+//    watchVC.watchVideoType = kWatchVideoPlayback;
+//    [self presentViewController:watchVC animated:YES completion:nil];
+//}
 
 - (IBAction)loginBtnClick:(id)sender
 {
-    [self closeKeyBtnClick:nil];
+  [self closeKeyBtnClick:nil];
 
     if([DEMO_AppKey isEqualToString:@"替换成您自己的AppKey"])//此处只用于提示信息判断，只替换CONSTS.h中的AppKey即可
     {
@@ -186,9 +185,12 @@
             [MBProgressHUD hideAllHUDsForView:weekself.view animated:YES];
             VHLog(@"Account: %@ Login:%d",[VHallApi currentAccount],[VHallApi isLoggedIn]);
             [weekself showMsg:@"登录成功" afterDelay:1.5];
+            VHHomeViewController *homeVC=[[VHHomeViewController alloc] init];
+            [self presentViewController:homeVC animated:YES completion:nil];
         } failure:^(NSError * error) {
             weekself.loginBtn.selected = [VHallApi isLoggedIn];
             VHLog(@"登录失败%@",error);
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                  [MBProgressHUD hideAllHUDsForView:weekself.view animated:YES];
                 [weekself showMsg:error.domain afterDelay:1.5];
@@ -198,6 +200,11 @@
 
 }
 
+- (IBAction)guestCLick:(id)sender
+{
+    VHHomeViewController *homeVC=[[VHHomeViewController alloc] init];
+    [self presentViewController:homeVC animated:YES completion:nil];
+}
 
 - (IBAction)closeKeyBtnClick:(id)sender
 {
@@ -224,6 +231,28 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)registerBtnClicked:(id)sender {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"注册热线：400-682-6882" message:@"" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"拨打", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == 1)
+    {
+        NSMutableString * str=[[NSMutableString alloc] initWithFormat:@"tel:%@",@"4006826882"];
+        UIWebView * callWebview = [[UIWebView alloc] init];
+        [callWebview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:str]]];
+        [self.view addSubview:callWebview];
+    }
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    
+    [[UIApplication sharedApplication].keyWindow endEditing:YES];
+    return YES;
 }
 
 @end

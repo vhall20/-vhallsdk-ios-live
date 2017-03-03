@@ -63,6 +63,7 @@
 @property (nonatomic, copy) NSString * answer_id;       //回答ID
 @property (nonatomic, copy) NSString * role_name;       //角色
 @property (nonatomic, assign)BOOL      is_open;         //是否公开回答
+@property (nonatomic, copy) NSString * avatar;
 @end
 
 /**

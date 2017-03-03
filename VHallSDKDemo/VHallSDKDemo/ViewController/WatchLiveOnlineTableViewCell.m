@@ -64,8 +64,15 @@
         role = @"观众";
     }
 
-    lblShow.text = [NSString stringWithFormat:@"欢迎%@%@加入房间:%@(%@)", role, userName, room, event];
-    lblState.text = [NSString stringWithFormat:@"加入时间:%@ 当前用户数:%@ 参会人数:%@", time, concurrent_user, attend_count];
+    if ([_model.event isEqualToString:@"online"]) {
+        lblShow.text = [NSString stringWithFormat:@"欢迎%@%@加入房间:%@(%@)", role, userName, room, event];
+        lblState.text = [NSString stringWithFormat:@"加入时间:%@ 当前用户数:%@ 参会人数:%@", time, concurrent_user, attend_count];
+    }else if ([_model.event isEqualToString:@"offline"])
+    {
+        lblShow.text = [NSString stringWithFormat:@"%@%@退出房间:%@(%@)", role, userName, room, event];
+        lblState.text = [NSString stringWithFormat:@"退出时间:%@ 当前用户数:%@ 参会人数:%@", time, concurrent_user, attend_count];
+    }
+    
 }
 
 @end

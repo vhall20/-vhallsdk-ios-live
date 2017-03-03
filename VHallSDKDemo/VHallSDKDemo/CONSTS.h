@@ -18,7 +18,6 @@
 #define DEMO_account        @"" //账号 详见：▪ 自助式网络直播API -> 活动管理 ->user/register 创建用户
 #define DEMO_password       @"" //密码 详见：▪ 自助式网络直播API -> 活动管理 ->user/register 创建用户
 
-
 #define  VHallFilterSDK_ENABLE 0//是否启用 美颜滤镜功能 VHallFilterSDK
 
 //#if DEBUG  // 调试状态, 打开LOG功能
@@ -46,5 +45,11 @@ typedef NS_ENUM(int,WatchVideoType)
 #define KIScreenHeight [[UIScreen mainScreen] bounds].size.height
 
 #define KIScreenWidth [[UIScreen mainScreen] bounds].size.width
+
+//颜色
+#define MakeColor(r,g,b,a) ([UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a])
+#define MakeColorRGB(hex)  ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:1.0])
+#define MakeColorRGBA(hex,a) ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:a])
+#define MakeColorARGB(hex) ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:((hex>>24)&0xff)/255.0])
 
 #endif /* CONSTS_h */

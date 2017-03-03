@@ -78,12 +78,18 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 - (void)VideoDefinitionList:(NSArray*)definitionList;
 /**
- *  直播结束消息 如果视频正在播放 等下一次loading 直播即结束
+ *  直播结束消息
  *
  *  直播结束消息
  */
 - (void)LiveStoped;
 
+/**
+ *  播主发布公告
+ *
+ *  播主发布公告消息
+ */
+- (void)Announcement:(NSString*)content publishTime:(NSString*)time;
 @end
 @interface VHallMoviePlayer : VHMoviePlayer
 
@@ -126,6 +132,18 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  */
 -(BOOL)startPlay:(NSDictionary*)param;
 
+
+/**
+ *  重连直播视频(直播功能)
+ *
+ *  @param param
+ *  param[@"id"]    = 活动Id 必传
+ *  param[@"name"]  = 如未登录SDK要传
+ *  param[@"email"] = 如未登录SDK要传
+ *  param[@"pass"]  = 活动如果有K值或密码需要传
+ *
+ */
+-(BOOL)reconnectPlay:(NSDictionary*)param;
 /**
  *  观看回放视频   (仅HLS可用)
  *
@@ -162,6 +180,11 @@ typedef NS_ENUM(NSInteger,VHallMovieActiveState) {
  *  停止播放
  */
 -(void)stopPlay;
+
+/**
+ *  暂停直播播放(直播功能)
+ */
+-(void)pausePlay;
 
 /**
  *  销毁播放器

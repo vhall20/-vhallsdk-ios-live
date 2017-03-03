@@ -7,16 +7,19 @@
 //
 
 #import "WatchLiveQATableViewCell.h"
-
+#import "UIImageView+WebCache.h"
+#import "VHallApi.h"
 @implementation WatchLiveQATableViewCell
 {
-    __weak IBOutlet UILabel *lblType;
+  
+    __weak IBOutlet UIButton *lblType;
     __weak IBOutlet UILabel *lblNickName;
     __weak IBOutlet UILabel *lblTime;
     __weak IBOutlet UILabel *lblContent;
-    __weak IBOutlet UILabel *lblQuestionID;
-    __weak IBOutlet UILabel *lblJoinID;
-    __weak IBOutlet UILabel *lblRole;
+    __weak IBOutlet UIImageView *headImage;
+//    __weak IBOutlet UILabel *lblQuestionID;
+//    __weak IBOutlet UILabel *lblJoinID;
+//    __weak IBOutlet UILabel *lblRole;
 }
 
 - (void)awakeFromNib {
@@ -35,17 +38,23 @@
     lblNickName.text   = [NSString stringWithFormat:@"%@:", _model.nick_name];
     lblTime.text       = _model.created_at;
     lblContent.text    = [NSString stringWithFormat:@"%@\n\n\n", _model.content];
-    lblJoinID.text     = [NSString stringWithFormat:@"参会 ID:%@",_model.join_id];
+    
+   // lblJoinID.text     = [NSString stringWithFormat:@"参会 ID:%@",_model.join_id];
     if ([_model.type isEqualToString:@"question"])
     {
-        lblRole.text = @"[--]";
-        lblType.text = @"问题";
-        lblQuestionID.text = [NSString stringWithFormat:@"问题 ID:%@", _model.question_id];
+     //   lblRole.text = @"[--]";
+        lblType.titleLabel.text = @"问";
+//        lblQuestionID.text = [NSString stringWithFormat:@"问题 ID:%@", _model.question_id];
+        
+        lblType.layer.borderColor=[UIColor redColor].CGColor;
+        [lblType setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+         [headImage sd_setImageWithURL:[NSURL URLWithString:[VHallApi currentUserHeadUrl]] placeholderImage:[UIImage imageNamed:@"head50"]];
     }
     else if ([_model.type isEqualToString:@"answer"])
     {
-        lblType.text = @"回答";
-        
+        lblType.titleLabel.text= @"答";
+        lblType.layer.borderColor=[UIColor blueColor].CGColor;
+        [lblType setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
         VHallAnswerModel* answer = (VHallAnswerModel *)_model;
         NSString* role = @"";
         if([answer.role_name isEqualToString:@"host"]) {
@@ -57,9 +66,12 @@
         }else if([answer.role_name isEqualToString:@"user"]) {
             role = @"观众";
         }
-        lblRole.text = [NSString stringWithFormat:@"[%@]", role];
-        lblQuestionID.text = [NSString stringWithFormat:@"问题 ID:%@  回答 ID:%@ 【%@】", _model.question_id, answer.answer_id,answer.is_open?@"公开":@"私密"];
+      [headImage sd_setImageWithURL:[NSURL URLWithString:answer.avatar] placeholderImage:[UIImage imageNamed:@"head50"]];
+      //  lblRole.text = [NSString stringWithFormat:@"[%@]", role];
+     //   lblQuestionID.text = [NSString stringWithFormat:@"问题 ID:%@  回答 ID:%@ 【%@】", _model.question_id, answer.answer_id,answer.is_open?@"公开":@"私密"];
     }
+    
+    [self layoutIfNeeded];
 }
 
 @end
