@@ -104,3 +104,13 @@
 @property (nonatomic, copy) NSString * account;         //登录账号
 @property (nonatomic, copy) NSMutableArray<VHallLotteryResultModel *> * resultModels; //中奖结果
 @end
+
+/**
+ *  调查问卷消息
+ */
+@interface VHallSurveyModel : NSObject
+@property(nonatomic,copy) NSString * releaseTime;//发起时间
+@property(nonatomic,copy) NSString * surveyId;//问卷ID
+@property(nonatomic,copy) NSString * joinId;
+@end
+

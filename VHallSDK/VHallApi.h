@@ -16,6 +16,7 @@
 #import "VHallMsgModels.h"
 #import "VHallComment.h"
 #import "VHallSign.h"
+#import "VHallSurvey.h"
 
 @interface VHallApi : NSObject 
 

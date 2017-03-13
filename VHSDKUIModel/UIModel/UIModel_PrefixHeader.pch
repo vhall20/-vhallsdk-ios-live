@@ -1,0 +1,64 @@
+//
+//  UIModel_PrefixHeader.pch
+//  UIModel
+//
+//  Created by vhall on 17/2/22.
+//  Copyright © 2017年 www.vhall.com. All rights reserved.
+//
+
+#ifndef UIModel_PrefixHeader_pch
+#define UIModel_PrefixHeader_pch
+
+#define  VHallFilterSDK_ENABLE 0//是否启用 美颜滤镜功能 VHallFilterSDK
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#define VHLog(...) NSLog(__VA_ARGS__)
+#define MakeColor(r,g,b,a) ([UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a])
+#define MessageTool_SendBtnColor [UIColor colorWithRed:153.0f/255.0f green:153.0f/255.0f blue:153.0f/255.0f alpha:1.0f]
+#define MakeColorRGB(hex)  ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:1.0])
+#define VH_SH           ((VHScreenWidth<VHScreenHeight)?VHScreenHeight:VHScreenWidth)
+#define VH_SW           ((VHScreenWidth<VHScreenHeight)?VHScreenWidth:VHScreenHeight)
+#define VHScreenHeight  ([UIScreen mainScreen].bounds.size.height)
+#define VHScreenWidth   ([UIScreen mainScreen].bounds.size.width)
+#define VH_Device_OS_ver [[UIDevice currentDevice] systemVersion]
+
+#define kViewFramePath  @"frame"
+
+#pragma mark - iphone detection functions
+
+#define APPDELEGATE [UIApplication sharedApplication]
+
+#define IOSVersion  [[UIDevice currentDevice].systemVersion floatValue]
+
+#define KIScreenHeight [[UIScreen mainScreen] bounds].size.height
+
+#define KIScreenWidth [[UIScreen mainScreen] bounds].size.width
+
+//颜色
+#define MakeColor(r,g,b,a) ([UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a])
+#define MakeColorRGB(hex)  ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:1.0])
+#define MakeColorRGBA(hex,a) ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:a])
+#define MakeColorARGB(hex) ([UIColor colorWithRed:((hex>>16)&0xff)/255.0 green:((hex>>8)&0xff)/255.0 blue:(hex&0xff)/255.0 alpha:((hex>>24)&0xff)/255.0])
+
+
+#define meetingResourceBundlePath [[NSBundle mainBundle] pathForResource:@"UIModel" ofType:@"bundle"]
+#define meetingResourcesBundle [NSBundle bundleWithPath:meetingResourceBundlePath]
+
+#define MakeUIImage(a) [UIImage imageNamed:[NSString stringWithFormat:@"UIModel.bundle/%@",a]]
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "UIAlertView+ITTAdditions.h"
+#import "UIView+ITTAdditions.h"
+#import "MBHUDHelper.h"
+
+typedef NS_ENUM(int,WatchVideoType)
+{
+    kWatchVideoNone,
+    kWatchVideoRTMP,
+    kWatchVideoHLS,
+    kWatchVideoPlayback
+};
+
+#endif /* UIModel_PrefixHeader_pch */

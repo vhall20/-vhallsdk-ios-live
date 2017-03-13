@@ -13,6 +13,14 @@ pod 'VHallSDK_Live' , :git => 'https://github.com/vhall20/vhallsdk_live_ios.git'
 使用美颜功能SDK<br>
 pod 'VHallSDK_LiveFilter' , :git => 'https://github.com/vhall20/vhallsdk_live_ios.git'<br>
 
+
+### 版本更新信息
+#### 版本 v2.7.0 更新时间：2017.03.13
+更新内容：<br>
+
+1：新增问卷功能<br>
+
+
 ### 版本更新信息
 #### 版本 v2.6.0 更新时间：2017.03.03
 更新内容：<br>
