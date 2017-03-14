@@ -19,6 +19,7 @@ pod 'VHallSDK_LiveFilter' , :git => 'https://github.com/vhall20/vhallsdk_live_io
 更新内容：<br>
 
 1：新增问卷功能<br>
+2：Demo UI层拆分<br>
 
 
 ### 版本更新信息
