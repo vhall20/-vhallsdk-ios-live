@@ -1,6 +1,8 @@
 # vhallsdk-live-ios
 自助式网络直播SDK
 
+注：SDK地址已迁移，请往新地址下载  https://github.com/vhall/vhallsdk_live_ios
+
 ### APP工程集成SDK基本设置
 1、工程中任意 *.m 文件修改为 *.mm<br>
 2、关闭bitcode 设置<br>
